@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import SelfieCapture from "@/components/SelfieCapture";
 import { brandInitials, type BrandConfig } from "@/lib/brand";
+import { heroFirst, heroZone } from "@/lib/hero";
 import { SAMPLES, sampleById, type DemoSample } from "@/lib/samples";
 import { trackDemo } from "@/lib/meta";
 import type { SkinAnalysis } from "@/lib/types";
@@ -63,12 +64,27 @@ export default function DemoPreview({
       if (!ar.ok) throw new Error(ad.error ?? "analyze_failed");
       const analysis = ad.analysis as SkinAnalysis;
 
-      const concerns =
-        analysis.annotations?.map((a) => ({ area: a.area, concern: a.concern })) ?? [];
+      // One area leads the image — see lib/hero.ts. A change spread evenly over
+      // the whole face is the hardest kind to see, and a clinic owner watching
+      // this demo decide whether the tool is worth having is exactly the viewer
+      // we cannot afford to leave saying "nothing happened". The hero must also
+      // lead the list: the route caps it at six and the prompt weights the first
+      // bullet most heavily.
+      const hero = heroZone(analysis.annotations, analysis.categories);
+      const concerns = heroFirst(
+        analysis.annotations?.map((a) => ({ area: a.area, concern: a.concern })) ?? [],
+        hero,
+      );
       const tr = await fetch("/api/transform", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image, quality: "medium", areas: concerns, annotate: false }),
+        body: JSON.stringify({
+          image,
+          quality: "medium",
+          areas: concerns,
+          annotate: false,
+          hero: hero ? { area: hero.area, concern: hero.concern } : null,
+        }),
       });
       const td = await tr.json().catch(() => ({}));
       const after = tr.ok ? (td.image as string) : image;
