@@ -84,9 +84,6 @@ export default function DemoPreview({
           areas: concerns,
           annotate: false,
           hero: hero ? { area: hero.area, concern: hero.concern } : null,
-          // The image depicts the whole programme now, and lib/veluria.ts
-          // derives that from the category scores as well as the annotations.
-          categories: analysis.categories ?? [],
         }),
       });
       const td = await tr.json().catch(() => ({}));

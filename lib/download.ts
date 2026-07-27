@@ -240,13 +240,12 @@ async function buildAnalysisPdf(opts: AnalysisPdfOptions) {
     const noteY = y;
     doc.text(note, margin, noteY);
     if (expected) {
-      // The destination the web report states, with no session count.
-      // Spelled "48 to 68" rather than reusing `expected.label`: jsPDF's
-      // built-in helvetica is WinAnsi-encoded and U+2192 is not in WinAnsi.
       const label =
         expected.kind === "consult"
           ? expected.label
-          : `${expected.from} to ${expected.to}`;
+          : expected.kind === "softened"
+            ? `Lines ${expected.label}`
+            : `Expected ${expected.label}`;
       const [bg, fg]: [[number, number, number], [number, number, number]] =
         expected.kind === "consult"
           ? [[247, 236, 219], [150, 101, 42]]

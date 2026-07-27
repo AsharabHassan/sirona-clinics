@@ -9,7 +9,7 @@ import AfterCallouts from "./AfterCallouts";
 import ReviewsSlider from "./ReviewsSlider";
 import VeluriaRejuvenation from "./VeluriaRejuvenation";
 import { expectedImprovement } from "@/lib/expectations";
-import { programmeFor } from "@/lib/veluria";
+import { planFor } from "@/lib/veluria";
 import { DISCLAIMER_FULL } from "@/lib/legal";
 import {
   composeBeforeAfter,
@@ -209,11 +209,10 @@ export default function AnalysisReport({
   const [mounted, setMounted] = useState(false);
   const previewRef = useRef<HTMLElement>(null);
 
-  // The same derivation the after-image prompt uses, run over the same
-  // annotations AND the same category scores — so the products named under the
-  // preview are exactly the ones allowed to change the image above it.
-  const previewPlan = programmeFor(
-    analysis.categories,
+  // The same matcher the after-image prompt uses, run over the same concerns —
+  // so the products named under the preview are exactly the ones allowed to
+  // change the image above it.
+  const previewPlan = planFor(
     (analysis.annotations ?? []).map((a) => ({
       area: a.area,
       concern: a.concern,
@@ -313,14 +312,16 @@ export default function AnalysisReport({
                 <span key={p.id}>
                   {i > 0 && (i === previewPlan.length - 1 ? " with " : ", ")}
                   <strong className="font-semibold">{p.name}</strong>
+                  {" — "}
+                  {p.sessions} sessions
                 </span>
               ))}
-              {" — "}the Veluria this skin matched, at the end of a full
-              programme.
+              .
             </p>
             <p className="mt-2 text-xs leading-relaxed text-plum-soft">
-              How much of it anyone needs, and over what period, is the
-              clinician's to advise at consultation.
+              Results build over the course and are typically reviewed at twelve
+              weeks. Bioremodelling is maintained with a top-up course, as the
+              effect softens gradually once treatment stops.
             </p>
           </div>
         )}
@@ -390,7 +391,11 @@ export default function AnalysisReport({
                             : "bg-[#F6EFD2] text-[#8a6d1f]"
                         }`}
                       >
-                        {expected.label}
+                        {expected.kind === "consult"
+                          ? expected.label
+                          : expected.kind === "softened"
+                            ? `Lines ${expected.label}`
+                            : `Expected ${expected.label}`}
                       </span>
                     )}
                   </div>
