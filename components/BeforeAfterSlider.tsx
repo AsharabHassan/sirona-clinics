@@ -5,9 +5,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export default function BeforeAfterSlider({
   before,
   after,
+  beforeAlt = "Before image",
+  afterAlt = "After image",
+  beforeLabel = "Before",
+  afterLabel = "After",
 }: {
   before: string;
   after: string;
+  beforeAlt?: string;
+  afterAlt?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
 }) {
   // Start on the BEFORE, then sweep across once the image lands.
   const [pos, setPos] = useState(100);
@@ -114,7 +122,7 @@ export default function BeforeAfterSlider({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={after}
-        alt="Simulated result"
+        alt={afterAlt}
         className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
@@ -126,16 +134,16 @@ export default function BeforeAfterSlider({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={before}
-          alt="Your photo"
+          alt={beforeAlt}
           className="absolute inset-0 h-full w-full object-cover"
           draggable={false}
         />
         <span className="absolute left-3 top-3 rounded-full border border-white/50 bg-white/70 px-3 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-plum backdrop-blur">
-          Before
+          {beforeLabel}
         </span>
       </div>
       <span className="absolute right-3 top-3 rounded-full border border-white/40 bg-plum px-3 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-white shadow-sm">
-        After
+        {afterLabel}
       </span>
 
       {/* Handle */}

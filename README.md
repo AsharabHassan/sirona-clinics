@@ -1,60 +1,69 @@
-# O.D. Aesthetics — AI Skin Consultation
+# PBSerum VELURIA for Clinics
 
-A complimentary AI skin-consultation lead magnet for **O.D. Aesthetics, Swindon**,
-featuring **Veluria** by PB Serum. A visitor takes one photo and receives a
-consultant-grade written analysis (Claude vision), a treatment map of their face,
-and a luminous before/after preview of their results with Veluria (OpenAI image
-edit). Leads are pushed to GoHighLevel with Meta Conversions API attribution.
+A conversion-focused Sirona Aesthetics campaign page for UK clinics. The page
+combines:
 
-Built with **Next.js 15 (App Router)** and **Tailwind CSS**. Zero-config on Vercel.
+- a clinic-personalised landing experience;
+- a real VELURIA before-and-after case study from Aesthetics Central;
+- a main CTA that opens the consented camera/upload experience immediately;
+- an instant branded patient preview and clinic-growth report;
+- an optional live, non-diagnostic AI skin visualisation;
+- a clinic growth report comparing product-only promotion with the connected
+  VELURIA + AI patient journey;
+- a transparent clinic scenario planner;
+- repeated registration paths to the 3 August 2026 VELURIA webinar; and
+- a secondary private-walkthrough lead form connected to GoHighLevel.
 
-## Tech
+Built with Next.js 15, React 19, TypeScript and Tailwind CSS.
 
-- Next.js 15 / React 19 / TypeScript
-- Tailwind CSS
-- `@anthropic-ai/sdk` — `claude-sonnet-4-6` vision for the written analysis
-- `openai` — `gpt-image-2` edits for the before/after + treatment map
-- GoHighLevel inbound webhook for CRM lead capture
+## Personalised outreach links
+
+Pass a public clinic name in the `clinic` query parameter:
+
+```text
+https://your-domain.example/?clinic=Harley%20Street%20Skin%20Studio
+```
+
+Do not place a recipient's name, email address or other personal data in the
+URL. Without the parameter, visitors can enter their own clinic name before
+opening the preview.
 
 ## Local development
 
 ```bash
 npm install
-cp .env.local.example .env.local   # then fill in your keys
-npm run dev                        # http://localhost:3000
+npm run dev
 ```
 
-> Don't run `next build` while `next dev` is running — they share the `.next`
-> directory and the running dev server will break. Stop dev first.
+Run the production check with:
 
-## Environment variables
+```bash
+npm run build
+```
 
-Set these in **Vercel → Project → Settings → Environment Variables** (and in
-`.env.local` for local dev). See `.env.local.example` for the full template.
+## Environment
 
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `ANTHROPIC_API_KEY` | Yes | Claude vision — the written skin analysis. |
-| `OPENAI_API_KEY` | Yes | `gpt-image-2` — the before/after + treatment-map image. |
-| `GHL_WEBHOOK_URL` | Yes* | GoHighLevel inbound webhook; leads are POSTed here. If unset, the lead is logged and the user still reaches results. |
-| `NEXT_PUBLIC_BOOKING_URL` | Yes | Where the "Book a consultation" button sends users. |
-| `NEXT_PUBLIC_META_PIXEL_ID` | No | Meta Pixel ID for PageView/Lead events + CAPI matching. Leave unset for the demo; set the real O.D. Aesthetics pixel before any campaign. |
+See `.env.local.example` for the complete template.
 
-## Deploying on Vercel
+| Variable | Purpose |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Cosmetic visible-skin analysis for the optional live preview. |
+| `OPENAI_API_KEY` | AI-generated visualisation for the optional live preview. |
+| `GHL_WEBHOOK_URL` | Sirona GoHighLevel webhook used by the private-walkthrough form. |
+| `NEXT_PUBLIC_CALENDAR_URL` | Optional private Sirona walkthrough calendar. |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Optional campaign attribution. |
 
-1. Push this repo to GitHub (already done if you're reading this on GitHub).
-2. In the [Vercel dashboard](https://vercel.com/new), **Import** the repository.
-3. Framework preset: **Next.js** (auto-detected, no config needed).
-4. Add the environment variables from the table above.
-5. **Deploy.**
+The webinar registration URL is defined in `app/page.tsx`.
 
-## Optional: Veluria reference images
+## Production safeguards
 
-Drop 3–6 real, consented Veluria "after" skin-crop photos in
-`public/references/veluria/` to make the AI before/afters more credible. The app
-falls back to a text-only prompt automatically when the folder is empty. See
-`public/references/veluria/README.md` for the rules and consent requirements.
+- The Aesthetics Central case study can be explored without an AI request.
+- A visitor must explicitly consent before adding a photo.
+- Camera and photo-upload controls stay disabled until consent is recorded.
+- Live AI routes enforce request-size checks and lightweight per-visitor limits.
+- The UI describes outputs as illustrative, cosmetic and non-diagnostic.
+- The scenario planner exposes its assumptions and does not present a forecast.
 
----
-
-A cosmetic, non-diagnostic AI simulation. Not medical advice.
+For a multi-instance production deployment, replace the in-memory AI route
+limiter with a shared rate-limit store and complete a documented privacy review
+of every image-processing provider before sending campaign traffic.

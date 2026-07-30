@@ -10,10 +10,8 @@
 
 export interface SampleMetric {
   label: string;
-  /** Baseline skin-quality score out of 100 (higher = healthier). */
+  /** Relative emphasis used to order the visual focus bars. */
   score: number;
-  /** Illustrative improvement after a Veluria course (percentage points). */
-  uplift: number;
 }
 
 export interface DemoSample {
@@ -37,15 +35,15 @@ export const SAMPLES: DemoSample[] = [
     afterSrc: "/assets/case-studies/facial-rejuvenation-after.webp",
     mapSrc: "/assets/face-map-premium.webp",
     summary:
-      "Skin quality is the opportunity here — dehydration, uneven texture and fine surface lines. All squarely within what a Veluria course improves.",
+      "A real VELURIA result from Aesthetics Central, showing the kind of visible skin-quality conversation the clinic can then explore with a patient.",
     metrics: [
-      { label: "Hydration & glow", score: 58, uplift: 22 },
-      { label: "Texture & pores", score: 62, uplift: 18 },
-      { label: "Fine surface lines", score: 66, uplift: 15 },
-      { label: "Firmness (appearance)", score: 64, uplift: 12 },
+      { label: "Hydration & glow", score: 82 },
+      { label: "Texture & pores", score: 74 },
+      { label: "Fine surface lines", score: 66 },
+      { label: "Firmness (appearance)", score: 58 },
     ],
     veluriaNote:
-      "A course of Veluria targets hydration, surface texture and fine lines — the visible skin-quality wins shown above. Anything beyond a skin booster's scope is flagged for an in-clinic consultation.",
+      "This case study establishes the real treatment story. The live AI experience then helps a new patient explore their own visible concerns before suitability, product choice and realistic outcomes are assessed in clinic.",
   },
 ];
 

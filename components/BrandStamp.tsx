@@ -20,13 +20,19 @@ async function fileToLogoDataUrl(file: File): Promise<string> {
 }
 
 export default function BrandStamp({
+  initialBrand,
   onDone,
 }: {
+  initialBrand?: BrandConfig;
   onDone: (brand: BrandConfig) => void;
 }) {
-  const [clinicName, setClinicName] = useState("");
-  const [accent, setAccent] = useState(DEFAULT_ACCENT);
-  const [logoDataUrl, setLogoDataUrl] = useState<string | undefined>();
+  const [clinicName, setClinicName] = useState(
+    initialBrand?.clinicName === "Your Clinic" ? "" : initialBrand?.clinicName ?? "",
+  );
+  const [accent, setAccent] = useState(initialBrand?.accent ?? DEFAULT_ACCENT);
+  const [logoDataUrl, setLogoDataUrl] = useState<string | undefined>(
+    initialBrand?.logoDataUrl,
+  );
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -62,8 +68,8 @@ export default function BrandStamp({
           Put your name on it
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-sm text-plum-soft">
-          We&rsquo;ll stamp the live demo with your clinic&rsquo;s brand — so you
-          see exactly what your patients would experience.
+          Add your clinic name, colour and optional logo to preview the patient
+          journey before the webinar.
         </p>
       </div>
 
@@ -149,7 +155,7 @@ export default function BrandStamp({
           See my branded demo
         </button>
         <p className="text-center text-[0.65rem] uppercase tracking-[0.14em] text-plum-mute">
-          Nothing is saved · Your logo stays in your browser
+          Your branding stays in this browser session
         </p>
       </form>
     </div>

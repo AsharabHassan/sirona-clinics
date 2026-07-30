@@ -29,19 +29,19 @@ export interface RoiResult {
 }
 
 export const ROI_DEFAULTS: RoiInputs = {
-  monthlyScans: 150,
-  optInRate: 55,
-  bookRate: 40,
-  closeRate: 35,
-  courseValue: 600,
+  monthlyScans: 80,
+  optInRate: 35,
+  bookRate: 25,
+  closeRate: 20,
+  courseValue: 500,
 };
 
 /** Sensible slider bounds for the UI. */
 export const ROI_BOUNDS = {
   monthlyScans: { min: 20, max: 1000, step: 10 },
-  optInRate: { min: 20, max: 90, step: 1 },
-  bookRate: { min: 10, max: 80, step: 1 },
-  closeRate: { min: 10, max: 70, step: 1 },
+  optInRate: { min: 10, max: 75, step: 1 },
+  bookRate: { min: 5, max: 60, step: 1 },
+  closeRate: { min: 5, max: 50, step: 1 },
   courseValue: { min: 150, max: 2500, step: 50 },
 } as const;
 

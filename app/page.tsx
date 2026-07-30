@@ -1,150 +1,529 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import BrandStamp from "@/components/BrandStamp";
+import ClinicLeadForm from "@/components/ClinicLeadForm";
+import ConversionReport from "@/components/ConversionReport";
 import DemoPreview from "@/components/DemoPreview";
 import RoiCalculator from "@/components/RoiCalculator";
-import ClinicLeadForm from "@/components/ClinicLeadForm";
 import { makeBrand, type BrandConfig } from "@/lib/brand";
 import type { ClinicLeadPayload } from "@/lib/types";
 
-type Step = "welcome" | "brand" | "demo" | "roi" | "form" | "done";
+type Step =
+  | "landing"
+  | "brand"
+  | "demo"
+  | "report"
+  | "roi"
+  | "form"
+  | "done";
 
-// Sirona's "book a demo" calendar (GoHighLevel). Set NEXT_PUBLIC_CALENDAR_URL
-// in the environment; the fallback keeps local dev working.
-const CALENDAR_URL =
+const WEBINAR_URL =
+  "https://link.sironaaesthetics.co.uk/widget/bookings/welcome-to-pbserum-webinar";
+
+const PRIVATE_DEMO_URL =
   process.env.NEXT_PUBLIC_CALENDAR_URL ?? "https://sironaaesthetics.co.uk/contact";
 
+const EVENT = {
+  date: "Monday 3 August 2026",
+  ukTime: "10:00 AM BST",
+  duration: "One-hour live clinic session",
+};
+
+function ArrowIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 8h9m-3.5-3.5L12 8l-3.5 3.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TickIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      <circle cx="8" cy="8" r="7.25" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="m4.8 8.1 2.05 2.05 4.35-4.4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
-  const [step, setStep] = useState<Step>("welcome");
+  const [step, setStep] = useState<Step>("landing");
   const [brand, setBrand] = useState<BrandConfig>(makeBrand());
   const [lead, setLead] = useState<ClinicLeadPayload | null>(null);
 
+  useEffect(() => {
+    const clinic = new URLSearchParams(window.location.search)
+      .get("clinic")
+      ?.trim()
+      .slice(0, 80);
+    if (clinic) setBrand(makeBrand({ clinicName: clinic }));
+  }, []);
+
+  const isPersonalised = brand.clinicName !== "Your Clinic";
+  const clinicCopy = isPersonalised ? brand.clinicName : "your clinic";
+
+  const beginPreview = () => {
+    setStep(isPersonalised ? "demo" : "brand");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goTo = (next: Step) => {
+    setStep(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <main className="relative min-h-dvh">
-      <header className="relative z-10">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-2 px-6 pt-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sirona-logo.png" alt="Sirona Aesthetics" className="h-9 w-auto" />
-          <p className="text-[0.6rem] uppercase tracking-couture text-plum-mute">
-            AI Skin-Scan for Clinics
-          </p>
+    <main className="relative min-h-dvh overflow-hidden">
+      <header className="relative z-30 border-b border-black/[0.06] bg-white/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+          <button
+            type="button"
+            onClick={() => goTo("landing")}
+            className="flex items-center gap-3 text-left"
+            aria-label="Back to the campaign page"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/sirona-logo.png"
+              alt="Sirona Aesthetics"
+              className="h-8 w-auto"
+            />
+            <span className="hidden border-l border-black/10 pl-3 text-[0.58rem] uppercase leading-relaxed tracking-[0.22em] text-plum-mute sm:block">
+              VELURIA
+              <br />
+              clinic growth
+            </span>
+          </button>
+
+          <div className="hidden items-center gap-2 text-xs text-plum-soft md:flex">
+            <span className="h-2 w-2 rounded-full bg-serum shadow-[0_0_0_5px_rgba(11,110,92,0.1)]" />
+            Live clinic webinar · 3 August
+          </div>
+
+          <a
+            href={WEBINAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-serum !px-5 !py-3 !text-[0.62rem] sm:!px-7"
+          >
+            Reserve a place
+          </a>
         </div>
       </header>
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 py-12 sm:py-16">
-        {step === "welcome" && (
-          <section key="welcome" className="relative mx-auto max-w-2xl text-center">
-            <p className="eyebrow animate-fade-scale" style={{ animationDelay: "60ms" }}>
-              For aesthetic clinics
-            </p>
-            <h1
-              className="display mt-6 animate-fade-scale text-5xl text-plum sm:text-7xl"
-              style={{ animationDelay: "140ms" }}
+      {step === "landing" ? (
+        <LandingPage
+          clinicCopy={clinicCopy}
+          beginPreview={beginPreview}
+        />
+      ) : (
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
+          <div className="mb-9 flex flex-wrap items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => goTo("landing")}
+              className="text-xs font-medium uppercase tracking-[0.14em] text-plum-mute transition hover:text-plum"
             >
-              Turn Instagram scrollers
-              <br />
-              <span className="serum-text italic">into booked Veluria consults.</span>
-            </h1>
-            <p
-              className="mx-auto mt-7 max-w-md animate-fade-scale text-balance text-plum-soft"
-              style={{ animationDelay: "240ms" }}
-            >
-              An AI skin-scan — branded to your clinic — that shows a patient
-              their Veluria before/after and captures the lead. See it with your
-              own name on it in under a minute.
-            </p>
-            <div
-              className="mt-10 flex animate-fade-scale flex-col items-center gap-4"
-              style={{ animationDelay: "340ms" }}
-            >
-              <button onClick={() => setStep("brand")} className="btn-serum">
-                See it with my clinic&rsquo;s name
-              </button>
-              <p className="text-[0.7rem] uppercase tracking-[0.16em] text-plum-mute">
-                No signup · Powered by Sirona &amp; PB Serum Veluria
-              </p>
-            </div>
-
-            <div
-              className="mx-auto mt-14 grid max-w-lg animate-fade-scale grid-cols-3 gap-3"
-              style={{ animationDelay: "440ms" }}
-            >
-              {[
-                ["01", "Brand the demo"],
-                ["02", "See the difference"],
-                ["03", "Project the ROI"],
-              ].map(([n, label]) => (
-                <div key={n} className="glass-soft px-4 py-5 text-center">
-                  <p className="font-display text-2xl text-plum-mute">{n}</p>
-                  <p className="mt-1 text-[0.65rem] uppercase tracking-[0.14em] text-plum-soft">
+              ← Campaign overview
+            </button>
+            <div className="flex items-center gap-2">
+              {["Brand", "AI Preview", "Report", "Potential"].map((label, index) => {
+                const activeIndex =
+                  step === "brand"
+                    ? 0
+                    : step === "demo"
+                      ? 1
+                      : step === "report"
+                        ? 2
+                        : 3;
+                return (
+                  <span
+                    key={label}
+                    className={`rounded-full px-3 py-1.5 text-[0.58rem] uppercase tracking-[0.12em] ${
+                      index <= activeIndex
+                        ? "bg-serum text-white"
+                        : "bg-black/[0.05] text-plum-mute"
+                    }`}
+                  >
                     {label}
-                  </p>
-                </div>
-              ))}
+                  </span>
+                );
+              })}
             </div>
-          </section>
-        )}
+          </div>
 
-        {step === "brand" && (
-          <BrandStamp
-            key="brand"
-            onDone={(b) => {
-              setBrand(b);
-              setStep("demo");
-            }}
-          />
-        )}
+          {step === "brand" && (
+            <BrandStamp
+              key="brand"
+              initialBrand={brand}
+              onDone={(nextBrand) => {
+                setBrand(nextBrand);
+                goTo("demo");
+              }}
+            />
+          )}
 
-        {step === "demo" && (
-          <DemoPreview key="demo" brand={brand} onContinue={() => setStep("roi")} />
-        )}
+          {step === "demo" && (
+            <DemoPreview
+              key="demo"
+              brand={brand}
+              webinarUrl={WEBINAR_URL}
+              onEditBrand={() => goTo("brand")}
+              onContinue={() => goTo("report")}
+            />
+          )}
 
-        {step === "roi" && (
-          <RoiCalculator key="roi" onContinue={() => setStep("form")} />
-        )}
+          {step === "report" && (
+            <ConversionReport
+              key="report"
+              brand={brand}
+              webinarUrl={WEBINAR_URL}
+              onExplore={() => goTo("roi")}
+              onPrivateDemo={() => goTo("form")}
+            />
+          )}
 
-        {step === "form" && (
-          <ClinicLeadForm
-            key="form"
-            brand={brand}
-            onSubmitted={(l) => {
-              setLead(l);
-              setStep("done");
-            }}
-          />
-        )}
+          {step === "roi" && (
+            <RoiCalculator
+              key="roi"
+              webinarUrl={WEBINAR_URL}
+              onPrivateDemo={() => goTo("form")}
+            />
+          )}
 
-        {step === "done" && (
-          <section key="done" className="mx-auto max-w-md animate-fade-scale text-center">
-            <p className="eyebrow">You&rsquo;re in</p>
-            <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-              Thanks{lead?.ownerName ? `, ${lead.ownerName.split(/\s+/)[0]}` : ""} —
-              let&rsquo;s talk
-            </h2>
-            <p className="mx-auto mt-4 max-w-sm text-plum-soft">
-              Pick a 15-minute slot and we&rsquo;ll walk you through your branded
-              Veluria skin-scan and the ad funnel that fills it.
-            </p>
-            <div className="mt-8 flex flex-col items-center gap-4">
-              <a href={CALENDAR_URL} target="_blank" rel="noopener noreferrer" className="btn-serum">
-                Book your 15-min demo
-              </a>
-              <button
-                onClick={() => setStep("welcome")}
-                className="text-sm text-plum-mute underline-offset-4 hover:text-plum hover:underline"
-              >
-                Back to start
-              </button>
-            </div>
-          </section>
-        )}
-      </div>
+          {step === "form" && (
+            <ClinicLeadForm
+              key="form"
+              brand={brand}
+              onSubmitted={(submittedLead) => {
+                setLead(submittedLead);
+                goTo("done");
+              }}
+            />
+          )}
 
-      <footer className="relative z-10 mx-auto max-w-5xl px-6 pb-10 text-center text-[0.65rem] uppercase tracking-[0.14em] text-plum-mute/70">
-        © {new Date().getFullYear()} Sirona Aesthetics · Veluria by PB Serum · AI
-        skin-scan for clinics
+          {step === "done" && (
+            <section className="mx-auto max-w-xl animate-fade-scale text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-serum text-white">
+                <TickIcon />
+              </div>
+              <p className="eyebrow mt-6">Request received</p>
+              <h2 className="display mt-3 text-4xl text-plum sm:text-6xl">
+                Thank you
+                {lead?.ownerName
+                  ? `, ${lead.ownerName.split(/\s+/)[0]}`
+                  : ""}
+                .
+              </h2>
+              <p className="mx-auto mt-5 max-w-md leading-relaxed text-plum-soft">
+                Sirona will follow up about a private VELURIA pipeline
+                walkthrough. You can also reserve your place on the 3 August
+                webinar now.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href={WEBINAR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-serum"
+                >
+                  Reserve webinar place <ArrowIcon />
+                </a>
+                <a
+                  href={PRIVATE_DEMO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost"
+                >
+                  Choose a private slot
+                </a>
+              </div>
+            </section>
+          )}
+        </div>
+      )}
+
+      <footer className="relative z-10 border-t border-black/[0.06] bg-white/55">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-8 text-center text-[0.62rem] uppercase tracking-[0.14em] text-plum-mute sm:flex-row sm:px-8 sm:text-left">
+          <span>
+            © {new Date().getFullYear()} Sirona Aesthetics · VELURIA by PBSerum
+          </span>
+          <span>
+            Cosmetic AI visualisation · Non-diagnostic · Results vary
+          </span>
+        </div>
       </footer>
     </main>
+  );
+}
+
+function LandingPage({
+  clinicCopy,
+  beginPreview,
+}: {
+  clinicCopy: string;
+  beginPreview: () => void;
+}) {
+  return (
+    <>
+      <section className="relative z-10">
+        <div className="mx-auto grid min-h-[760px] max-w-[1320px] items-center gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:py-20">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-serum/15 bg-white/70 px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.17em] text-serum">
+              <span className="h-1.5 w-1.5 rounded-full bg-serum" />
+              The live VELURIA AI patient experience
+            </div>
+
+            <h1 className="display mt-7 text-[3.45rem] text-plum sm:text-7xl lg:text-[4.75rem]">
+              Show the difference.
+              <span className="serum-text italic"> Start the conversation.</span>
+            </h1>
+
+            <p className="mt-7 max-w-xl text-base leading-7 text-plum-soft sm:text-lg sm:leading-8">
+              For <strong className="font-semibold text-plum">{clinicCopy}</strong>,
+              this is the patient hook: a branded, non-diagnostic AI
+              before-and-after designed to move passive treatment interest
+              toward an informed consultation.
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button type="button" onClick={beginPreview} className="btn-serum">
+                Launch the AI before &amp; after <ArrowIcon />
+              </button>
+              <a
+                href={WEBINAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Reserve webinar place
+              </a>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-plum-mute">
+              {["Drag-to-compare preview", "Optional live AI", "Clinic-branded journey"].map(
+                (item) => (
+                  <span key={item} className="flex items-center gap-2">
+                    <TickIcon />
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[650px]">
+            <div className="absolute -inset-10 -z-10 rounded-full bg-[#DFF3EE]/80 blur-3xl" />
+            <div className="landing-preview-shell">
+              <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-7 sm:py-5">
+                <div>
+                  <p className="text-[0.56rem] uppercase tracking-[0.18em] text-white/55">
+                    Drag to compare
+                  </p>
+                  <p className="mt-1 text-base font-semibold text-white sm:text-lg">
+                    Real VELURIA before &amp; after
+                  </p>
+                </div>
+                <span className="rounded-full bg-white/10 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.14em] text-white/75">
+                  Aesthetics Central
+                </span>
+              </div>
+
+              <div className="p-4 sm:p-7">
+                <BeforeAfterSlider
+                  before="/assets/case-studies/facial-rejuvenation-before.webp"
+                  after="/assets/case-studies/facial-rejuvenation-after.webp"
+                  beforeAlt="Before the VELURIA course"
+                  afterAlt="Real VELURIA result"
+                  afterLabel="After VELURIA"
+                />
+                <div className="mt-5 rounded-2xl bg-white/[0.07] p-4 sm:p-5">
+                  <p className="text-sm leading-relaxed text-white/85 sm:text-base">
+                    The real result establishes product credibility. The AI
+                    experience lets a patient explore visible skin quality and
+                    creates a clearer route into consultation.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {["Hydration", "Texture", "Fine lines"].map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-white/10 px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.12em] text-white/60"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="mx-auto mt-4 max-w-sm text-center text-[0.65rem] leading-relaxed text-plum-mute">
+              Real VELURIA case study from Aesthetics Central. Individual
+              results vary. The live AI experience is illustrative and
+              non-diagnostic.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 border-y border-serum/10 bg-[#EAF6F2]/75">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-7 sm:px-8 md:grid-cols-[1fr_auto_auto] md:items-center">
+          <div>
+            <p className="eyebrow">Live clinic webinar</p>
+            <h2 className="mt-2 text-xl font-medium text-plum">
+              Welcome to PBSerum VELURIA: A Revolution in Microneedling
+            </h2>
+          </div>
+          <div className="text-sm leading-6 text-plum-soft md:border-l md:border-serum/15 md:pl-8">
+            <strong className="font-semibold text-plum">{EVENT.date}</strong>
+            <br />
+            {EVENT.ukTime} · {EVENT.duration}
+          </div>
+          <a
+            href={WEBINAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-serum whitespace-nowrap"
+          >
+            Reserve my place <ArrowIcon />
+          </a>
+        </div>
+      </section>
+
+      <section className="relative z-10 mx-auto max-w-6xl px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">More than a product introduction</p>
+          <h2 className="display mt-4 text-4xl text-plum sm:text-6xl">
+            The range, the patient story and the route to consultation.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl leading-7 text-plum-soft">
+            The campaign is designed to help clinics explain skin quality
+            clearly, capture genuine interest and follow up with the right
+            conversation.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {[
+            {
+              number: "01",
+              title: "Personalised attention",
+              copy: "A clinic-branded experience gives patients a reason to stop, interact and understand the treatment conversation.",
+            },
+            {
+              number: "02",
+              title: "Responsible visualisation",
+              copy: "The AI experience stays cosmetic and non-diagnostic, with visible limitations and clinician consultation built in.",
+            },
+            {
+              number: "03",
+              title: "Follow-up that connects",
+              copy: "Patient interest can move into a structured enquiry and follow-up journey instead of disappearing after a social click.",
+            },
+          ].map((item) => (
+            <article key={item.number} className="conversion-card">
+              <span className="font-display text-3xl text-serum/45">
+                {item.number}
+              </span>
+              <h3 className="mt-8 text-xl font-medium text-plum">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-plum-soft">{item.copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="relative z-10 bg-[#10231F] text-white">
+        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-24 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#8ED8C7]">
+              See it before the webinar
+            </p>
+            <h2 className="display mt-5 text-4xl sm:text-6xl">
+              Put your clinic&rsquo;s name on the patient journey.
+            </h2>
+            <p className="mt-5 max-w-lg leading-7 text-white/65">
+              The fastest way to understand the concept is to experience it.
+              Brand the preview, explore the patient view and then join Sirona
+              for the full VELURIA walkthrough.
+            </p>
+            <button
+              type="button"
+              onClick={beginPreview}
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#10231F] transition hover:-translate-y-0.5 hover:bg-[#EAF6F2]"
+            >
+              Build my preview <ArrowIcon />
+            </button>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              ["Clinic branded", "Your name, colour and optional logo appear in the patient preview."],
+              ["Instant sample", "Visitors can understand the experience before choosing to try the live AI."],
+              ["Transparent model", "Inputs and assumptions remain visible in the optional pipeline planner."],
+              ["Human next step", "Every route leads back to a qualified clinic conversation."],
+            ].map(([title, copy]) => (
+              <div
+                key={title}
+                className="rounded-[1.75rem] border border-white/10 bg-white/[0.05] p-6"
+              >
+                <TickIcon />
+                <h3 className="mt-5 font-medium text-white">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/55">{copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8">
+        <p className="eyebrow">Monday 3 August · 10:00 AM BST</p>
+        <h2 className="display mt-5 text-5xl text-plum sm:text-7xl">
+          See where VELURIA could fit in your clinic.
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl leading-7 text-plum-soft">
+          Join the one-hour Sirona session for a practical introduction to the
+          range and a look at the patient-pipeline support behind this preview.
+        </p>
+        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a
+            href={WEBINAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-serum"
+          >
+            Reserve webinar place <ArrowIcon />
+          </a>
+          <button type="button" onClick={beginPreview} className="btn-ghost">
+            Try the clinic preview
+          </button>
+        </div>
+      </section>
+    </>
   );
 }

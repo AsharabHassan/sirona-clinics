@@ -35,6 +35,7 @@ export default function AfterCallouts({
             const expected = expectedForArea(a.area, categories, {
               concern: a.concern,
               treatment: a.treatment,
+              scope: a.scope,
             });
             return (
               <li

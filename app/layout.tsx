@@ -19,9 +19,9 @@ const sans = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "AI Skin-Scan for Clinics | Sirona Aesthetics",
+  title: "PBSerum VELURIA for Clinics | Sirona Aesthetics",
   description:
-    "See the AI Veluria skin-scan branded to your clinic — the lead magnet that turns Instagram scrollers into booked consultations. A Sirona Aesthetics demo for aesthetic clinic owners.",
+    "Preview a clinic-branded, non-diagnostic AI skin visualisation and reserve a place on Sirona Aesthetics' live PBSerum VELURIA clinic webinar.",
 };
 
 export default function RootLayout({

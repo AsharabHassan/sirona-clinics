@@ -5,12 +5,12 @@
 
 /** Shown as a required checkbox BEFORE the camera/upload opens (step 01). */
 export const PHOTO_CONSENT =
-  "I understand this is a cosmetic, non-diagnostic AI tool — not medical advice or a diagnosis — and I consent to my photo being processed to generate my analysis. My photo is used only to create the result and is never stored.";
+  "I understand this is a cosmetic, non-diagnostic AI visualisation — not medical advice, a diagnosis or a treatment prediction — and I consent to my photo being sent to Sirona's AI processing services solely to generate this preview. I confirm that this is my photo or I have permission to use it.";
 
 /** One-line disclaimer for compact / footer placements. */
 export const DISCLAIMER_SHORT =
-  "Cosmetic, non-diagnostic AI simulation of visible skin appearance only. Not medical advice or a diagnosis.";
+  "Cosmetic, non-diagnostic AI visualisation of visible skin appearance only. Not medical advice, a diagnosis or a treatment prediction.";
 
 /** Full disclaimer for the prominent notices on the result page and the PDF. */
 export const DISCLAIMER_FULL =
-  "This is a cosmetic, non-diagnostic AI simulation of visible skin appearance only. It is not medical advice, not a diagnosis, and results are illustrative and not guaranteed. A skin booster cannot treat every concern — always consult O.D. Aesthetics' clinicians before any treatment.";
+  "This is a cosmetic, non-diagnostic AI visualisation of visible skin appearance only. It is not medical advice, a diagnosis or a prediction of treatment results. Images are illustrative and individual outcomes vary. A qualified clinician must assess suitability and discuss realistic expectations before any treatment.";

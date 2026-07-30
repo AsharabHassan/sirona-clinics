@@ -220,7 +220,7 @@ export default function SelfieCapture({
             </div>
             <p className="display text-3xl text-plum">Add your photo</p>
             <p className="mx-auto mt-2 max-w-xs text-sm text-plum-soft">
-              We see only what you share — and never keep it.
+              Your photo is used to generate this one cosmetic AI preview.
             </p>
 
             {/* The after-image can only show a glow the camera actually caught:

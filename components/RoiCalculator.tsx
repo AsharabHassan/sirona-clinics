@@ -20,9 +20,11 @@ const FIELDS: { key: Field; label: string; suffix?: string; money?: boolean }[] 
 ];
 
 export default function RoiCalculator({
-  onContinue,
+  webinarUrl,
+  onPrivateDemo,
 }: {
-  onContinue: () => void;
+  webinarUrl: string;
+  onPrivateDemo: () => void;
 }) {
   const [inputs, setInputs] = useState<RoiInputs>(ROI_DEFAULTS);
   const result = useMemo(() => computeRoi(inputs), [inputs]);
@@ -32,13 +34,14 @@ export default function RoiCalculator({
   return (
     <div className="w-full animate-fade-scale">
       <div className="mb-7 text-center">
-        <p className="eyebrow">Step 03 — Your Numbers</p>
+        <p className="eyebrow">Step 03 — Scenario Planner</p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-          What could it add?
+          Model the patient pathway
         </h2>
         <p className="mx-auto mt-3 max-w-md text-sm text-plum-soft">
-          Move the sliders to your clinic&rsquo;s reality. The maths is a plain
-          funnel — no magic, just your own numbers.
+          Start with our deliberately conservative assumptions, then move the
+          sliders to reflect your clinic. This is planning support, not a
+          forecast.
         </p>
       </div>
 
@@ -74,7 +77,7 @@ export default function RoiCalculator({
         <div className="glass flex flex-col gap-5 p-6 sm:p-7">
           <div className="text-center">
             <p className="text-[0.65rem] uppercase tracking-[0.18em] text-plum-soft">
-              Projected Veluria revenue
+          Illustrative pipeline value
             </p>
             <p className="font-display text-5xl text-plum sm:text-6xl">
               {gbp(result.monthlyRevenue)}
@@ -103,12 +106,21 @@ export default function RoiCalculator({
           </div>
 
           <p className="text-center text-[0.65rem] leading-relaxed text-plum-mute">
-            Illustrative projection from your inputs — not a guarantee. Real
-            results depend on your offer, ads and follow-up.
+            Scenario only—not a forecast or guarantee. Revenue is gross course
+            value before product, media, staffing and operating costs. Actual
+            results depend on demand, offer, clinical suitability and follow-up.
           </p>
 
-          <button onClick={onContinue} className="btn-serum w-full">
-            Claim my clinic&rsquo;s app →
+          <a
+            href={webinarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-serum w-full"
+          >
+            Reserve webinar place →
+          </a>
+          <button onClick={onPrivateDemo} className="btn-ghost w-full">
+            Request a private walkthrough
           </button>
         </div>
       </div>

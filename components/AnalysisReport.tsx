@@ -216,6 +216,7 @@ export default function AnalysisReport({
     (analysis.annotations ?? []).map((a) => ({
       area: a.area,
       concern: a.concern,
+      scope: a.scope,
     })),
   );
 

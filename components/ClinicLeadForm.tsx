@@ -71,13 +71,13 @@ export default function ClinicLeadForm({
   return (
     <div className="mx-auto w-full max-w-lg animate-fade-scale">
       <div className="mb-6 text-center">
-        <p className="eyebrow">Step 04 — Claim Your App</p>
+        <p className="eyebrow">Private walkthrough</p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-          Let&rsquo;s build yours
+          Talk through your clinic&rsquo;s setup
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-sm text-plum-soft">
-          Book a 15-minute demo and we&rsquo;ll set up a Veluria skin-scan
-          branded to your clinic — plus show you the ad funnel behind it.
+          Leave your details and Sirona will follow up about a focused VELURIA
+          pipeline walkthrough for your clinic.
         </p>
       </div>
 
@@ -129,6 +129,7 @@ export default function ClinicLeadForm({
             type="number"
             min={0}
             placeholder="Patients / month"
+            aria-label="Current patients per month"
             value={monthlyPatients}
             onChange={(e) => setMonthlyPatients(e.target.value)}
           />
@@ -143,15 +144,16 @@ export default function ClinicLeadForm({
             required
           />
           <span>
-            I agree to Sirona Aesthetics contacting me about Veluria and the AI
-            skin-scan app for my clinic.
+            I agree to Sirona Aesthetics contacting me about VELURIA and the
+            clinic patient-pipeline preview. I can ask not to be contacted again
+            at any time.
           </span>
         </label>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" className="btn-serum w-full" disabled={submitting}>
-          {submitting ? "Sending…" : "Book my demo"}
+          {submitting ? "Sending…" : "Request my walkthrough"}
         </button>
       </form>
     </div>

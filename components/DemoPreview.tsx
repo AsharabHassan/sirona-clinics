@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import SelfieCapture from "@/components/SelfieCapture";
 import { brandInitials, type BrandConfig } from "@/lib/brand";
-import { heroFirst, heroZone } from "@/lib/hero";
+import { createAfterPreview } from "@/lib/afterPreview";
 import { SAMPLES, sampleById, type DemoSample } from "@/lib/samples";
 import { trackDemo } from "@/lib/meta";
 import type { SkinAnalysis } from "@/lib/types";
@@ -13,7 +13,7 @@ interface DemoView {
   before: string;
   after: string;
   summary: string;
-  metrics: { label: string; score: number; uplift: number }[];
+  metrics: { label: string; score: number }[];
   veluriaNote: string;
   live?: boolean;
 }
@@ -30,14 +30,18 @@ function sampleToView(s: DemoSample): DemoView {
 
 export default function DemoPreview({
   brand,
+  webinarUrl,
+  onEditBrand,
   onContinue,
 }: {
   brand: BrandConfig;
+  webinarUrl: string;
+  onEditBrand: () => void;
   onContinue: () => void;
 }) {
   const [sampleId, setSampleId] = useState(SAMPLES[0].id);
   const [live, setLive] = useState<DemoView | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [liveError, setLiveError] = useState<string | null>(null);
 
@@ -64,30 +68,8 @@ export default function DemoPreview({
       if (!ar.ok) throw new Error(ad.error ?? "analyze_failed");
       const analysis = ad.analysis as SkinAnalysis;
 
-      // One area leads the image — see lib/hero.ts. A change spread evenly over
-      // the whole face is the hardest kind to see, and a clinic owner watching
-      // this demo decide whether the tool is worth having is exactly the viewer
-      // we cannot afford to leave saying "nothing happened". The hero must also
-      // lead the list: the route caps it at six and the prompt weights the first
-      // bullet most heavily.
-      const hero = heroZone(analysis.annotations, analysis.categories);
-      const concerns = heroFirst(
-        analysis.annotations?.map((a) => ({ area: a.area, concern: a.concern })) ?? [],
-        hero,
-      );
-      const tr = await fetch("/api/transform", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          image,
-          quality: "medium",
-          areas: concerns,
-          annotate: false,
-          hero: hero ? { area: hero.area, concern: hero.concern } : null,
-        }),
-      });
-      const td = await tr.json().catch(() => ({}));
-      const after = tr.ok ? (td.image as string) : image;
+      const after = await createAfterPreview(image, analysis);
+      if (!after) throw new Error("transform_failed");
 
       setLive({
         before: image,
@@ -96,7 +78,6 @@ export default function DemoPreview({
         metrics: (analysis.categories ?? []).slice(0, 4).map((c) => ({
           label: c.label,
           score: c.score,
-          uplift: Math.max(0, Math.min(22, Math.round((100 - c.score) * 0.25))),
         })),
         veluriaNote: analysis.veluriaRecommendation,
         live: true,
@@ -107,7 +88,7 @@ export default function DemoPreview({
       setLiveError(
         msg === "no_face"
           ? "We couldn't detect a face in that photo. Try another, well-lit and head-on."
-          : "That live run didn't complete — the sample demos above still show the difference.",
+          : "That live run didn't complete. Please try again, or view the real VELURIA case study instead.",
       );
     } finally {
       setBusy(false);
@@ -116,22 +97,137 @@ export default function DemoPreview({
 
   const accent = brand.accent;
 
+  if (uploading) {
+    return (
+      <div className="w-full animate-fade-scale">
+        <div className="mb-8 text-center">
+          <p className="eyebrow">Step 02 — Live AI Experience</p>
+          <h2 className="display mt-3 text-4xl text-plum sm:text-6xl">
+            Try the AI on a real photo
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-plum-soft">
+            Use the camera or upload a clear, front-facing photo. The experience
+            will create a cosmetic skin analysis and an illustrative VELURIA
+            before-and-after for the clinic report.
+          </p>
+          <button
+            type="button"
+            onClick={onEditBrand}
+            className="mt-3 text-xs text-plum-mute underline underline-offset-4 transition hover:text-plum"
+          >
+            Change clinic branding
+          </button>
+        </div>
+
+        <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+          <aside className="report-advantage-card order-2 p-7 text-white lg:order-1 sm:p-8">
+            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">
+              What the clinic owner will see
+            </p>
+            <h3 className="mt-3 text-2xl font-medium text-white">
+              One photo becomes a complete patient-conversation preview.
+            </h3>
+            <div className="mt-7 space-y-5">
+              {[
+                ["01", "Visible-skin analysis", "Cosmetic observations written in clear patient language."],
+                ["02", "AI before & after", "An illustrative visualisation that makes the experience tangible."],
+                ["03", "VELURIA direction", "A report showing how the range and the clinic journey connect."],
+              ].map(([number, title, copy]) => (
+                <div key={number} className="flex gap-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-display text-sm text-[#8ED8C7]">
+                    {number}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <p className="mt-1 text-xs leading-5 text-white/55">{copy}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 border-t border-white/10 pt-6">
+              <p className="text-xs leading-6 text-white/55">
+                The output is cosmetic and non-diagnostic. It is not medical
+                advice or a prediction of treatment results.
+              </p>
+            </div>
+          </aside>
+
+          <div className="order-1 lg:order-2">
+            {busy ? (
+              <div className="glass min-h-[470px] overflow-hidden p-8 text-center sm:p-12">
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-serum/10">
+                  <div className="h-12 w-12 animate-spin rounded-full border-2 border-serum/20 border-t-serum" />
+                </div>
+                <p className="eyebrow mt-9">Building your clinical preview</p>
+                <h3 className="display mx-auto mt-4 max-w-md text-4xl text-plum sm:text-5xl">
+                  Analysing the photo and creating the AI comparison.
+                </h3>
+                <p className="mx-auto mt-5 max-w-sm text-sm leading-7 text-plum-soft">
+                  This can take around one minute. Keep this page open while the
+                  analysis and illustrative after image are prepared.
+                </p>
+              </div>
+            ) : (
+              <SelfieCapture onCaptured={(url) => runLive(url)} />
+            )}
+            {liveError && (
+              <p className="mt-4 rounded-2xl bg-red-50 p-4 text-center text-sm text-red-700">
+                {liveError}
+              </p>
+            )}
+            {!busy && (
+              <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLiveError(null);
+                    setUploading(false);
+                  }}
+                  className="text-xs font-medium text-plum-mute underline underline-offset-4 hover:text-plum"
+                >
+                  View the real VELURIA case study instead
+                </button>
+                <span className="hidden text-plum-mute/40 sm:inline">·</span>
+                <a
+                  href={webinarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-serum underline underline-offset-4"
+                >
+                  Reserve webinar place
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full animate-fade-scale">
       <div className="mb-7 text-center">
-        <p className="eyebrow">Step 02 — Your Branded Demo</p>
+        <p className="eyebrow">Step 02 — Your Branded Preview</p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-          This is what <span className="serum-text italic">{brand.clinicName}</span> patients see
+          A patient journey, branded for{" "}
+          <span className="serum-text italic">{brand.clinicName}</span>
         </h2>
         <p className="mx-auto mt-3 max-w-md text-sm text-plum-soft">
-          The exact AI skin-scan that turns an Instagram scroll into a booked
-          Veluria consultation — drag the slider to reveal the difference.
+          Explore the cosmetic AI visualisation, then see how the experience can
+          lead into a qualified clinic conversation.
         </p>
+        <button
+          type="button"
+          onClick={onEditBrand}
+          className="mt-3 text-xs text-plum-mute underline underline-offset-4 transition hover:text-plum"
+        >
+          Change clinic branding
+        </button>
       </div>
 
-      <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[minmax(280px,340px)_1fr] md:items-start">
-        {/* ---- Phone frame, stamped with THEIR brand ---- */}
-        <div className="mx-auto w-full max-w-[340px]">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(360px,520px)_1fr] lg:items-start">
+        {/* ---- Hero visualisation, stamped with THEIR brand ---- */}
+        <div className="mx-auto w-full max-w-[520px]">
           <div className="rounded-[2.4rem] border-[6px] border-plum/90 bg-plum/90 p-2 shadow-dew">
             <div className="overflow-hidden rounded-[1.9rem] bg-white">
               {/* Brand bar */}
@@ -161,7 +257,18 @@ export default function DemoPreview({
 
               {/* Before/after */}
               <div className="p-3">
-                <BeforeAfterSlider before={view.before} after={view.after} />
+                <BeforeAfterSlider
+                  key={live?.live ? "live-ai" : "veluria-case-study"}
+                  before={view.before}
+                  after={view.after}
+                  beforeAlt={live?.live ? "Uploaded photo" : "Before the VELURIA course"}
+                  afterAlt={
+                    live?.live
+                      ? "Illustrative AI VELURIA visualisation"
+                      : "Real VELURIA result"
+                  }
+                  afterLabel={live?.live ? "AI preview" : "After VELURIA"}
+                />
               </div>
 
               {/* Mini result card */}
@@ -170,10 +277,13 @@ export default function DemoPreview({
                 <div className="space-y-2">
                   {view.metrics.map((m) => (
                     <div key={m.label}>
-                      <div className="flex items-baseline justify-between text-[0.7rem]">
+                      <div className="flex items-center justify-between gap-3 text-[0.7rem]">
                         <span className="text-plum-soft">{m.label}</span>
-                        <span className="font-semibold" style={{ color: accent }}>
-                          +{m.uplift}%
+                        <span
+                          className="rounded-full px-2 py-1 text-[0.5rem] font-semibold uppercase tracking-[0.12em]"
+                          style={{ color: accent, background: `${accent}12` }}
+                        >
+                          Visual focus
                         </span>
                       </div>
                       <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-plum/10">
@@ -193,6 +303,11 @@ export default function DemoPreview({
                 >
                   Book with {brand.clinicName}
                 </button>
+                <p className="text-[0.52rem] leading-relaxed text-plum-mute">
+                  {live?.live
+                    ? "AI-generated cosmetic visualisation. Not a diagnosis, treatment prediction or guarantee."
+                    : "Real VELURIA case study from Aesthetics Central. Individual results vary."}
+                </p>
               </div>
             </div>
           </div>
@@ -229,62 +344,57 @@ export default function DemoPreview({
 
           <div className="glass-soft space-y-2 p-5">
             <p className="text-[0.65rem] uppercase tracking-[0.18em] text-serum">
-              Veluria scope, honestly
+              A responsible patient conversation
             </p>
             <p className="text-sm leading-relaxed text-plum-soft">{view.veluriaNote}</p>
           </div>
 
-          {/* Optional live path */}
-          {!uploading ? (
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setLiveError(null);
+                setUploading(true);
+              }}
+              className="btn-ghost !px-6 !py-3 !text-[0.65rem]"
+            >
+              {live ? "Try another real photo" : "Try the live AI instead"}
+            </button>
+            {live && (
               <button
                 type="button"
-                onClick={() => {
-                  setLiveError(null);
-                  setUploading(true);
-                }}
-                className="btn-ghost !px-6 !py-3 !text-[0.65rem]"
+                onClick={() => setLive(null)}
+                className="text-xs text-plum-mute underline underline-offset-2 hover:text-plum"
               >
-                {live ? "Try another photo" : "Try it on a real photo"}
+                View the VELURIA case study
               </button>
-              {live && (
-                <button
-                  type="button"
-                  onClick={() => setLive(null)}
-                  className="text-xs text-plum-mute underline underline-offset-2 hover:text-plum"
-                >
-                  back to samples
-                </button>
-              )}
-              <span className="text-[0.65rem] uppercase tracking-[0.14em] text-plum-mute">
-                {live?.live ? "Live AI result" : "Optional · live AI"}
-              </span>
-            </div>
-          ) : busy ? (
-            <div className="glass-soft p-6 text-center">
-              <p className="text-sm text-plum-soft">Running the live skin-scan…</p>
-              <p className="mt-1 text-[0.65rem] uppercase tracking-[0.14em] text-plum-mute">
-                20–40 seconds · same engine your patients use
+            )}
+            <span className="text-[0.65rem] uppercase tracking-[0.14em] text-plum-mute">
+              {live?.live ? "Your live AI result" : "Real VELURIA case study"}
+            </span>
+          </div>
+
+          <div className="space-y-3 border-t border-black/[0.07] pt-6">
+            <div className="rounded-2xl bg-[#EAF6F2] p-4">
+              <p className="text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-serum">
+                Next: your clinic growth report
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-plum-soft">
+                Compare product-only marketing with the VELURIA + AI patient
+                journey behind this preview.
               </p>
             </div>
-          ) : (
-            <div>
-              <SelfieCapture onCaptured={(url) => runLive(url)} />
-              <button
-                type="button"
-                onClick={() => setUploading(false)}
-                className="mt-3 text-xs text-plum-mute underline underline-offset-2 hover:text-plum"
-              >
-                cancel
-              </button>
-            </div>
-          )}
-          {liveError && <p className="text-sm text-red-600">{liveError}</p>}
-
-          <div className="pt-2">
-            <button onClick={onContinue} className="btn-serum">
-              What could this do for my clinic? →
+            <button onClick={onContinue} className="btn-serum w-full">
+              See the clinic growth report →
             </button>
+            <a
+              href={webinarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost w-full"
+            >
+              Reserve webinar place now
+            </a>
           </div>
         </div>
       </div>
