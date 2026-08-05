@@ -294,6 +294,13 @@ export default function AnalysisReport({
             </p>
           </div>
         )}
+        {after && (
+          <p className="mt-3 text-center text-xs italic text-plum-mute">
+            Illustrative AI simulation of a possible appearance 4–6 weeks after
+            a completed clinician-planned course. Individual results vary and
+            are not guaranteed. Not medical advice or clinical evidence.
+          </p>
+        )}
         {/*
           Name the plan against the image. The preview used to be captioned only
           with a disclaimer, so a client saw a better-looking face and was never

@@ -37,7 +37,7 @@ export async function createAfterPreview(
     ]),
   ];
   const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 255_000);
+  const timeout = window.setTimeout(() => controller.abort(), 125_000);
 
   try {
     const response = await fetch("/api/transform", {
@@ -53,6 +53,9 @@ export async function createAfterPreview(
           area: annotation.area,
           concern: annotation.concern,
           scope: annotation.scope,
+          x: annotation.x,
+          y: annotation.y,
+          severity: annotation.severity,
         })),
         hero: hero ? { area: hero.area, concern: hero.concern } : null,
       }),

@@ -7,6 +7,7 @@ import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConversionReport from "@/components/ConversionReport";
 import DemoPreview from "@/components/DemoPreview";
 import RoiCalculator from "@/components/RoiCalculator";
+import VeluriaProfessionalEducation from "@/components/VeluriaProfessionalEducation";
 import { makeBrand, type BrandConfig } from "@/lib/brand";
 import type { ClinicLeadPayload } from "@/lib/types";
 
@@ -404,6 +405,10 @@ function LandingPage({
             View available times <ArrowIcon />
           </a>
         </div>
+      </section>
+
+      <section className="relative z-10 mx-auto max-w-6xl px-5 py-20 sm:px-8">
+        <VeluriaProfessionalEducation />
       </section>
 
       <section className="relative z-10 mx-auto max-w-6xl px-5 py-24 sm:px-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import type { BrandConfig } from "@/lib/brand";
+import VeluriaProfessionalEducation from "./VeluriaProfessionalEducation";
 
 function Check({
   muted = false,
@@ -130,6 +131,10 @@ export default function ConversionReport({
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="mx-auto mt-10 max-w-5xl">
+        <VeluriaProfessionalEducation report />
       </div>
 
       <div className="mx-auto mt-14 grid max-w-5xl gap-5 lg:grid-cols-2">
