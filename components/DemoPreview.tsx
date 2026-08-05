@@ -16,7 +16,10 @@ interface DemoView {
   metrics: { label: string; score: number }[];
   veluriaNote: string;
   live?: boolean;
+  afterAvailable?: boolean;
 }
+
+type LivePhase = "analysing" | "generating";
 
 function sampleToView(s: DemoSample): DemoView {
   return {
@@ -25,6 +28,7 @@ function sampleToView(s: DemoSample): DemoView {
     summary: s.summary,
     metrics: s.metrics,
     veluriaNote: s.veluriaNote,
+    afterAvailable: true,
   };
 }
 
@@ -43,6 +47,7 @@ export default function DemoPreview({
   const [live, setLive] = useState<DemoView | null>(null);
   const [uploading, setUploading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [livePhase, setLivePhase] = useState<LivePhase>("analysing");
   const [liveError, setLiveError] = useState<string | null>(null);
 
   // Mid-funnel signal → optimisation + "demo viewers who didn't book" retargeting.
@@ -57,6 +62,7 @@ export default function DemoPreview({
 
   const runLive = async (image: string) => {
     setBusy(true);
+    setLivePhase("analysing");
     setLiveError(null);
     try {
       const ar = await fetch("/api/analyze", {
@@ -68,8 +74,28 @@ export default function DemoPreview({
       if (!ar.ok) throw new Error(ad.error ?? "analyze_failed");
       const analysis = ad.analysis as SkinAnalysis;
 
+      setLivePhase("generating");
+
       const after = await createAfterPreview(image, analysis);
-      if (!after) throw new Error("transform_failed");
+      if (!after) {
+        setLive({
+          before: image,
+          after: image,
+          summary: analysis.summary,
+          metrics: (analysis.categories ?? []).slice(0, 4).map((c) => ({
+            label: c.label,
+            score: c.score,
+          })),
+          veluriaNote: analysis.veluriaRecommendation,
+          live: true,
+          afterAvailable: false,
+        });
+        setUploading(false);
+        setLiveError(
+          "Your skin analysis completed successfully, but the illustrative after image did not finish. You can still review the analysis below or try another photo.",
+        );
+        return;
+      }
 
       setLive({
         before: image,
@@ -81,14 +107,19 @@ export default function DemoPreview({
         })),
         veluriaNote: analysis.veluriaRecommendation,
         live: true,
+        afterAvailable: true,
       });
       setUploading(false);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
       setLiveError(
-        msg === "no_face"
+        msg.includes("clear face") || msg === "no_face"
           ? "We couldn't detect a face in that photo. Try another, well-lit and head-on."
-          : "That live run didn't complete. Please try again, or view the real VELURIA case study instead.",
+          : msg.includes("Too many live previews")
+            ? "This preview has reached its short-term usage limit. Please wait a few minutes and try again."
+            : msg.includes("configured")
+              ? "The live analysis service is temporarily unavailable. Please try again shortly."
+              : "The skin analysis did not complete. Please try a clear JPG, PNG or WebP photo with the face looking straight at the camera.",
       );
     } finally {
       setBusy(false);
@@ -158,14 +189,38 @@ export default function DemoPreview({
                 <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-serum/10">
                   <div className="h-12 w-12 animate-spin rounded-full border-2 border-serum/20 border-t-serum" />
                 </div>
-                <p className="eyebrow mt-9">Building your clinical preview</p>
+                <p className="eyebrow mt-9">
+                  {livePhase === "analysing"
+                    ? "Analysing visible skin quality"
+                    : "Skin analysis complete"}
+                </p>
                 <h3 className="display mx-auto mt-4 max-w-md text-4xl text-plum sm:text-5xl">
-                  Analysing the photo and creating the AI comparison.
+                  {livePhase === "analysing"
+                    ? "Reading the photo and building the skin analysis."
+                    : "Now creating the illustrative before-and-after."}
                 </h3>
                 <p className="mx-auto mt-5 max-w-sm text-sm leading-7 text-plum-soft">
-                  This can take around one minute. Keep this page open while the
-                  analysis and illustrative after image are prepared.
+                  {livePhase === "analysing"
+                    ? "This first step normally completes within a few moments."
+                    : "Your analysis is safe. The visual image step can take around one minute, so please keep this page open."}
                 </p>
+                <div className="mx-auto mt-7 flex max-w-sm items-center justify-center gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.13em]">
+                  <span className="rounded-full bg-serum px-3 py-2 text-white">
+                    Photo received
+                  </span>
+                  <span
+                    className={`rounded-full px-3 py-2 ${
+                      livePhase === "generating"
+                        ? "bg-serum text-white"
+                        : "bg-serum/10 text-serum"
+                    }`}
+                  >
+                    Analysis complete
+                  </span>
+                  <span className="rounded-full bg-serum/10 px-3 py-2 text-serum">
+                    AI comparison
+                  </span>
+                </div>
               </div>
             ) : (
               <SelfieCapture onCaptured={(url) => runLive(url)} />
@@ -257,18 +312,32 @@ export default function DemoPreview({
 
               {/* Before/after */}
               <div className="p-3">
-                <BeforeAfterSlider
-                  key={live?.live ? "live-ai" : "veluria-case-study"}
-                  before={view.before}
-                  after={view.after}
-                  beforeAlt={live?.live ? "Uploaded photo" : "Before the VELURIA course"}
-                  afterAlt={
-                    live?.live
-                      ? "Illustrative AI VELURIA visualisation"
-                      : "Real VELURIA result"
-                  }
-                  afterLabel={live?.live ? "AI preview" : "After VELURIA"}
-                />
+                {view.afterAvailable === false ? (
+                  <div className="relative overflow-hidden rounded-[1.45rem] bg-plum/5">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={view.before}
+                      alt="Uploaded photo used for the completed skin analysis"
+                      className="aspect-square w-full object-cover"
+                    />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-serum px-3 py-2 text-[0.55rem] font-semibold uppercase tracking-[0.13em] text-white">
+                      Skin analysis complete
+                    </span>
+                  </div>
+                ) : (
+                  <BeforeAfterSlider
+                    key={live?.live ? "live-ai" : "veluria-case-study"}
+                    before={view.before}
+                    after={view.after}
+                    beforeAlt={live?.live ? "Uploaded photo" : "Before the VELURIA course"}
+                    afterAlt={
+                      live?.live
+                        ? "Illustrative AI VELURIA visualisation"
+                        : "Real VELURIA result"
+                    }
+                    afterLabel={live?.live ? "AI preview" : "After VELURIA"}
+                  />
+                )}
               </div>
 
               {/* Mini result card */}
@@ -305,7 +374,9 @@ export default function DemoPreview({
                 </button>
                 <p className="text-[0.52rem] leading-relaxed text-plum-mute">
                   {live?.live
-                    ? "AI-generated cosmetic visualisation. Not a diagnosis, treatment prediction or guarantee."
+                    ? view.afterAvailable === false
+                      ? "The cosmetic skin analysis completed. No after image is being presented for this run."
+                      : "AI-generated cosmetic visualisation. Not a diagnosis, treatment prediction or guarantee."
                     : "Real VELURIA case study from Aesthetics Central. Individual results vary."}
                 </p>
               </div>
