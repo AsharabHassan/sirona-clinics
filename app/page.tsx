@@ -70,11 +70,18 @@ export default function Home() {
   const [lead, setLead] = useState<ClinicLeadPayload | null>(null);
 
   useEffect(() => {
-    const clinic = new URLSearchParams(window.location.search)
-      .get("clinic")
-      ?.trim()
-      .slice(0, 80);
+    const params = new URLSearchParams(window.location.search);
+    const clinic = params.get("clinic")?.trim().slice(0, 80);
     if (clinic) setBrand(makeBrand({ clinicName: clinic }));
+
+    const requestedView = params.get("view");
+    if (
+      requestedView === "demo" ||
+      requestedView === "report" ||
+      requestedView === "roi"
+    ) {
+      setStep(requestedView);
+    }
   }, []);
 
   const isPersonalised = brand.clinicName !== "Your Clinic";

@@ -28,6 +28,20 @@ Do not place a recipient's name, email address or other personal data in the
 URL. Without the parameter, visitors can enter their own clinic name before
 opening the preview.
 
+Follow-up messages can deep-link to a specific proof stage while retaining the
+clinic personalisation:
+
+```text
+# Real VELURIA result and AI before-and-after experience
+https://your-domain.example/?clinic=Harley%20Street%20Skin%20Studio&view=demo
+
+# Sample clinic-growth report
+https://your-domain.example/?clinic=Harley%20Street%20Skin%20Studio&view=report
+
+# Transparent clinic scenario planner
+https://your-domain.example/?clinic=Harley%20Street%20Skin%20Studio&view=roi
+```
+
 ## Local development
 
 ```bash
