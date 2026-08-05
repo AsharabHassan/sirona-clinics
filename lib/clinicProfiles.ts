@@ -7,9 +7,9 @@ import profileData from "@/data/clinic-profiles.json";
  * Only approved, source-backed profiles belong here. Prospect research is kept
  * out of the client bundle and an unknown slug always resolves to a 404.
  *
- * The demonstration record contains no claims about a real clinic. It exists so
- * the complete personalised route can be tested before prospect profiles are
- * reviewed and approved.
+ * Demonstration records are preview-only and never qualify for outreach. A real
+ * clinic may have a source-backed demonstration profile so the user can review
+ * its personalised funnel before recipient and corporate approval is complete.
  */
 const CLINIC_PROFILES = profileData as ClinicProfile[];
 

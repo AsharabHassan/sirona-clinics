@@ -31,5 +31,48 @@
     "productFit": "The profile can match Silk Skin, Ultra Lift or Pearl Tone to the visible skin-quality conversations already supported by the clinic's verified public offering.",
     "pipelineOpportunity": "The clinic can show real product proof, let prospective patients explore the cosmetic AI experience and follow genuine interest into a structured consultation pathway.",
     "consultationRationale": "Use the free clinic growth map to review product fit, the proposed patient journey and one practical launch step."
+  },
+  {
+    "id": "profile_preview_clinica_london",
+    "slug": "clinica-london",
+    "clinicName": "Clinica London",
+    "city": "London",
+    "website": "https://clinicalondon.co.uk/",
+    "segment": "surgical-aesthetics",
+    "legalEntityType": "unknown",
+    "status": "demo",
+    "verifiedAt": "2026-08-06",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Founder-led oculoplastic practice",
+        "detail": "Clinica London identifies Jane Olver as its founder and Medical Director, with specialist work spanning oculoplastic surgery and aesthetic facial rejuvenation.",
+        "sourceUrl": "https://clinicalondon.co.uk/consultants/jane-olver/"
+      },
+      {
+        "label": "Established non-surgical rejuvenation pathway",
+        "detail": "The clinic publicly lists facial fillers, Profhilo, Sculptra and Ultherapy alongside its surgical and eye-care services.",
+        "sourceUrl": "https://clinicalondon.co.uk/consultants/jane-olver/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Jane Olver consultant profile",
+        "url": "https://clinicalondon.co.uk/consultants/jane-olver/",
+        "verifiedAt": "2026-08-06"
+      },
+      {
+        "label": "Clinica London official website",
+        "url": "https://clinicalondon.co.uk/",
+        "verifiedAt": "2026-08-06"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Clinica London",
+    "heroHeadline": "Connect facial rejuvenation expertise with a clearer skin-quality journey.",
+    "heroIntro": "this private preview explores how an enzyme-led professional range, responsible visual engagement and structured consultation follow-up could complement the clinic's existing surgical and non-surgical facial rejuvenation pathway.",
+    "productFit": "VELURIA Silk Skin could support a conversation around visible surface quality, smoothness and radiance, while Ultra Lift could support a separate firmness and elasticity pathway. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Clinica London can introduce the range through verified product education, show a real VELURIA result, let prospective patients explore the cosmetic AI experience and move genuine interest into a structured consultation journey.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could complement Clinica London's existing facial rejuvenation services, staff education and patient journey."
   }
 ]
