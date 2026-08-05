@@ -16,6 +16,7 @@ build
 .env.test.local
 .env.production.local
 .env*.local
+outreach-private/
 
 # logs
 dev.log

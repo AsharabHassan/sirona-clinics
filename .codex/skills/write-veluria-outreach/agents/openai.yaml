@@ -1,0 +1,4 @@
+interface:
+  display_name: "VELURIA Outreach"
+  short_description: "Personalised, polished VELURIA outreach copy"
+  default_prompt: "Use $write-veluria-outreach to draft and quality-check a personalised clinic outreach message."

@@ -33,7 +33,7 @@ export function makeBrand(partial: Partial<BrandConfig> = {}): BrandConfig {
   };
 }
 
-/** Readable initials for a logo fallback chip (e.g. "O.D. Aesthetics" → "OA"). */
+/** Readable initials for a clinic-logo fallback chip (e.g. "Example Clinic" -> "EC"). */
 export function brandInitials(name: string): string {
   const words = name.trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) return "YC";

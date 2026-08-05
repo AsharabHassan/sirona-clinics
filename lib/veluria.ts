@@ -9,9 +9,11 @@
  * in with, so the report dismissed them ("beyond a skin booster's scope") and the
  * simulated result showed no change.
  *
- * Veluria is in fact PB Serum's BIOREMODELING line (Proteos Biotech, Spain;
- * Class 3 medical device, professional use only). Every product is built on
- * recombinant Collagenase G & H, which degrades disorganised collagen and drives
+ * VELURIA is PBSerum's professional cosmetic BIOREMODELLING line. Every skin
+ * product is built around recombinant Collagenase G & H and selected cosmetic
+ * actives. Keep all public copy at the cosmetic appearance-claim level. The
+ * formulation is described by the manufacturer as supporting visible skin
+ * quality rather than as diagnosing or treating disease.
  * new collagen synthesis. Three of the four are for skin, and each targets a
  * DIFFERENT concern — including the ones we were refusing:
  *

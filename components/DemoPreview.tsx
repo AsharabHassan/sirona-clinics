@@ -194,7 +194,7 @@ export default function DemoPreview({
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-serum underline underline-offset-4"
                 >
-                  Book a free consultation
+                  Get my free clinic growth map
                 </a>
               </div>
             )}
@@ -393,7 +393,7 @@ export default function DemoPreview({
               rel="noopener noreferrer"
               className="btn-ghost w-full"
             >
-              Book a free consultation
+              Get my free clinic growth map
             </a>
           </div>
         </div>

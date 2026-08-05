@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "outreach:init": "node tools/outreach-loop.mjs init",
+    "outreach:status": "node tools/outreach-loop.mjs status",
+    "outreach:validate": "node tools/outreach-loop.mjs validate",
+    "outreach:learn": "node tools/outreach-loop.mjs learn",
+    "test": "node --test tools/outreach-loop.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

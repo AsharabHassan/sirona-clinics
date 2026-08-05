@@ -2,16 +2,16 @@ import { deliverReportToGhl } from "@/lib/ghl-report";
 
 export const runtime = "nodejs";
 
-const CLINIC_NAME = "O.D. Aesthetics";
-const CLINIC_BYLINE = "Swindon";
+const CLINIC_NAME = "Sirona Aesthetics";
+const CLINIC_BYLINE = "United Kingdom";
 // The report email's "Book your consultation" link points at the same free
 // online consultation calendar as the in-app CTA (falls back to the website).
 const BOOKING_URL =
   process.env.NEXT_PUBLIC_CALENDAR_URL ??
   process.env.NEXT_PUBLIC_BOOKING_URL ??
-  "https://odaesthetics-swindon.com/";
+  "https://sironaaesthetics.co.uk/";
 const WEBSITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://odaesthetics-swindon.com/";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://sironaaesthetics.co.uk/";
 
 interface ReportRequest {
   lead?: {
@@ -60,7 +60,7 @@ export async function POST(request: Request): Promise<Response> {
       <p style="color:#5c5852">— <a href="${WEBSITE_URL}" style="color:#5c5852">${CLINIC_NAME}</a>, ${CLINIC_BYLINE}</p>
     </div>`;
 
-  const noteBody = "📄 Skin analysis report (O.D. Aesthetics): {url}";
+  const noteBody = "Skin analysis report (Sirona Aesthetics): {url}";
 
   const result = await deliverReportToGhl({
     firstName: first,

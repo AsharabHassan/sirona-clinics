@@ -197,12 +197,12 @@ async function buildAnalysisPdf(opts: AnalysisPdfOptions) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
   doc.setTextColor(33, 33, 33);
-  doc.text("O.D. AESTHETICS", margin, y);
+  doc.text("SIRONA AESTHETICS", margin, y);
   y += 16;
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.setTextColor(154, 123, 31);
-  doc.text("AI Skin Consultation · odaesthetics-swindon.com", margin, y);
+  doc.text("AI Skin Consultation · sironaaesthetics.co.uk", margin, y);
   y += 16;
   doc.setDrawColor(180, 180, 180);
   doc.line(margin, y, pageW - margin, y);
@@ -352,7 +352,7 @@ async function buildAnalysisPdf(opts: AnalysisPdfOptions) {
     y += 4;
   }
 
-  heading("How O.D. Aesthetics can help");
+  heading("How a qualified clinic can help");
   body(analysis.veluriaRecommendation);
 
   // Repeat the prominent disclaimer at the end of the report.

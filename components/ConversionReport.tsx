@@ -1,6 +1,7 @@
 "use client";
 
 import type { BrandConfig } from "@/lib/brand";
+import { CAMPAIGN_PRODUCT_LABELS, type ClinicProfile } from "@/lib/campaign";
 import VeluriaProfessionalEducation from "./VeluriaProfessionalEducation";
 
 function Check({
@@ -36,11 +37,13 @@ function Check({
 
 export default function ConversionReport({
   brand,
+  profile,
   consultationUrl,
   onExplore,
   onPrivateDemo,
 }: {
   brand: BrandConfig;
+  profile?: ClinicProfile;
   consultationUrl: string;
   onExplore: () => void;
   onPrivateDemo: () => void;
@@ -61,6 +64,10 @@ export default function ConversionReport({
     "Consent and enquiry details can move into a structured CRM journey.",
     "Follow-up workflows can keep the conversation moving while the clinic stays in control.",
   ];
+
+  const relevantProducts = profile?.relevantProducts.map(
+    (product) => CAMPAIGN_PRODUCT_LABELS[product],
+  );
 
   const journey = [
     {
@@ -132,6 +139,30 @@ export default function ConversionReport({
           ))}
         </div>
       </div>
+
+      {profile && (
+        <div className="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-2">
+          <article className="rounded-[2rem] border border-black/[0.06] bg-white/75 p-7">
+            <p className="eyebrow">Prepared for {profile.clinicName}</p>
+            <h3 className="mt-3 text-2xl font-medium text-plum">
+              The relevant product conversation
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-plum-soft">{profile.productFit}</p>
+            <p className="mt-4 text-xs leading-6 text-plum-mute">
+              Selected range: {relevantProducts?.join(", ")}.
+            </p>
+          </article>
+          <article className="rounded-[2rem] border border-serum/15 bg-[#EAF6F2] p-7">
+            <p className="eyebrow">Clinic-growth opportunity</p>
+            <h3 className="mt-3 text-2xl font-medium text-plum">
+              From interest to a structured next step
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-plum-soft">
+              {profile.pipelineOpportunity}
+            </p>
+          </article>
+        </div>
+      )}
 
       <div className="mx-auto mt-10 max-w-5xl">
         <VeluriaProfessionalEducation report />
@@ -291,7 +322,7 @@ export default function ConversionReport({
         <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">
-              Free 20-minute online clinic consultation
+              Free 20-minute VELURIA Clinic Growth Map
             </p>
             <h3 className="display mt-4 text-4xl text-white sm:text-5xl">
               See how VELURIA and the patient pipeline could fit your clinic.

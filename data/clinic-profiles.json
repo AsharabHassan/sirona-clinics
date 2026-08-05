@@ -1,0 +1,35 @@
+[
+  {
+    "id": "profile_demo_001",
+    "slug": "example-skin-clinic",
+    "clinicName": "Example Skin Clinic",
+    "city": "London",
+    "website": "https://demo.sironaaesthetics.agency/",
+    "segment": "skin-rejuvenation",
+    "legalEntityType": "unknown",
+    "status": "demo",
+    "verifiedAt": "2026-08-06",
+    "brand": { "accent": "#0E8C77" },
+    "signals": [
+      {
+        "label": "Demonstration profile",
+        "detail": "This is an internal QA profile and does not describe a real clinic.",
+        "sourceUrl": "https://demo.sironaaesthetics.agency/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Sirona VELURIA demonstration",
+        "url": "https://demo.sironaaesthetics.agency/",
+        "verifiedAt": "2026-08-06"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A clinic-specific VELURIA growth idea",
+    "heroHeadline": "A clearer VELURIA patient journey for your clinic.",
+    "heroIntro": "this demonstration shows how a verified clinic signal can shape the VELURIA product story, AI experience and consultation pathway without inventing services or making outcome promises.",
+    "productFit": "The profile can match Silk Skin, Ultra Lift or Pearl Tone to the visible skin-quality conversations already supported by the clinic's verified public offering.",
+    "pipelineOpportunity": "The clinic can show real product proof, let prospective patients explore the cosmetic AI experience and follow genuine interest into a structured consultation pathway.",
+    "consultationRationale": "Use the free clinic growth map to review product fit, the proposed patient journey and one practical launch step."
+  }
+]

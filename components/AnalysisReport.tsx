@@ -6,7 +6,6 @@ import type { SkinAnalysis } from "@/lib/types";
 import AnnotatedFace from "./AnnotatedFace";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import AfterCallouts from "./AfterCallouts";
-import ReviewsSlider from "./ReviewsSlider";
 import VeluriaRejuvenation from "./VeluriaRejuvenation";
 import { expectedImprovement } from "@/lib/expectations";
 import { planFor } from "@/lib/veluria";
@@ -18,9 +17,9 @@ import {
 } from "@/lib/download";
 
 const BOOKING_URL =
-  process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://odaesthetics-swindon.com/";
+  process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://sironaaesthetics.co.uk/";
 
-// O.D. Aesthetics booking calendar for the free online phone consultation.
+// Sirona's booking calendar for the free VELURIA Clinic Growth Map.
 const CALENDAR_URL =
   process.env.NEXT_PUBLIC_CALENDAR_URL ??
   "https://api.leadconnectorhq.com/widget/booking/EPirJq269h39RT81x9X1";
@@ -236,7 +235,7 @@ export default function AnalysisReport({
   const handleDownloadBeforeAfter = async () => {
     if (!after) return;
     const composite = await composeBeforeAfter(before, after);
-    downloadDataUrl(composite, "od-aesthetics-before-after.png");
+    downloadDataUrl(composite, "veluria-before-after.png");
   };
 
   return (
@@ -340,7 +339,7 @@ export default function AnalysisReport({
         <div className="mt-6 flex flex-col items-center gap-2">
           <PhoneConsultButton />
           <p className="text-xs text-plum-mute">
-            Discuss your preview with Olivia — no cost, no obligation.
+            Discuss your preview with a qualified clinic professional, with no obligation.
           </p>
         </div>
       </section>
@@ -365,7 +364,7 @@ export default function AnalysisReport({
           <p className="mt-4 text-center text-xs italic text-plum-mute">
             Markers show areas identified for treatment, drawn on your simulated
             result. AI-estimated for guidance only — not a clinical diagnosis.
-            A consultation with Olivia confirms the right plan for you.
+            A clinician consultation confirms the appropriate plan for you.
           </p>
         </section>
       )}
@@ -414,21 +413,12 @@ export default function AnalysisReport({
         </div>
       </section>
 
-      {/* Veluria rejuvenation — how Veluria (at O.D. Aesthetics) helps this patient */}
+      {/* VELURIA education for the clinic-branded patient journey. */}
       <section className="animate-fade-scale" style={{ animationDelay: "200ms" }}>
         <VeluriaRejuvenation
           categories={analysis.categories}
           cta={<PhoneConsultButton />}
         />
-      </section>
-
-      {/* Patient reviews */}
-      <section className="animate-fade-scale" style={{ animationDelay: "210ms" }}>
-        <div className="mb-6 text-center">
-          <p className="eyebrow">Loved by patients</p>
-          <h3 className="display mt-2 text-3xl text-plum">What people say about O.D. Aesthetics</h3>
-        </div>
-        <ReviewsSlider />
       </section>
 
       {/* Save / open your analysis */}
