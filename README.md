@@ -11,7 +11,7 @@ combines:
 - a clinic growth report comparing product-only promotion with the connected
   VELURIA + AI patient journey;
 - a transparent clinic scenario planner;
-- repeated registration paths to the 3 August 2026 VELURIA webinar; and
+- repeated booking paths to a free 20-minute online clinic consultation; and
 - a secondary private-walkthrough lead form connected to GoHighLevel.
 
 Built with Next.js 15, React 19, TypeScript and Tailwind CSS.
@@ -50,10 +50,11 @@ See `.env.local.example` for the complete template.
 | `ANTHROPIC_API_KEY` | Cosmetic visible-skin analysis for the optional live preview. |
 | `OPENAI_API_KEY` | AI-generated visualisation for the optional live preview. |
 | `GHL_WEBHOOK_URL` | Sirona GoHighLevel webhook used by the private-walkthrough form. |
-| `NEXT_PUBLIC_CALENDAR_URL` | Optional private Sirona walkthrough calendar. |
+| `NEXT_PUBLIC_CALENDAR_URL` | Sirona's free 20-minute online consultation calendar. |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Optional campaign attribution. |
 
-The webinar registration URL is defined in `app/page.tsx`.
+The B2B consultation URL is defined in `app/page.tsx` so the primary CTA cannot
+be redirected by a stale deployment environment value.
 
 ## Production safeguards
 

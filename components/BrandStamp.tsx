@@ -69,7 +69,7 @@ export default function BrandStamp({
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-sm text-plum-soft">
           Add your clinic name, colour and optional logo to preview the patient
-          journey before the webinar.
+          journey before your free consultation.
         </p>
       </div>
 

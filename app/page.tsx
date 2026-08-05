@@ -19,17 +19,8 @@ type Step =
   | "form"
   | "done";
 
-const WEBINAR_URL =
-  "https://link.sironaaesthetics.co.uk/widget/bookings/welcome-to-pbserum-webinar";
-
-const PRIVATE_DEMO_URL =
-  process.env.NEXT_PUBLIC_CALENDAR_URL ?? "https://sironaaesthetics.co.uk/contact";
-
-const EVENT = {
-  date: "Monday 3 August 2026",
-  ukTime: "10:00 AM BST",
-  duration: "One-hour live clinic session",
-};
+const CONSULTATION_URL =
+  "https://link.sironaaesthetics.co.uk/widget/bookings/free-20-mint-online-consultation";
 
 function ArrowIcon() {
   return (
@@ -124,16 +115,16 @@ export default function Home() {
 
           <div className="hidden items-center gap-2 text-xs text-plum-soft md:flex">
             <span className="h-2 w-2 rounded-full bg-serum shadow-[0_0_0_5px_rgba(11,110,92,0.1)]" />
-            Live clinic webinar · 3 August
+            Free 20-minute clinic consultation
           </div>
 
           <a
-            href={WEBINAR_URL}
+            href={CONSULTATION_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-serum !px-5 !py-3 !text-[0.62rem] sm:!px-7"
           >
-            Reserve a place
+            Book a free consultation
           </a>
         </div>
       </header>
@@ -194,7 +185,7 @@ export default function Home() {
             <DemoPreview
               key="demo"
               brand={brand}
-              webinarUrl={WEBINAR_URL}
+              consultationUrl={CONSULTATION_URL}
               onEditBrand={() => goTo("brand")}
               onContinue={() => goTo("report")}
             />
@@ -204,7 +195,7 @@ export default function Home() {
             <ConversionReport
               key="report"
               brand={brand}
-              webinarUrl={WEBINAR_URL}
+              consultationUrl={CONSULTATION_URL}
               onExplore={() => goTo("roi")}
               onPrivateDemo={() => goTo("form")}
             />
@@ -213,7 +204,7 @@ export default function Home() {
           {step === "roi" && (
             <RoiCalculator
               key="roi"
-              webinarUrl={WEBINAR_URL}
+              consultationUrl={CONSULTATION_URL}
               onPrivateDemo={() => goTo("form")}
             />
           )}
@@ -243,26 +234,18 @@ export default function Home() {
                 .
               </h2>
               <p className="mx-auto mt-5 max-w-md leading-relaxed text-plum-soft">
-                Sirona will follow up about a private VELURIA pipeline
-                walkthrough. You can also reserve your place on the 3 August
-                webinar now.
+                Sirona will follow up about your VELURIA clinic-growth
+                walkthrough. You can choose a free 20-minute online consultation
+                now.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
-                  href={WEBINAR_URL}
+                  href={CONSULTATION_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-serum"
                 >
-                  Reserve webinar place <ArrowIcon />
-                </a>
-                <a
-                  href={PRIVATE_DEMO_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-ghost"
-                >
-                  Choose a private slot
+                  Choose my consultation <ArrowIcon />
                 </a>
               </div>
             </section>
@@ -318,12 +301,12 @@ function LandingPage({
                 Launch the AI before &amp; after <ArrowIcon />
               </button>
               <a
-                href={WEBINAR_URL}
+                href={CONSULTATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-ghost"
               >
-                Reserve webinar place
+                Book a free consultation
               </a>
             </div>
 
@@ -395,23 +378,23 @@ function LandingPage({
       <section className="relative z-10 border-y border-serum/10 bg-[#EAF6F2]/75">
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-7 sm:px-8 md:grid-cols-[1fr_auto_auto] md:items-center">
           <div>
-            <p className="eyebrow">Live clinic webinar</p>
+            <p className="eyebrow">Free 20-minute online consultation</p>
             <h2 className="mt-2 text-xl font-medium text-plum">
-              Welcome to PBSerum VELURIA: A Revolution in Microneedling
+              See how VELURIA and the AI patient funnel could fit your clinic
             </h2>
           </div>
           <div className="text-sm leading-6 text-plum-soft md:border-l md:border-serum/15 md:pl-8">
-            <strong className="font-semibold text-plum">{EVENT.date}</strong>
+            <strong className="font-semibold text-plum">Choose a time that suits you</strong>
             <br />
-            {EVENT.ukTime} · {EVENT.duration}
+            Personalised · Online · No obligation
           </div>
           <a
-            href={WEBINAR_URL}
+            href={CONSULTATION_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-serum whitespace-nowrap"
           >
-            Reserve my place <ArrowIcon />
+            View available times <ArrowIcon />
           </a>
         </div>
       </section>
@@ -462,15 +445,15 @@ function LandingPage({
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-24 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#8ED8C7]">
-              See it before the webinar
+              See it before your consultation
             </p>
             <h2 className="display mt-5 text-4xl sm:text-6xl">
               Put your clinic&rsquo;s name on the patient journey.
             </h2>
             <p className="mt-5 max-w-lg leading-7 text-white/65">
               The fastest way to understand the concept is to experience it.
-              Brand the preview, explore the patient view and then join Sirona
-              for the full VELURIA walkthrough.
+              Brand the preview, explore the patient view and then use a short
+              Sirona consultation to review the range, training and funnel.
             </p>
             <button
               type="button"
@@ -502,22 +485,22 @@ function LandingPage({
       </section>
 
       <section className="relative z-10 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8">
-        <p className="eyebrow">Monday 3 August · 10:00 AM BST</p>
+        <p className="eyebrow">Free 20-minute online consultation</p>
         <h2 className="display mt-5 text-5xl text-plum sm:text-7xl">
           See where VELURIA could fit in your clinic.
         </h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-plum-soft">
-          Join the one-hour Sirona session for a practical introduction to the
-          range and a look at the patient-pipeline support behind this preview.
+          Choose a private time with Sirona to discuss the professional range,
+          clinic fit, training and the patient-pipeline support behind this preview.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
-            href={WEBINAR_URL}
+            href={CONSULTATION_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-serum"
           >
-            Reserve webinar place <ArrowIcon />
+            Book my free consultation <ArrowIcon />
           </a>
           <button type="button" onClick={beginPreview} className="btn-ghost">
             Try the clinic preview

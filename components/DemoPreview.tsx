@@ -30,12 +30,12 @@ function sampleToView(s: DemoSample): DemoView {
 
 export default function DemoPreview({
   brand,
-  webinarUrl,
+  consultationUrl,
   onEditBrand,
   onContinue,
 }: {
   brand: BrandConfig;
-  webinarUrl: string;
+  consultationUrl: string;
   onEditBrand: () => void;
   onContinue: () => void;
 }) {
@@ -189,12 +189,12 @@ export default function DemoPreview({
                 </button>
                 <span className="hidden text-plum-mute/40 sm:inline">·</span>
                 <a
-                  href={webinarUrl}
+                  href={consultationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-serum underline underline-offset-4"
                 >
-                  Reserve webinar place
+                  Book a free consultation
                 </a>
               </div>
             )}
@@ -388,12 +388,12 @@ export default function DemoPreview({
               See the clinic growth report →
             </button>
             <a
-              href={webinarUrl}
+              href={consultationUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-ghost w-full"
             >
-              Reserve webinar place now
+              Book a free consultation
             </a>
           </div>
         </div>

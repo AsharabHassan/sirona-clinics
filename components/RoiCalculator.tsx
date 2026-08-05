@@ -20,10 +20,10 @@ const FIELDS: { key: Field; label: string; suffix?: string; money?: boolean }[] 
 ];
 
 export default function RoiCalculator({
-  webinarUrl,
+  consultationUrl,
   onPrivateDemo,
 }: {
-  webinarUrl: string;
+  consultationUrl: string;
   onPrivateDemo: () => void;
 }) {
   const [inputs, setInputs] = useState<RoiInputs>(ROI_DEFAULTS);
@@ -112,12 +112,12 @@ export default function RoiCalculator({
           </p>
 
           <a
-            href={webinarUrl}
+            href={consultationUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-serum w-full"
           >
-            Reserve webinar place →
+            Discuss this scenario →
           </a>
           <button onClick={onPrivateDemo} className="btn-ghost w-full">
             Request a private walkthrough

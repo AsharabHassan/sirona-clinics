@@ -35,12 +35,12 @@ function Check({
 
 export default function ConversionReport({
   brand,
-  webinarUrl,
+  consultationUrl,
   onExplore,
   onPrivateDemo,
 }: {
   brand: BrandConfig;
-  webinarUrl: string;
+  consultationUrl: string;
   onExplore: () => void;
   onPrivateDemo: () => void;
 }) {
@@ -282,28 +282,28 @@ export default function ConversionReport({
         </div>
       </div>
 
-      <div className="report-webinar-card mx-auto mt-16 max-w-5xl overflow-hidden">
+      <div className="report-consultation-card mx-auto mt-16 max-w-5xl overflow-hidden">
         <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">
-              Live clinic webinar · Monday 3 August · 10:00 AM BST
+              Free 20-minute online clinic consultation
             </p>
             <h3 className="display mt-4 text-4xl text-white sm:text-5xl">
-              See the VELURIA range and the complete patient pipeline live.
+              See how VELURIA and the patient pipeline could fit your clinic.
             </h3>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/65">
-              Sirona will introduce the professional range, show where the
-              cosmetic AI experience fits and explain how the CRM and follow-up
-              layers can support a clinic campaign.
+              Use a private call to review the professional range, training,
+              clinic fit and how the AI, CRM and follow-up layers can support
+              your own patient campaign.
             </p>
           </div>
           <a
-            href={webinarUrl}
+            href={consultationUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[#10231F] transition hover:-translate-y-0.5 hover:bg-[#EAF6F2]"
           >
-            Reserve my place →
+            Choose a consultation time →
           </a>
         </div>
         <div className="grid border-t border-white/10 sm:grid-cols-4">

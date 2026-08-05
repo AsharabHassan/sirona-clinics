@@ -21,7 +21,7 @@ const sans = Montserrat({
 export const metadata: Metadata = {
   title: "PBSerum VELURIA for Clinics | Sirona Aesthetics",
   description:
-    "Preview a clinic-branded, non-diagnostic AI skin visualisation and reserve a place on Sirona Aesthetics' live PBSerum VELURIA clinic webinar.",
+    "Preview a clinic-branded AI patient journey and book a free 20-minute VELURIA clinic consultation with Sirona Aesthetics.",
 };
 
 export default function RootLayout({
