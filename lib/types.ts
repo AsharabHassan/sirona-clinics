@@ -11,6 +11,8 @@ export interface LeadPayload {
   phone: string;
   goals: SkinGoal[];
   consent: boolean;
+  /** Clinic whose branded client experience captured this patient lead. */
+  clinicName?: string;
 }
 
 /** B2B lead — an aesthetic clinic owner captured from the demo funnel. */

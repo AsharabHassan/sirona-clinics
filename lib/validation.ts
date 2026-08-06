@@ -21,6 +21,8 @@ export function validateLead(input: unknown):
   const email = typeof o.email === "string" ? o.email.trim() : "";
   const phone = typeof o.phone === "string" ? o.phone.trim() : "";
   const consent = o.consent === true;
+  const clinicName =
+    typeof o.clinicName === "string" ? o.clinicName.trim().slice(0, 120) : "";
   const goals = Array.isArray(o.goals)
     ? (o.goals.filter(
         (g): g is SkinGoal =>
@@ -36,7 +38,17 @@ export function validateLead(input: unknown):
   if (!consent)
     return { ok: false, error: "Please accept the consent statement to continue." };
 
-  return { ok: true, lead: { name, email, phone, goals, consent } };
+  return {
+    ok: true,
+    lead: {
+      name,
+      email,
+      phone,
+      goals,
+      consent,
+      ...(clinicName ? { clinicName } : {}),
+    },
+  };
 }
 
 export function validateClinicLead(input: unknown):

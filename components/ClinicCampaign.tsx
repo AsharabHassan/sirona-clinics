@@ -5,7 +5,7 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import BrandStamp from "@/components/BrandStamp";
 import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConversionReport from "@/components/ConversionReport";
-import DemoPreview from "@/components/DemoPreview";
+import PatientExperience from "@/components/PatientExperience";
 import RoiCalculator from "@/components/RoiCalculator";
 import VeluriaProfessionalEducation from "@/components/VeluriaProfessionalEducation";
 import { makeBrand, type BrandConfig } from "@/lib/brand";
@@ -223,7 +223,7 @@ export default function ClinicCampaign({
           )}
 
           {step === "demo" && (
-            <DemoPreview
+            <PatientExperience
               key="demo"
               brand={brand}
               consultationUrl={consultationUrl}

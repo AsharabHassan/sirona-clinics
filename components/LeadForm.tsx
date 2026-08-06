@@ -15,9 +15,11 @@ const GOALS: SkinGoal[] = [
 
 export default function LeadForm({
   selfie,
+  clinicName,
   onSubmitted,
 }: {
   selfie: string;
+  clinicName: string;
   onSubmitted: (lead: LeadPayload, meta: GhlMeta) => void;
 }) {
   const [name, setName] = useState("");
@@ -36,7 +38,7 @@ export default function LeadForm({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    const lead: LeadPayload = { name, email, phone, goals, consent };
+    const lead: LeadPayload = { name, email, phone, goals, consent, clinicName };
     // Shared id so the browser Pixel + GHL's server (CAPI) event deduplicate.
     const eventId = newEventId();
     const meta = {
@@ -53,7 +55,7 @@ export default function LeadForm({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...lead, meta }),
+        body: JSON.stringify({ leadType: "patient", ...lead, meta }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -160,9 +162,9 @@ export default function LeadForm({
             required
           />
           <span>
-            I consent to Sirona Aesthetics using my photo
-            to generate this analysis and contacting me about treatments. My photo
-            is processed to create the result and is not stored.
+            I consent to {clinicName} using my photo to generate this analysis
+            and contacting me about treatments. My photo is processed to create
+            the result and is not stored.
           </span>
         </label>
 

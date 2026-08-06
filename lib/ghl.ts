@@ -127,9 +127,12 @@ export function buildGhlPayload(lead: LeadPayload, meta: GhlMeta = {}) {
     full_name: lead.name.trim(),
     email: lead.email.trim().toLowerCase(),
     phone: lead.phone.trim(),
+    clinic_name: lead.clinicName?.trim() ?? "",
     skin_goals: lead.goals.join(", "),
     marketing_consent: lead.consent ? "yes" : "no",
-    source: "Skin Analysis Lead Magnet",
+    source: lead.clinicName
+      ? `VELURIA Client Experience — ${lead.clinicName.trim()}`
+      : "VELURIA Client Experience",
     submitted_at: new Date().toISOString(),
 
     // ---- Meta Conversions API mapping (for GHL → Meta dedup) ----

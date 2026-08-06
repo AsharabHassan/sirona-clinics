@@ -25,15 +25,19 @@ const CALENDAR_URL =
   "https://api.leadconnectorhq.com/widget/booking/EPirJq269h39RT81x9X1";
 
 function PhoneConsultButton({
+  href = CALENDAR_URL,
+  label = "Book a Free Consultation",
   variant = "primary",
   className = "",
 }: {
+  href?: string;
+  label?: string;
   variant?: "primary" | "ghost";
   className?: string;
 }) {
   return (
     <a
-      href={CALENDAR_URL}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className={`${variant === "primary" ? "btn-serum" : "btn-ghost"} ${className}`}
@@ -46,7 +50,7 @@ function PhoneConsultButton({
           strokeLinejoin="round"
         />
       </svg>
-      Book a Free Consultation
+      {label}
     </a>
   );
 }
@@ -193,6 +197,8 @@ export default function AnalysisReport({
   mapImage,
   mapPending,
   analysis,
+  clinicName = "Your Clinic",
+  consultationUrl = CALENDAR_URL,
   onRestart,
 }: {
   before: string;
@@ -201,6 +207,8 @@ export default function AnalysisReport({
   mapImage: string | null;
   mapPending: boolean;
   analysis: SkinAnalysis;
+  clinicName?: string;
+  consultationUrl?: string;
   onRestart: () => void;
 }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
@@ -245,6 +253,9 @@ export default function AnalysisReport({
         <h2 className="display mt-4 text-4xl text-plum sm:text-6xl">
           Your skin, <span className="serum-text italic">at its best.</span>
         </h2>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-plum-soft">
+          Your complete client experience, prepared in the branding of {clinicName}.
+        </p>
       </div>
 
       {/* Prominent disclaimer at the TOP of the results, not just the footer. */}
@@ -337,7 +348,7 @@ export default function AnalysisReport({
           and are not guaranteed. Not medical advice.
         </p>
         <div className="mt-6 flex flex-col items-center gap-2">
-          <PhoneConsultButton />
+          <PhoneConsultButton href={consultationUrl} />
           <p className="text-xs text-plum-mute">
             Discuss your preview with a qualified clinic professional, with no obligation.
           </p>
@@ -417,7 +428,7 @@ export default function AnalysisReport({
       <section className="animate-fade-scale" style={{ animationDelay: "200ms" }}>
         <VeluriaRejuvenation
           categories={analysis.categories}
-          cta={<PhoneConsultButton />}
+          cta={<PhoneConsultButton href={consultationUrl} />}
         />
       </section>
 
@@ -463,7 +474,7 @@ export default function AnalysisReport({
           Ready when you are
         </h3>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <PhoneConsultButton />
+          <PhoneConsultButton href={consultationUrl} />
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ghost">
             Explore treatments
           </a>

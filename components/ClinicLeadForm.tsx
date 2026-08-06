@@ -52,7 +52,7 @@ export default function ClinicLeadForm({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...lead, meta }),
+        body: JSON.stringify({ leadType: "clinic", ...lead, meta }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
