@@ -199,6 +199,7 @@ export default function AnalysisReport({
   analysis,
   clinicName = "Your Clinic",
   consultationUrl = CALENDAR_URL,
+  onRetryPreview,
   onRestart,
 }: {
   before: string;
@@ -209,6 +210,7 @@ export default function AnalysisReport({
   analysis: SkinAnalysis;
   clinicName?: string;
   consultationUrl?: string;
+  onRetryPreview?: () => void;
   onRestart: () => void;
 }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
@@ -302,6 +304,17 @@ export default function AnalysisReport({
               We couldn&rsquo;t render your visual preview this time — your full
               analysis is below.
             </p>
+            {onRetryPreview && (
+              <div className="flex justify-center bg-white/70 px-4 pb-5">
+                <button
+                  type="button"
+                  onClick={onRetryPreview}
+                  className="btn-ghost !px-6 !py-3 !text-[0.65rem]"
+                >
+                  Retry visual preview
+                </button>
+              </div>
+            )}
           </div>
         )}
         {after && (

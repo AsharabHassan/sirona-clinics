@@ -163,6 +163,17 @@ export default function PatientExperience({
       .finally(() => setMapPending(false));
   };
 
+  const retryPreview = (image: string, result: SkinAnalysis) => {
+    setAfterImage(null);
+    setAfterPending(true);
+    createAfterPreview(image, result)
+      .then((generated) => {
+        if (generated) setAfterImage(generated);
+      })
+      .catch(() => {})
+      .finally(() => setAfterPending(false));
+  };
+
   return (
     <div className="w-full animate-fade-scale">
       <BrandedHeader brand={brand} />
@@ -253,6 +264,7 @@ export default function PatientExperience({
             analysis={analysis}
             clinicName={brand.clinicName}
             consultationUrl={consultationUrl}
+            onRetryPreview={() => retryPreview(selfie, analysis)}
             onRestart={reset}
           />
           <div className="mx-auto -mt-10 mb-10 max-w-3xl rounded-3xl border border-serum/15 bg-[#EAF6F2] p-6 text-center sm:p-8">
