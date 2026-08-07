@@ -93,8 +93,8 @@ const VERIFY_MODEL = "claude-sonnet-5";
  * "Final pass" indefinitely. This is one budget shared by the entire pipeline.
  */
 const REQUEST_BUDGET_MS = Math.min(
-  120_000,
-  Math.max(90_000, Number(process.env.AFTER_MAX_WAIT_MS ?? 115_000)),
+  240_000,
+  Math.max(150_000, Number(process.env.AFTER_MAX_WAIT_MS ?? 220_000)),
 );
 const VERIFY_CALL_TIMEOUT_MS = 40_000;
 /**
@@ -970,6 +970,7 @@ export async function POST(req: Request) {
     let buffer = "";
     let image: string | null = null;
     let error = "We couldn't generate your after image.";
+    let reason: string | null = null;
 
     for (;;) {
       const { done, value } = await reader.read();
@@ -985,9 +986,11 @@ export async function POST(req: Request) {
             type?: string;
             image?: string;
             error?: string;
+            reason?: string;
           };
           if (message.type === "final" && message.image) image = message.image;
           if (message.type === "error" && message.error) error = message.error;
+          if (message.type === "error" && message.reason) reason = message.reason;
         } catch {
           // A malformed progress frame must not hide a later valid final frame.
         }
@@ -996,7 +999,7 @@ export async function POST(req: Request) {
 
     return image
       ? NextResponse.json({ image })
-      : NextResponse.json({ error }, { status: 502 });
+      : NextResponse.json({ error, reason }, { status: reason ? 422 : 502 });
   }
 
   return new Response(stream, {

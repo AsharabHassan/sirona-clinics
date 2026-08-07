@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
@@ -22,6 +22,17 @@ export const metadata: Metadata = {
   title: "PBSerum VELURIA for Clinics | Sirona Aesthetics",
   description:
     "Preview a clinic-branded AI patient journey and book a free 20-minute VELURIA clinic consultation with Sirona Aesthetics.",
+  applicationName: "Sirona VELURIA for Clinics",
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Sirona VELURIA" },
+  formatDetection: { telephone: false },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "light",
+  themeColor: "#F4FBF9",
 };
 
 export default function RootLayout({

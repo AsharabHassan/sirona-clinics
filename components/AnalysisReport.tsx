@@ -163,7 +163,7 @@ function StickyPreviewBar({
   if (!scrolledPast) return null;
 
   return (
-    <div className="no-print fixed bottom-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
+    <div className="safe-fixed-bottom no-print fixed inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
       <div className="pointer-events-auto flex items-center gap-3 rounded-full border border-white/70 bg-white/80 px-5 py-3 backdrop-blur-xl shadow-[0_8px_32px_-10px_rgba(34,30,82,0.35)]">
         {afterPending ? (
           <>
