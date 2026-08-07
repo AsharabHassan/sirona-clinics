@@ -5,6 +5,7 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import BrandStamp from "@/components/BrandStamp";
 import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConversionReport from "@/components/ConversionReport";
+import { PartnerLogoStrip, TrainerSpotlight } from "@/components/PartnerProof";
 import PatientExperience from "@/components/PatientExperience";
 import RoiCalculator from "@/components/RoiCalculator";
 import VeluriaProfessionalEducation from "@/components/VeluriaProfessionalEducation";
@@ -419,6 +420,8 @@ function LandingPage({
         </div>
       </section>
 
+      <PartnerLogoStrip />
+
       <section className="relative z-10 border-y border-serum/10 bg-[#EAF6F2]/75">
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-7 sm:px-8 md:grid-cols-[1fr_auto_auto] md:items-center">
           <div>
@@ -490,6 +493,11 @@ function LandingPage({
           </div>
         )}
       </section>
+
+      <TrainerSpotlight
+        consultationUrl={consultationUrl}
+        onTryExperience={beginPreview}
+      />
 
       <section className="relative z-10 mx-auto max-w-6xl px-5 py-24 sm:px-8">
         <div className="mx-auto max-w-3xl text-center">
