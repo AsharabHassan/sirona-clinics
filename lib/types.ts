@@ -25,6 +25,8 @@ export interface ClinicLeadPayload {
   city: string;
   /** Optional: rough current monthly patient volume. */
   monthlyPatients?: number;
+  /** The concern or funnel experience that triggered this enquiry. */
+  interest?: string;
   consent: boolean;
 }
 export interface AnalysisCategory {

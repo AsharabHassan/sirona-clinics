@@ -65,6 +65,8 @@ export function validateClinicLead(input: unknown):
   const phone = typeof o.phone === "string" ? o.phone.trim() : "";
   const city = typeof o.city === "string" ? o.city.trim() : "";
   const consent = o.consent === true;
+  const interest =
+    typeof o.interest === "string" ? o.interest.trim().slice(0, 160) : "";
   const rawPatients =
     typeof o.monthlyPatients === "number"
       ? o.monthlyPatients
@@ -89,6 +91,15 @@ export function validateClinicLead(input: unknown):
 
   return {
     ok: true,
-    lead: { clinicName, ownerName, email, phone, city, monthlyPatients, consent },
+    lead: {
+      clinicName,
+      ownerName,
+      email,
+      phone,
+      city,
+      monthlyPatients,
+      ...(interest ? { interest } : {}),
+      consent,
+    },
   };
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import AnalysisReport from "@/components/AnalysisReport";
+import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConcernSamplePicker from "@/components/ConcernSamplePicker";
 import LeadForm from "@/components/LeadForm";
 import Processing from "@/components/Processing";
@@ -17,13 +18,21 @@ import type { GhlMeta } from "@/lib/ghl";
 import { trackDemo } from "@/lib/meta";
 import { trackOutreachEvent } from "@/lib/outreachClient";
 import type {
+  ClinicLeadPayload,
   LeadPayload,
   PatientJourneySnapshot,
   SkinAnalysis,
 } from "@/lib/types";
 import { planFor } from "@/lib/veluria";
 
-type PatientStep = "choose" | "capture" | "lead" | "processing" | "result" | "error";
+type PatientStep =
+  | "choose"
+  | "capture"
+  | "sample-lead"
+  | "lead"
+  | "processing"
+  | "result"
+  | "error";
 
 function BrandedHeader({ brand }: { brand: BrandConfig }) {
   return (
@@ -77,6 +86,7 @@ export default function PatientExperience({
   const [mapImage, setMapImage] = useState<string | null>(null);
   const [mapPending, setMapPending] = useState(false);
   const [selectedSample, setSelectedSample] = useState<ConcernSample | null>(null);
+  const [sampleLead, setSampleLead] = useState<ClinicLeadPayload | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const analysisPromise = useRef<Promise<SkinAnalysis> | null>(null);
   const previewPromise = useRef<Promise<string | null> | null>(null);
@@ -107,6 +117,7 @@ export default function PatientExperience({
     setMapImage(null);
     setMapPending(false);
     setSelectedSample(null);
+    setSampleLead(null);
     setErrorMsg("");
     setStep("choose");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -114,6 +125,12 @@ export default function PatientExperience({
 
   const selectSample = (sample: ConcernSample) => {
     setSelectedSample(sample);
+    setStep("sample-lead");
+    trackOutreachEvent(recipientToken, "concern_sample_select", campaignStage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const revealSample = (sample: ConcernSample) => {
     setSelfie(sample.before);
     setAfterImage(sample.after);
     setAnalysis(sample.analysis);
@@ -121,7 +138,6 @@ export default function PatientExperience({
     setAfterPending(false);
     setMapPending(false);
     setStep("result");
-    trackOutreachEvent(recipientToken, "concern_sample_select", campaignStage);
     trackOutreachEvent(recipientToken, "patient_result_view", campaignStage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -227,6 +243,24 @@ export default function PatientExperience({
           }}
           onSelect={selectSample}
           onEditBrand={onEditBrand}
+        />
+      )}
+
+      {step === "sample-lead" && selectedSample && (
+        <ClinicLeadForm
+          brand={brand}
+          mode="concern-gate"
+          interest={selectedSample.label}
+          previewImage={selectedSample.before}
+          onBack={() => {
+            setSelectedSample(null);
+            setStep("choose");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          onSubmitted={(submittedLead) => {
+            setSampleLead(submittedLead);
+            revealSample(selectedSample);
+          }}
         />
       )}
 
@@ -349,6 +383,11 @@ export default function PatientExperience({
 
       {lead && leadMeta && step === "result" && (
         <p className="sr-only">Lead captured for {lead.name} with a matched analysis event.</p>
+      )}
+      {sampleLead && step === "result" && (
+        <p className="sr-only">
+          Clinic lead captured for {sampleLead.ownerName} after selecting {selectedSample?.label}.
+        </p>
       )}
     </div>
   );

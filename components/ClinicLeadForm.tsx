@@ -7,9 +7,17 @@ import { getFbc, getFbclid, getFbp, newEventId, trackLead } from "@/lib/meta";
 
 export default function ClinicLeadForm({
   brand,
+  mode = "walkthrough",
+  interest,
+  previewImage,
+  onBack,
   onSubmitted,
 }: {
   brand: BrandConfig;
+  mode?: "walkthrough" | "concern-gate";
+  interest?: string;
+  previewImage?: string;
+  onBack?: () => void;
   onSubmitted: (lead: ClinicLeadPayload) => void;
 }) {
   const [clinicName, setClinicName] = useState(
@@ -34,6 +42,7 @@ export default function ClinicLeadForm({
       phone,
       city,
       monthlyPatients: monthlyPatients ? Number(monthlyPatients) : undefined,
+      interest,
       consent,
     };
     // Shared id so the browser Pixel + GHL's server (CAPI) event deduplicate.
@@ -71,15 +80,40 @@ export default function ClinicLeadForm({
   return (
     <div className="mx-auto w-full max-w-lg animate-fade-scale">
       <div className="mb-6 text-center">
-        <p className="eyebrow">Private walkthrough</p>
+        <p className="eyebrow">
+          {mode === "concern-gate" ? "Your selected patient journey" : "Private walkthrough"}
+        </p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-          Talk through your clinic&rsquo;s setup
+          {mode === "concern-gate"
+            ? "Unlock your clinic preview"
+            : "Talk through your clinic&rsquo;s setup"}
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-sm text-plum-soft">
-          Leave your details and Sirona will follow up about a focused VELURIA
-          pipeline walkthrough for your clinic.
+          {mode === "concern-gate"
+            ? `Enter your work details to unlock the ${interest ?? "selected"} patient journey and its clinic growth report.`
+            : "Leave your details and Sirona will follow up about a focused VELURIA pipeline walkthrough for your clinic."}
         </p>
       </div>
+
+      {mode === "concern-gate" && previewImage && (
+        <div className="mx-auto mb-5 flex max-w-sm items-center gap-4 rounded-2xl border border-serum/15 bg-[#EAF6F2] p-3 text-left">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={previewImage}
+            alt="Selected synthetic concern demonstration"
+            className="h-20 w-20 shrink-0 rounded-xl object-cover"
+          />
+          <div>
+            <p className="text-[0.56rem] font-semibold uppercase tracking-[0.14em] text-serum">
+              Selected concern
+            </p>
+            <p className="mt-1 text-sm font-semibold text-plum">{interest}</p>
+            <p className="mt-1 text-[0.62rem] leading-4 text-plum-mute">
+              Synthetic AI demonstration
+            </p>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={submit} className="glass space-y-4 p-6 sm:p-8">
         <input
@@ -116,7 +150,8 @@ export default function ClinicLeadForm({
           autoComplete="tel"
           required
         />
-        <div className="grid grid-cols-2 gap-4">
+        {mode === "walkthrough" && (
+          <div className="grid grid-cols-2 gap-4">
           <input
             className="field"
             placeholder="Town / city"
@@ -133,7 +168,8 @@ export default function ClinicLeadForm({
             value={monthlyPatients}
             onChange={(e) => setMonthlyPatients(e.target.value)}
           />
-        </div>
+          </div>
+        )}
 
         <label className="flex items-start gap-3 text-xs leading-relaxed text-plum-soft">
           <input
@@ -153,8 +189,21 @@ export default function ClinicLeadForm({
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" className="btn-serum w-full" disabled={submitting}>
-          {submitting ? "Sending…" : "Request my walkthrough"}
+          {submitting
+            ? "Saving your details…"
+            : mode === "concern-gate"
+              ? "Unlock the patient journey"
+              : "Request my walkthrough"}
         </button>
+        {mode === "concern-gate" && onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            className="block w-full text-center text-xs text-plum-mute underline underline-offset-4 hover:text-plum"
+          >
+            Choose a different concern
+          </button>
+        )}
       </form>
     </div>
   );
