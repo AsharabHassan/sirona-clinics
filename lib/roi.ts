@@ -1,69 +1,104 @@
 /**
- * Transparent clinic economics model for the VELURIA patient-acquisition
- * funnel. Every commercial assumption is adjustable and the output is a
+ * Transparent two-stream clinic economics model for the VELURIA funnel.
+ * Every commercial assumption is adjustable and the output is an illustrative
  * scenario, never a forecast or guarantee.
  */
 export interface RoiInputs {
-  qualifiedEnquiries: number;
-  bookRate: number;
-  closeRate: number;
-  courseValue: number;
-  variableCourseCost: number;
-  monthlyMarketingCost: number;
+  dailyAdSpend: number;
+  qualifiedPaidLeads: number;
+  newPatientCourses: number;
+  reactivatedPatientCourses: number;
+  sessionFee: number;
+  sessionsPerCourse: number;
+  directCostPerCourse: number;
+  reactivationSpend: number;
 }
 
 export interface RoiResult {
-  consultations: number;
-  courses: number;
+  monthlyAdSpend: number;
+  costPerQualifiedLead: number;
+  leadToCourseRate: number;
+  totalPatientCourses: number;
   appointments: number;
+  paidAcquisitionRevenue: number;
+  reactivationRevenue: number;
   grossRevenue: number;
-  deliveryCosts: number;
+  marketingSpend: number;
+  directDeliveryCosts: number;
+  totalCosts: number;
   contribution: number;
   breakEvenCourses: number | null;
 }
 
 export const ROI_DEFAULTS: RoiInputs = {
-  qualifiedEnquiries: 24,
-  bookRate: 35,
-  closeRate: 25,
-  courseValue: 600,
-  variableCourseCost: 125,
-  monthlyMarketingCost: 300,
+  dailyAdSpend: 15,
+  qualifiedPaidLeads: 24,
+  newPatientCourses: 6,
+  reactivatedPatientCourses: 3,
+  sessionFee: 299,
+  sessionsPerCourse: 3,
+  directCostPerCourse: 125,
+  reactivationSpend: 150,
 };
 
 export const ROI_BOUNDS = {
-  qualifiedEnquiries: { min: 4, max: 200, step: 2 },
-  bookRate: { min: 5, max: 60, step: 1 },
-  closeRate: { min: 5, max: 60, step: 1 },
-  courseValue: { min: 150, max: 2500, step: 50 },
-  variableCourseCost: { min: 0, max: 1000, step: 25 },
-  monthlyMarketingCost: { min: 0, max: 3000, step: 50 },
+  dailyAdSpend: { min: 5, max: 200, step: 5 },
+  qualifiedPaidLeads: { min: 1, max: 200, step: 1 },
+  newPatientCourses: { min: 0, max: 100, step: 1 },
+  reactivatedPatientCourses: { min: 0, max: 100, step: 1 },
+  sessionFee: { min: 100, max: 1000, step: 1 },
+  sessionsPerCourse: { min: 1, max: 6, step: 1 },
+  directCostPerCourse: { min: 0, max: 1000, step: 25 },
+  reactivationSpend: { min: 0, max: 3000, step: 25 },
 } as const;
 
-const pct = (n: number) => Math.max(0, Math.min(100, n)) / 100;
+const safe = (n: number) => Math.max(0, Number.isFinite(n) ? n : 0);
 
 export function computeRoi(input: RoiInputs): RoiResult {
-  const enquiries = Math.max(0, input.qualifiedEnquiries);
-  const consultations = enquiries * pct(input.bookRate);
-  const courses = consultations * pct(input.closeRate);
-  const courseValue = Math.max(0, input.courseValue);
-  const variableCourseCost = Math.max(0, input.variableCourseCost);
-  const marketingCost = Math.max(0, input.monthlyMarketingCost);
-  const grossRevenue = courses * courseValue;
-  const variableCosts = courses * variableCourseCost;
-  const contribution = grossRevenue - variableCosts - marketingCost;
-  const contributionPerCourse = courseValue - variableCourseCost;
+  const dailyAdSpend = safe(input.dailyAdSpend);
+  const qualifiedPaidLeads = safe(input.qualifiedPaidLeads);
+  const newPatientCourses = Math.min(safe(input.newPatientCourses), qualifiedPaidLeads);
+  const reactivatedPatientCourses = safe(input.reactivatedPatientCourses);
+  const sessionFee = safe(input.sessionFee);
+  const sessionsPerCourse = safe(input.sessionsPerCourse);
+  const directCostPerCourse = safe(input.directCostPerCourse);
+  const reactivationSpend = safe(input.reactivationSpend);
+
+  const monthlyAdSpend = dailyAdSpend * 30;
+  const courseRevenue = sessionFee * sessionsPerCourse;
+  const paidAcquisitionRevenue = newPatientCourses * courseRevenue;
+  const reactivationRevenue = reactivatedPatientCourses * courseRevenue;
+  const totalPatientCourses = newPatientCourses + reactivatedPatientCourses;
+  const appointments = totalPatientCourses * sessionsPerCourse;
+  const grossRevenue = paidAcquisitionRevenue + reactivationRevenue;
+  const marketingSpend = monthlyAdSpend + reactivationSpend;
+  const directDeliveryCosts = totalPatientCourses * directCostPerCourse;
+  const totalCosts = marketingSpend + directDeliveryCosts;
+  const contribution = grossRevenue - totalCosts;
+  const contributionPerCourse = courseRevenue - directCostPerCourse;
 
   return {
-    consultations: Math.round(consultations),
-    courses: Math.round(courses * 10) / 10,
-    appointments: Math.round(courses * 3),
+    monthlyAdSpend: Math.round(monthlyAdSpend),
+    costPerQualifiedLead:
+      qualifiedPaidLeads > 0
+        ? Math.round((monthlyAdSpend / qualifiedPaidLeads) * 100) / 100
+        : 0,
+    leadToCourseRate:
+      qualifiedPaidLeads > 0
+        ? Math.round((newPatientCourses / qualifiedPaidLeads) * 1000) / 10
+        : 0,
+    totalPatientCourses: Math.round(totalPatientCourses * 10) / 10,
+    appointments: Math.round(appointments),
+    paidAcquisitionRevenue: Math.round(paidAcquisitionRevenue),
+    reactivationRevenue: Math.round(reactivationRevenue),
     grossRevenue: Math.round(grossRevenue),
-    deliveryCosts: Math.round(variableCosts + marketingCost),
+    marketingSpend: Math.round(marketingSpend),
+    directDeliveryCosts: Math.round(directDeliveryCosts),
+    totalCosts: Math.round(totalCosts),
     contribution: Math.round(contribution),
     breakEvenCourses:
       contributionPerCourse > 0
-        ? Math.ceil(marketingCost / contributionPerCourse)
+        ? Math.ceil(marketingSpend / contributionPerCourse)
         : null,
   };
 }
