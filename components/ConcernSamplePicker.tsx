@@ -17,13 +17,14 @@ export default function ConcernSamplePicker({
   return (
     <section className="w-full">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="eyebrow">Choose your patient experience</p>
+        <p className="eyebrow">{clinicPreview ? "You are previewing the patient application" : "Choose your patient experience"}</p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-6xl">
-          Try it on your face, or explore an instant patient journey.
+          {clinicPreview ? "See exactly how the before-and-after journey works." : "Try it on your face, or explore an instant patient journey."}
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-plum-soft">
-          Use a real photograph for a live, consented analysis, or choose a
-          common concern to see the complete clinic-branded experience instantly.
+          {clinicPreview
+            ? "Choose a concern to see an instant synthetic patient journey, or use your own permitted photograph to test the live route. You will see the visual preview, concern explanation, VELURIA match and clinic handoff a patient receives."
+            : "Use a real photograph for a live, consented analysis, or choose a common concern to see the complete clinic-branded experience instantly."}
         </p>
         <button
           type="button"
@@ -41,9 +42,9 @@ export default function ConcernSamplePicker({
       >
         <div>
           <span className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">
-            Live AI experience
+            {clinicPreview ? "Doctor test route · permitted photograph" : "Live AI experience"}
           </span>
-          <h3 className="display mt-3 text-3xl sm:text-4xl">Analyse my own face</h3>
+          <h3 className="display mt-3 text-3xl sm:text-4xl">{clinicPreview ? "Test the live route with my photo" : "Analyse my own face"}</h3>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
             Continue to photo permission, camera or upload, live skin analysis
             and a personalised visual preview{clinicPreview ? " without another contact form" : " with patient lead capture"}.
@@ -57,8 +58,8 @@ export default function ConcernSamplePicker({
       <div className="mx-auto mt-10 max-w-5xl">
         <div className="mb-5 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
           <div>
-            <p className="eyebrow">Instant demonstrations</p>
-            <h3 className="mt-2 text-2xl font-medium text-plum">Explore a patient concern</h3>
+            <p className="eyebrow">Instant doctor previews</p>
+            <h3 className="mt-2 text-2xl font-medium text-plum">Choose the patient concern you want to test</h3>
           </div>
           <p className="text-xs text-plum-mute">{clinicPreview ? "No upload, extra contact form or API wait" : "No upload or API wait; patient details are captured before the result"}</p>
         </div>
