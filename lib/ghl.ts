@@ -81,9 +81,11 @@ export function buildClinicGhlPayload(
       typeof lead.monthlyPatients === "number" ? String(lead.monthlyPatients) : "",
     selected_concern: lead.interest?.trim() ?? "",
     marketing_consent: lead.consent ? "yes" : "no",
-    source: lead.interest
-      ? "VELURIA Concern Demo Lead Gate"
-      : "Clinic Owner Demo — Veluria",
+    source: lead.interest?.startsWith("Clinic application preview")
+      ? "VELURIA Clinic Application Doctor Gate"
+      : lead.interest
+        ? "VELURIA Concern Demo Lead Gate"
+        : "Clinic Owner Demo — Veluria",
     submitted_at: new Date().toISOString(),
 
     // ---- Meta Conversions API mapping ----
@@ -98,7 +100,7 @@ export async function pushClinicLeadToGhl(
   const url = process.env.GHL_WEBHOOK_URL;
   if (!url) {
     if (lead.interest) {
-      throw new Error("GHL_WEBHOOK_URL is required for gated concern leads.");
+      throw new Error("GHL_WEBHOOK_URL is required for gated clinic leads.");
     }
     console.warn(
       "[ghl] GHL_WEBHOOK_URL not set — skipping CRM push. Clinic lead:",

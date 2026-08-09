@@ -7,10 +7,12 @@ export default function ConcernSamplePicker({
   onUsePhoto,
   onSelect,
   onEditBrand,
+  clinicPreview = false,
 }: {
   onUsePhoto: () => void;
   onSelect: (sample: ConcernSample) => void;
   onEditBrand: () => void;
+  clinicPreview?: boolean;
 }) {
   return (
     <section className="w-full">
@@ -28,7 +30,7 @@ export default function ConcernSamplePicker({
           onClick={onEditBrand}
           className="mt-3 text-xs text-plum-mute underline underline-offset-4 hover:text-plum"
         >
-          Change clinic branding
+          {clinicPreview ? "Return to the clinic opportunity" : "Change clinic branding"}
         </button>
       </div>
 
@@ -43,8 +45,8 @@ export default function ConcernSamplePicker({
           </span>
           <h3 className="display mt-3 text-3xl sm:text-4xl">Analyse my own face</h3>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
-            Continue to consent, camera or upload, patient lead capture, live
-            skin analysis and a personalised visual preview.
+            Continue to photo permission, camera or upload, live skin analysis
+            and a personalised visual preview{clinicPreview ? " without another contact form" : " with patient lead capture"}.
           </p>
         </div>
         <span className="shrink-0 rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#10231F]">
@@ -58,7 +60,7 @@ export default function ConcernSamplePicker({
             <p className="eyebrow">Instant demonstrations</p>
             <h3 className="mt-2 text-2xl font-medium text-plum">Explore a patient concern</h3>
           </div>
-          <p className="text-xs text-plum-mute">No upload, lead form or API wait</p>
+          <p className="text-xs text-plum-mute">{clinicPreview ? "No upload, extra contact form or API wait" : "No upload or API wait; patient details are captured before the result"}</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CONCERN_SAMPLES.map((sample) => {

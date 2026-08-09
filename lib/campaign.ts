@@ -43,6 +43,10 @@ export type OutreachEventName =
   | "hero_fit_click"
   | "product_interest"
   | "ai_demo_start"
+  | "clinic_gate_view"
+  | "clinic_gate_submit"
+  | "demo_launch"
+  | "scenario_interaction"
   | "lead_gate_submit"
   | "calculator_adjust"
   | "hair_consultation_click"
@@ -133,6 +137,10 @@ export function isOutreachEventName(value: unknown): value is OutreachEventName 
     value === "hero_fit_click" ||
     value === "product_interest" ||
     value === "ai_demo_start" ||
+    value === "clinic_gate_view" ||
+    value === "clinic_gate_submit" ||
+    value === "demo_launch" ||
+    value === "scenario_interaction" ||
     value === "lead_gate_submit" ||
     value === "calculator_adjust" ||
     value === "hair_consultation_click" ||

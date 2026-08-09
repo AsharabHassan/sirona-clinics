@@ -77,12 +77,14 @@ export default function RoiCalculator({
   clinicName = "your clinic",
   onPrivateDemo,
   onAdjust,
+  onBook,
   embedded = false,
 }: {
   consultationUrl: string;
   clinicName?: string;
   onPrivateDemo?: () => void;
   onAdjust?: () => void;
+  onBook?: () => void;
   embedded?: boolean;
 }) {
   const [inputs, setInputs] = useState<RoiInputs>(ROI_DEFAULTS);
@@ -98,6 +100,9 @@ export default function RoiCalculator({
   };
 
   const paidCourses = Math.min(inputs.newPatientCourses, inputs.qualifiedPaidLeads);
+  const starterCourses = 4;
+  const starterSessions = starterCourses * inputs.sessionsPerCourse;
+  const starterGross = starterSessions * inputs.sessionFee;
 
   return (
     <section className={embedded ? "w-full" : "w-full animate-fade-scale"}>
@@ -111,6 +116,17 @@ export default function RoiCalculator({
         </p>
       </div>
 
+      <article className="mb-6 grid gap-5 rounded-[1.75rem] border border-serum/15 bg-[#EAF6F2] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7">
+        <div>
+          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.17em] text-serum">Starter launch · initial four-course supply</p>
+          <h3 className="mt-2 text-2xl font-semibold text-plum">A simple first capacity scenario.</h3>
+          <p className="mt-2 text-sm leading-6 text-plum-soft">Four courses × {inputs.sessionsPerCourse} sessions × {gbp(inputs.sessionFee)} per session. This is separate from the scaled monthly acquisition scenario below.</p>
+        </div>
+        <div className="grid grid-cols-3 gap-2 text-center">
+          {[[starterCourses, "courses"], [starterSessions, "sessions"], [gbp(starterGross), "gross"]].map(([value, label]) => <div key={label} className="rounded-xl bg-white px-4 py-3"><p className="font-display text-2xl text-plum">{value}</p><p className="mt-1 text-[0.55rem] uppercase tracking-[0.11em] text-plum-mute">{label}</p></div>)}
+        </div>
+      </article>
+
       <div className="mb-6 grid gap-4 lg:grid-cols-2">
         <article className="rounded-[1.75rem] border border-serum/12 bg-white p-6 shadow-[0_20px_55px_-42px_rgba(16,35,31,0.45)]">
           <p className="text-[0.6rem] font-semibold uppercase tracking-[0.17em] text-serum">New-patient scenario</p>
@@ -122,7 +138,7 @@ export default function RoiCalculator({
             <strong className="rounded-xl bg-[#EAF6F2] px-3 py-2 text-sm text-plum">{paidCourses} courses</strong>
           </div>
           <p className="mt-6 font-display text-4xl text-plum">{gbp(result.paidAcquisitionRevenue)}</p>
-          <p className="mt-1 text-xs text-plum-mute">Illustrative gross treatment revenue from new patients.</p>
+          <p className="mt-1 text-xs text-plum-mute">Illustrative gross treatment revenue from new patients. {gbp(result.monthlyAdSpend)} monthly ads ÷ {inputs.qualifiedPaidLeads} enquiries = £{result.costPerQualifiedLead.toFixed(2)} per qualified enquiry; {paidCourses} of {inputs.qualifiedPaidLeads} = {result.leadToCourseRate}% course conversion.</p>
         </article>
 
         <article className="rounded-[1.75rem] border border-[#0B2747]/10 bg-[#0B2747] p-6 text-white shadow-[0_20px_55px_-42px_rgba(11,39,71,0.6)]">
@@ -233,11 +249,15 @@ export default function RoiCalculator({
             <p className="mt-2 text-[0.62rem] leading-5 text-white/45">The clinic still conducts the consultation, confirms suitability and delivers treatment.</p>
           </div>
 
+          <div className="mt-4 rounded-2xl border border-amber-200/20 bg-amber-200/10 p-4 text-xs leading-6 text-white/65">
+            The default scaled month models {result.totalPatientCourses} courses and {result.appointments} sessions. It therefore requires product replenishment and enough practitioner capacity beyond the initial four-course starter supply.
+          </div>
+
           <p className="mt-5 text-[0.65rem] leading-relaxed text-white/45">
             Adjustable scenario only, not a forecast or guarantee. It excludes tax, fixed overhead, refunds, unused capacity and the separately priced optional AI Brain. Lead volume, conversion, suitability and patient outcomes vary.
           </p>
 
-          <a href={consultationUrl} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#10231F] transition hover:bg-[#EAF6F2]">Build my clinic growth map</a>
+          <a href={consultationUrl} target="_blank" rel="noopener noreferrer" onClick={onBook} className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-4 text-center text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#10231F] transition hover:bg-[#EAF6F2]">Book a free 20-minute VELURIA Clinic Growth Map</a>
           {onPrivateDemo && (
             <button type="button" onClick={onPrivateDemo} className="mt-3 w-full text-xs text-white/65 underline underline-offset-4 hover:text-white">Request a private walkthrough</button>
           )}

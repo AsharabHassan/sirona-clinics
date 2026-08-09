@@ -18,7 +18,8 @@ import {
 import { consultationHref, trackOutreachEvent } from "@/lib/outreachClient";
 import type { ClinicLeadPayload, PatientJourneySnapshot } from "@/lib/types";
 
-type Step = "landing" | "funnel" | "brand" | "demo" | "report" | "roi" | "form" | "done";
+type Step = "landing" | "funnel" | "gate" | "brand" | "demo" | "report" | "roi" | "form" | "done";
+type PreviewOrigin = "landing" | "funnel";
 
 function ArrowIcon() {
   return (
@@ -49,7 +50,9 @@ export default function ClinicCampaign({
   initialStage = "overview",
 }: ClinicCampaignProps) {
   const startingView = CAMPAIGN_STAGE_TO_VIEW[initialStage];
-  const [step, setStep] = useState<Step>(startingView);
+  const [step, setStep] = useState<Step>(startingView === "demo" && profile ? "gate" : startingView);
+  const [previewOrigin, setPreviewOrigin] = useState<PreviewOrigin>(startingView === "funnel" ? "funnel" : "landing");
+  const [clinicPreviewUnlocked, setClinicPreviewUnlocked] = useState(false);
   const [brand, setBrand] = useState<BrandConfig>(
     makeBrand(profile ? { clinicName: profile.clinicName, accent: profile.brand.accent } : undefined),
   );
@@ -63,6 +66,13 @@ export default function ClinicCampaign({
 
   useEffect(() => {
     if (profile) {
+      const gateKey = `veluria-doctor-preview:${profile.slug}`;
+      const unlocked = window.sessionStorage.getItem(gateKey) === "1";
+      setClinicPreviewUnlocked(unlocked);
+      if (startingView === "demo") {
+        setStep(unlocked ? "demo" : "gate");
+        if (!unlocked) trackOutreachEvent(recipientToken, "clinic_gate_view", initialStage);
+      }
       trackOutreachEvent(recipientToken, startingView === "funnel" ? "funnel_view" : "landing_view", initialStage);
       return;
     }
@@ -76,8 +86,17 @@ export default function ClinicCampaign({
   const isPersonalised = Boolean(profile) || brand.clinicName !== "Your Clinic";
   const clinicCopy = isPersonalised ? brand.clinicName : "your clinic";
 
-  const beginPreview = () => {
-    setStep(isPersonalised ? "demo" : "brand");
+  const beginPreview = (origin: PreviewOrigin) => {
+    setPreviewOrigin(origin);
+    if (!isPersonalised) {
+      setStep("brand");
+    } else if (clinicPreviewUnlocked) {
+      track("demo_launch");
+      setStep("demo");
+    } else {
+      track("clinic_gate_view");
+      setStep("gate");
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -96,7 +115,7 @@ export default function ClinicCampaign({
     <main className="relative min-h-dvh overflow-hidden">
       <header className="relative z-30 border-b border-black/[0.06] bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-          <button type="button" onClick={() => goTo("landing")} className="flex items-center gap-3 text-left" aria-label="Back to the VELURIA clinic page">
+          <button type="button" onClick={() => goTo(step === "landing" || step === "funnel" ? "landing" : previewOrigin)} className="flex items-center gap-3 text-left" aria-label="Back to the VELURIA clinic page">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/sirona-logo.png" alt="Sirona Aesthetics" className="h-8 w-auto" />
             <span className="hidden border-l border-black/10 pl-3 text-[0.58rem] uppercase leading-relaxed tracking-[0.22em] text-plum-mute sm:block">VELURIA<br />clinic growth</span>
@@ -106,36 +125,52 @@ export default function ClinicCampaign({
             Free 20-minute VELURIA Clinic Growth Map
           </div>
           <a href={consultationUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("booking_click")} className="btn-serum !px-5 !py-3 !text-[0.62rem] sm:!px-7">
-            Book free consultation
+            Book a free 20-minute VELURIA Clinic Growth Map
           </a>
         </div>
       </header>
 
       {step === "landing" ? (
-        <ClinicLandingPage clinicCopy={clinicCopy} profile={profile} consultationUrl={consultationUrl} beginPreview={beginPreview} onTrack={track} />
+        <ClinicLandingPage clinicCopy={clinicCopy} profile={profile} consultationUrl={consultationUrl} beginPreview={() => beginPreview("landing")} onTrack={track} />
       ) : step === "funnel" ? (
-        <ClinicFunnelPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={beginPreview} onTrack={track} />
+        <ClinicFunnelPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={() => beginPreview("funnel")} onTrack={track} />
       ) : (
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
           <div className="mb-9 flex flex-wrap items-center justify-between gap-4">
-            <button type="button" onClick={() => goTo("landing")} className="text-xs font-medium uppercase tracking-[0.14em] text-plum-mute transition hover:text-plum">← Campaign overview</button>
+            <button type="button" onClick={() => goTo(previewOrigin)} className="text-xs font-medium uppercase tracking-[0.14em] text-plum-mute transition hover:text-plum">← Return to the opportunity</button>
             <div className="flex items-center gap-2">
-              {["Brand", "AI Preview", "Report", "Potential"].map((label, index) => {
-                const activeIndex = step === "brand" ? 0 : step === "demo" ? 1 : step === "report" ? 2 : 3;
+              {["Details", "AI Preview", "Report", "Potential"].map((label, index) => {
+                const activeIndex = step === "gate" || step === "brand" ? 0 : step === "demo" ? 1 : step === "report" ? 2 : 3;
                 return <span key={label} className={`rounded-full px-3 py-1.5 text-[0.58rem] uppercase tracking-[0.12em] ${index <= activeIndex ? "bg-serum text-white" : "bg-black/[0.05] text-plum-mute"}`}>{label}</span>;
               })}
             </div>
           </div>
 
+          {step === "gate" && (
+            <ClinicLeadForm
+              key="doctor-gate"
+              brand={brand}
+              mode="doctor-gate"
+              interest={`Clinic application preview | ${initialStage}`}
+              onSubmitted={(submittedLead) => {
+                setLead(submittedLead);
+                setClinicPreviewUnlocked(true);
+                if (profile) window.sessionStorage.setItem(`veluria-doctor-preview:${profile.slug}`, "1");
+                track("clinic_gate_submit");
+                track("demo_launch");
+                goTo("demo");
+              }}
+            />
+          )}
           {step === "brand" && <BrandStamp key="brand" initialBrand={brand} onDone={(nextBrand) => { setBrand(nextBrand); goTo("demo"); }} />}
           {step === "demo" && (
-            <PatientExperience key="demo" brand={brand} consultationUrl={consultationUrl} onEditBrand={() => goTo("brand")} recipientToken={recipientToken} campaignStage={initialStage} onContinue={(snapshot) => { setPatientJourney(snapshot); goTo("report"); }} />
+            <PatientExperience key="demo" brand={brand} consultationUrl={consultationUrl} audienceMode={isPersonalised ? "clinic-preview" : "patient"} onEditBrand={() => goTo(isPersonalised ? previewOrigin : "brand")} recipientToken={recipientToken} campaignStage={initialStage} onContinue={(snapshot) => { setPatientJourney(snapshot); goTo("report"); }} />
           )}
           {step === "report" && (
-            <ConversionReport key="report" brand={brand} consultationUrl={consultationUrl} profile={profile} patientJourney={patientJourney} onExplore={() => goTo("roi")} onPrivateDemo={() => goTo("form")} />
+            <ConversionReport key="report" brand={brand} consultationUrl={consultationUrl} profile={profile} patientJourney={patientJourney} onExplore={() => goTo("roi")} onPrivateDemo={() => goTo("form")} onBook={() => track("booking_click")} />
           )}
           {step === "roi" && (
-            <RoiCalculator key="roi" consultationUrl={consultationUrl} clinicName={clinicCopy} onAdjust={() => track("calculator_adjust")} onPrivateDemo={() => goTo("form")} />
+            <RoiCalculator key="roi" consultationUrl={consultationUrl} clinicName={clinicCopy} onAdjust={() => track("scenario_interaction")} onBook={() => track("booking_click")} onPrivateDemo={() => goTo("form")} />
           )}
           {step === "form" && (
             <ClinicLeadForm key="form" brand={brand} onSubmitted={(submittedLead) => { setLead(submittedLead); goTo("done"); }} />
@@ -146,7 +181,7 @@ export default function ClinicCampaign({
               <p className="eyebrow mt-6">Request received</p>
               <h2 className="display mt-3 text-4xl text-plum sm:text-6xl">Thank you{lead?.ownerName ? `, ${lead.ownerName.split(/\s+/)[0]}` : ""}.</h2>
               <p className="mx-auto mt-5 max-w-md leading-relaxed text-plum-soft">Sirona will follow up about your VELURIA clinic-growth walkthrough. You can choose a free 20-minute Clinic Growth Map now.</p>
-              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("booking_click")} className="btn-serum mt-8">Choose my growth-map time <ArrowIcon /></a>
+              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("booking_click")} className="btn-serum mt-8">Book a free 20-minute VELURIA Clinic Growth Map <ArrowIcon /></a>
             </section>
           )}
         </div>

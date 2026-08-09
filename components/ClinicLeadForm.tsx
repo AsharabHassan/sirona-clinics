@@ -14,7 +14,7 @@ export default function ClinicLeadForm({
   onSubmitted,
 }: {
   brand: BrandConfig;
-  mode?: "walkthrough" | "concern-gate";
+  mode?: "walkthrough" | "concern-gate" | "doctor-gate";
   interest?: string;
   previewImage?: string;
   onBack?: () => void;
@@ -81,17 +81,25 @@ export default function ClinicLeadForm({
     <div className="mx-auto w-full max-w-lg animate-fade-scale">
       <div className="mb-6 text-center">
         <p className="eyebrow">
-          {mode === "concern-gate" ? "Your selected patient journey" : "Private walkthrough"}
+          {mode === "doctor-gate"
+            ? "Clinic-owner preview"
+            : mode === "concern-gate"
+              ? "Your selected patient journey"
+              : "Private walkthrough"}
         </p>
         <h2 className="display mt-3 text-4xl text-plum sm:text-5xl">
-          {mode === "concern-gate"
-            ? "Unlock your clinic preview"
-            : "Talk through your clinic&rsquo;s setup"}
+          {mode === "doctor-gate"
+            ? `See how the VELURIA application would work for ${brand.clinicName}.`
+            : mode === "concern-gate"
+              ? "Unlock your clinic preview"
+              : "Talk through your clinic&rsquo;s setup"}
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-sm text-plum-soft">
-          {mode === "concern-gate"
-            ? `Enter your work details to unlock the ${interest ?? "selected"} patient journey and its clinic growth report.`
-            : "Leave your details and Sirona will follow up about a focused VELURIA pipeline walkthrough for your clinic."}
+          {mode === "doctor-gate"
+            ? "Confirm your work details once to enter the clinic-branded demonstration. Your details also let Sirona answer questions about the range and funnel."
+            : mode === "concern-gate"
+              ? `Enter your work details to unlock the ${interest ?? "selected"} patient journey and its clinic growth report.`
+              : "Leave your details and Sirona will follow up about a focused VELURIA pipeline walkthrough for your clinic."}
         </p>
       </div>
 
@@ -126,7 +134,7 @@ export default function ClinicLeadForm({
         />
         <input
           className="field"
-          placeholder="Your name"
+          placeholder={mode === "doctor-gate" ? "Doctor / owner name" : "Your name"}
           value={ownerName}
           onChange={(e) => setOwnerName(e.target.value)}
           autoComplete="name"
@@ -191,9 +199,11 @@ export default function ClinicLeadForm({
         <button type="submit" className="btn-serum w-full" disabled={submitting}>
           {submitting
             ? "Saving your details…"
-            : mode === "concern-gate"
-              ? "Unlock the patient journey"
-              : "Request my walkthrough"}
+            : mode === "doctor-gate"
+              ? "Enter the clinic application"
+              : mode === "concern-gate"
+                ? "Unlock the patient journey"
+                : "Request my walkthrough"}
         </button>
         {mode === "concern-gate" && onBack && (
           <button

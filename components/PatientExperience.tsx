@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import AnalysisReport from "@/components/AnalysisReport";
-import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConcernSamplePicker from "@/components/ConcernSamplePicker";
 import LeadForm from "@/components/LeadForm";
 import Processing from "@/components/Processing";
@@ -18,7 +17,6 @@ import type { GhlMeta } from "@/lib/ghl";
 import { trackDemo } from "@/lib/meta";
 import { trackOutreachEvent } from "@/lib/outreachClient";
 import type {
-  ClinicLeadPayload,
   LeadPayload,
   PatientJourneySnapshot,
   SkinAnalysis,
@@ -34,7 +32,7 @@ type PatientStep =
   | "result"
   | "error";
 
-function BrandedHeader({ brand }: { brand: BrandConfig }) {
+function BrandedHeader({ brand, clinicPreview }: { brand: BrandConfig; clinicPreview: boolean }) {
   return (
     <div
       className="mx-auto mb-8 flex max-w-3xl items-center gap-3 rounded-2xl px-4 py-3 text-white shadow-sm"
@@ -51,11 +49,11 @@ function BrandedHeader({ brand }: { brand: BrandConfig }) {
       <div>
         <p className="font-semibold">{brand.clinicName}</p>
         <p className="text-[0.58rem] uppercase tracking-[0.16em] text-white/70">
-          Complimentary AI skin consultation
+          Illustrative AI skin-quality experience
         </p>
       </div>
       <span className="ml-auto hidden rounded-full bg-white/10 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.14em] text-white/75 sm:block">
-        Patient view
+        {clinicPreview ? "Clinic preview" : "Patient view"}
       </span>
     </div>
   );
@@ -66,6 +64,7 @@ export default function PatientExperience({
   consultationUrl,
   onEditBrand,
   onContinue,
+  audienceMode = "patient",
   recipientToken,
   campaignStage = "demo",
 }: {
@@ -73,6 +72,7 @@ export default function PatientExperience({
   consultationUrl: string;
   onEditBrand: () => void;
   onContinue: (snapshot: PatientJourneySnapshot) => void;
+  audienceMode?: "patient" | "clinic-preview";
   recipientToken?: string;
   campaignStage?: CampaignStage;
 }) {
@@ -86,7 +86,6 @@ export default function PatientExperience({
   const [mapImage, setMapImage] = useState<string | null>(null);
   const [mapPending, setMapPending] = useState(false);
   const [selectedSample, setSelectedSample] = useState<ConcernSample | null>(null);
-  const [sampleLead, setSampleLead] = useState<ClinicLeadPayload | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const analysisPromise = useRef<Promise<SkinAnalysis> | null>(null);
   const previewPromise = useRef<Promise<string | null> | null>(null);
@@ -117,7 +116,6 @@ export default function PatientExperience({
     setMapImage(null);
     setMapPending(false);
     setSelectedSample(null);
-    setSampleLead(null);
     setErrorMsg("");
     setStep("choose");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -125,8 +123,12 @@ export default function PatientExperience({
 
   const selectSample = (sample: ConcernSample) => {
     setSelectedSample(sample);
-    setStep("sample-lead");
     trackOutreachEvent(recipientToken, "concern_sample_select", campaignStage);
+    if (audienceMode === "clinic-preview") {
+      revealSample(sample);
+      return;
+    }
+    setStep("sample-lead");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -144,8 +146,8 @@ export default function PatientExperience({
 
   const runAnalysis = async (
     image: string,
-    submittedLead: LeadPayload,
-    submittedMeta: GhlMeta,
+    submittedLead?: LeadPayload,
+    submittedMeta?: GhlMeta,
   ) => {
     setStep("processing");
     setAfterImage(null);
@@ -169,11 +171,13 @@ export default function PatientExperience({
       return;
     }
 
-    fetch("/api/lead/concerns", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...submittedLead, analysis: result, meta: submittedMeta }),
-    }).catch(() => {});
+    if (submittedLead && submittedMeta) {
+      fetch("/api/lead/concerns", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...submittedLead, analysis: result, meta: submittedMeta }),
+      }).catch(() => {});
+    }
 
     (previewPromise.current ?? createAfterPreview(image, result))
       .then((generated) => {
@@ -233,7 +237,7 @@ export default function PatientExperience({
 
   return (
     <div className="w-full animate-fade-scale">
-      <BrandedHeader brand={brand} />
+      <BrandedHeader brand={brand} clinicPreview={audienceMode === "clinic-preview"} />
 
       {step === "choose" && (
         <ConcernSamplePicker
@@ -243,22 +247,17 @@ export default function PatientExperience({
           }}
           onSelect={selectSample}
           onEditBrand={onEditBrand}
+          clinicPreview={audienceMode === "clinic-preview"}
         />
       )}
 
       {step === "sample-lead" && selectedSample && (
-        <ClinicLeadForm
-          brand={brand}
-          mode="concern-gate"
-          interest={selectedSample.label}
-          previewImage={selectedSample.before}
-          onBack={() => {
-            setSelectedSample(null);
-            setStep("choose");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          onSubmitted={(submittedLead) => {
-            setSampleLead(submittedLead);
+        <LeadForm
+          selfie={selectedSample.before}
+          clinicName={brand.clinicName}
+          onSubmitted={(submittedLead, submittedMeta) => {
+            setLead(submittedLead);
+            setLeadMeta(submittedMeta);
             trackOutreachEvent(recipientToken, "lead_gate_submit", campaignStage);
             revealSample(selectedSample);
           }}
@@ -271,8 +270,8 @@ export default function PatientExperience({
             <p className="eyebrow">Live route · Client photograph</p>
             <h2 className="display mt-3 text-4xl text-plum sm:text-6xl">Analyse a real photo</h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-plum-soft">
-              Upload or take a clear, front-facing photo. Consent, lead capture,
-              live analysis and the visual preview continue exactly as they would for a patient.
+              Upload or take a clear, front-facing photo. Photo permission is
+              required before capture. {audienceMode === "clinic-preview" ? "Your clinic details are not requested again." : "Patient lead capture follows before the complete result."}
             </p>
             <button
               type="button"
@@ -288,8 +287,8 @@ export default function PatientExperience({
               <div className="mt-6 space-y-5">
                 {[
                   ["01", "Consent and photograph", "Clear permission and a guided, privacy-conscious upload."],
-                  ["02", "Patient lead gate", "Name, email, phone and treatment priorities captured before reveal."],
-                  ["03", "Live AI consultation", "Analysis, treatment map, before-and-after and honest limitations."],
+                  ["02", audienceMode === "clinic-preview" ? "Single clinic-owner gate" : "Patient lead gate", audienceMode === "clinic-preview" ? "Your work details were captured once before entering this demonstration." : "Name, email, phone and treatment priorities are captured before reveal."],
+                  ["03", "Illustrative AI skin-quality experience", "Analysis, treatment map, before-and-after and honest limitations."],
                   ["04", "Consultation handoff", "A direct route from visible interest into the clinic conversation."],
                 ].map(([number, title, copy]) => (
                   <div key={number} className="flex gap-4">
@@ -308,7 +307,11 @@ export default function PatientExperience({
                   setSelfie(image);
                   setSelectedSample(null);
                   startPipeline(image);
-                  setStep("lead");
+                  if (audienceMode === "clinic-preview") {
+                    runAnalysis(image);
+                  } else {
+                    setStep("lead");
+                  }
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               />
@@ -375,8 +378,8 @@ export default function PatientExperience({
           <h2 className="display mt-3 text-4xl text-plum">Let&rsquo;s try again</h2>
           <p className="mt-4 text-sm leading-6 text-plum-soft">{errorMsg}</p>
           <div className="mt-8 flex flex-col items-center gap-4">
-            {selfie && lead && leadMeta && (
-              <button type="button" onClick={() => runAnalysis(selfie, lead, leadMeta)} className="btn-serum">Retry analysis</button>
+            {selfie && (audienceMode === "clinic-preview" || (lead && leadMeta)) && (
+              <button type="button" onClick={() => runAnalysis(selfie, lead ?? undefined, leadMeta ?? undefined)} className="btn-serum">Retry analysis</button>
             )}
             <button type="button" onClick={reset} className="text-sm text-plum-mute underline underline-offset-4 hover:text-plum">Choose another route</button>
           </div>
@@ -385,11 +388,6 @@ export default function PatientExperience({
 
       {lead && leadMeta && step === "result" && (
         <p className="sr-only">Lead captured for {lead.name} with a matched analysis event.</p>
-      )}
-      {sampleLead && step === "result" && (
-        <p className="sr-only">
-          Clinic lead captured for {sampleLead.ownerName} after selecting {selectedSample?.label}.
-        </p>
       )}
     </div>
   );

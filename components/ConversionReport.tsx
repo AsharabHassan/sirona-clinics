@@ -25,10 +25,12 @@ function ConsultationCta({
   consultationUrl,
   clinic,
   position,
+  onBook,
 }: {
   consultationUrl: string;
   clinic: string;
   position: "patient-value" | "proof" | "final";
+  onBook: () => void;
 }) {
   const copy =
     position === "patient-value"
@@ -53,9 +55,10 @@ function ConsultationCta({
           href={consultationUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={onBook}
           className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-[#10231F] transition hover:-translate-y-0.5 hover:bg-[#EAF6F2]"
         >
-          Book my growth map <ArrowIcon />
+          Book a free 20-minute VELURIA Clinic Growth Map <ArrowIcon />
         </a>
       </div>
     </div>
@@ -89,6 +92,7 @@ export default function ConversionReport({
   patientJourney,
   onExplore,
   onPrivateDemo,
+  onBook,
 }: {
   brand: BrandConfig;
   profile?: ClinicProfile;
@@ -96,6 +100,7 @@ export default function ConversionReport({
   patientJourney: PatientJourneySnapshot | null;
   onExplore: () => void;
   onPrivateDemo: () => void;
+  onBook: () => void;
 }) {
   const clinic = brand.clinicName === "Your Clinic" ? "your clinic" : brand.clinicName;
   const isFallback = !patientJourney;
@@ -228,7 +233,7 @@ export default function ConversionReport({
             </article>
           ))}
         </div>
-        <div className="mt-8"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="patient-value" /></div>
+        <div className="mt-8"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="patient-value" onBook={onBook} /></div>
       </div>
 
       <div className="mx-auto mt-16 max-w-5xl">
@@ -252,7 +257,7 @@ export default function ConversionReport({
       <div className="mx-auto mt-16 max-w-5xl rounded-[2rem] bg-[#10231F] p-6 text-white sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">Real treatment proof</p>
+            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#8ED8C7]">VELURIA clinic case study</p>
             <h3 className="display mt-3 text-4xl">Aesthetics Central · real VELURIA case study</h3>
             <p className="mt-4 max-w-xl text-sm leading-7 text-white/65">
               The synthetic samples explain the digital patient journey. This separate case study provides the real clinical proof for VELURIA skin-quality treatment.
@@ -273,7 +278,7 @@ export default function ConversionReport({
           />
         </div>
       </div>
-      <div className="mx-auto mt-8 max-w-5xl"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="proof" /></div>
+      <div className="mx-auto mt-8 max-w-5xl"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="proof" onBook={onBook} /></div>
 
       <div className="mx-auto mt-16 max-w-5xl">
         <div className="text-center">
@@ -318,7 +323,7 @@ export default function ConversionReport({
         </div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-5xl"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="final" /></div>
+      <div className="mx-auto mt-10 max-w-5xl"><ConsultationCta consultationUrl={consultationUrl} clinic={clinic} position="final" onBook={onBook} /></div>
 
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <button type="button" onClick={onExplore} className="btn-ghost">Explore the ROI scenario</button>
