@@ -64,7 +64,7 @@ const GROUPS: { title: string; eyebrow: string; fields: Field[] }[] = [
   {
     title: "Set the treatment economics",
     eyebrow: "Clinic assumptions",
-    fields: ["sessionFee", "sessionsPerCourse", "directCostPerCourse"],
+    fields: ["sessionFee", "sessionsPerCourse"],
   },
 ];
 
@@ -112,7 +112,7 @@ export default function RoiCalculator({
           See how the VELURIA funnel could add revenue for {clinicName}.
         </h2>
         <p className="mt-4 max-w-3xl leading-7 text-plum-soft">
-          Model new-patient acquisition and current-client reactivation separately. Every number is editable, with gross revenue, marketing spend and direct delivery costs shown clearly.
+          Model new-patient acquisition and current-client reactivation separately. The calculator shows illustrative gross treatment revenue only, not clinic profit or contribution.
         </p>
       </div>
 
@@ -237,12 +237,6 @@ export default function RoiCalculator({
             </div>
           </div>
 
-          <div className="mt-6 space-y-2 rounded-2xl bg-white/[0.06] p-4 text-xs leading-6 text-white/60">
-            <div className="flex justify-between gap-4"><span>Paid ads plus reactivation spend</span><strong className="text-white">− {gbp(result.marketingSpend)}</strong></div>
-            <div className="flex justify-between gap-4"><span>Direct treatment delivery costs</span><strong className="text-white">− {gbp(result.directDeliveryCosts)}</strong></div>
-            <div className="flex justify-between gap-4 border-t border-white/10 pt-2"><span>Contribution before fixed overhead</span><strong className="text-[#8ED8C7]">{gbp(result.contribution)}</strong></div>
-          </div>
-
           <div className="mt-5 rounded-2xl border border-[#8ED8C7]/20 bg-[#8ED8C7]/8 p-4">
             <p className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[#8ED8C7]">What the system automates</p>
             <p className="mt-2 text-xs leading-6 text-white/65">Campaign response, patient education, consented lead capture, configured follow-up, retargeting and booking prompts can run without repetitive manual chasing.</p>
@@ -254,7 +248,7 @@ export default function RoiCalculator({
           </div>
 
           <p className="mt-5 text-[0.65rem] leading-relaxed text-white/45">
-            Adjustable scenario only, not a forecast or guarantee. It excludes tax, fixed overhead, refunds, unused capacity and the separately priced optional AI Brain. Lead volume, conversion, suitability and patient outcomes vary.
+            Gross revenue scenario only, not a forecast, guarantee or profit calculation. Clinic costs, practitioner time, product costs, marketing costs, tax, overhead, refunds, unused capacity and the separately priced optional AI Brain are not deducted. Lead volume, conversion, suitability and patient outcomes vary.
           </p>
 
           <a href={consultationUrl} target="_blank" rel="noopener noreferrer" onClick={onBook} className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-4 text-center text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#10231F] transition hover:bg-[#EAF6F2]">Book a free 20-minute VELURIA Clinic Growth Map</a>
