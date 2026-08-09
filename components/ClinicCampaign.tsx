@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import BrandStamp from "@/components/BrandStamp";
 import ClinicApplicationPage from "@/components/ClinicApplicationPage";
+import ClinicAiBrainPage from "@/components/ClinicAiBrainPage";
 import ClinicFunnelPage from "@/components/ClinicFunnelPage";
 import ClinicLandingPage from "@/components/ClinicLandingPage";
 import ClinicLeadForm from "@/components/ClinicLeadForm";
@@ -19,8 +20,8 @@ import {
 import { consultationHref, trackOutreachEvent } from "@/lib/outreachClient";
 import type { ClinicLeadPayload, PatientJourneySnapshot } from "@/lib/types";
 
-type Step = "landing" | "funnel" | "application" | "gate" | "brand" | "demo" | "report" | "roi" | "form" | "done";
-type PreviewOrigin = "landing" | "funnel" | "application";
+type Step = "landing" | "funnel" | "application" | "brain" | "gate" | "brand" | "demo" | "report" | "roi" | "form" | "done";
+type PreviewOrigin = "landing" | "funnel" | "application" | "brain";
 
 function ArrowIcon() {
   return (
@@ -52,7 +53,7 @@ export default function ClinicCampaign({
 }: ClinicCampaignProps) {
   const startingView = CAMPAIGN_STAGE_TO_VIEW[initialStage];
   const [step, setStep] = useState<Step>(startingView === "demo" && profile ? "gate" : startingView);
-  const [previewOrigin, setPreviewOrigin] = useState<PreviewOrigin>(startingView === "funnel" || startingView === "application" ? startingView : "landing");
+  const [previewOrigin, setPreviewOrigin] = useState<PreviewOrigin>(startingView === "funnel" || startingView === "application" || startingView === "brain" ? startingView : "landing");
   const [clinicPreviewUnlocked, setClinicPreviewUnlocked] = useState(false);
   const [brand, setBrand] = useState<BrandConfig>(
     makeBrand(profile ? { clinicName: profile.clinicName, accent: profile.brand.accent } : undefined),
@@ -74,7 +75,7 @@ export default function ClinicCampaign({
         setStep(unlocked ? "demo" : "gate");
         if (!unlocked) trackOutreachEvent(recipientToken, "clinic_gate_view", initialStage);
       }
-      trackOutreachEvent(recipientToken, startingView === "funnel" ? "funnel_view" : startingView === "application" ? "application_view" : "landing_view", initialStage);
+      trackOutreachEvent(recipientToken, startingView === "funnel" ? "funnel_view" : startingView === "application" ? "application_view" : startingView === "brain" ? "ai_brain_view" : "landing_view", initialStage);
       return;
     }
     const params = new URLSearchParams(window.location.search);
@@ -116,7 +117,7 @@ export default function ClinicCampaign({
     <main className="relative min-h-dvh overflow-hidden">
       <header className="relative z-30 border-b border-black/[0.06] bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-          <button type="button" onClick={() => goTo(step === "landing" || step === "funnel" || step === "application" ? "landing" : previewOrigin)} className="flex items-center gap-3 text-left" aria-label="Back to the VELURIA clinic page">
+          <button type="button" onClick={() => goTo(step === "landing" || step === "funnel" || step === "application" || step === "brain" ? "landing" : previewOrigin)} className="flex items-center gap-3 text-left" aria-label="Back to the VELURIA clinic page">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/sirona-logo.png" alt="Sirona Aesthetics" className="h-8 w-auto" />
             <span className="hidden border-l border-black/10 pl-3 text-[0.58rem] uppercase leading-relaxed tracking-[0.22em] text-plum-mute sm:block">VELURIA<br />clinic growth</span>
@@ -137,6 +138,8 @@ export default function ClinicCampaign({
         <ClinicFunnelPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={() => beginPreview("funnel")} onTrack={track} />
       ) : step === "application" ? (
         <ClinicApplicationPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={() => beginPreview("application")} onTrack={track} />
+      ) : step === "brain" ? (
+        <ClinicAiBrainPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={() => beginPreview("brain")} onTrack={track} />
       ) : (
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
           <div className="mb-9 flex flex-wrap items-center justify-between gap-4">

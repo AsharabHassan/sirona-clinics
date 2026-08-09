@@ -40,6 +40,7 @@ export type OutreachEventName =
   | "funnel_view"
   | "application_view"
   | "application_try_click"
+  | "ai_brain_view"
   | "funnel_try_click"
   | "ai_brain_interest"
   | "hero_fit_click"
@@ -106,7 +107,7 @@ export const CAMPAIGN_PRODUCT_LABELS: Record<CampaignProductId, string> = {
   "hair-force-plus": "VELURIA Hair Force+",
 };
 
-export const CAMPAIGN_STAGE_TO_VIEW: Record<CampaignStage, "landing" | "funnel" | "application" | "demo" | "report" | "roi"> = {
+export const CAMPAIGN_STAGE_TO_VIEW: Record<CampaignStage, "landing" | "funnel" | "application" | "brain" | "demo" | "report" | "roi"> = {
   overview: "landing",
   demo: "demo",
   report: "report",
@@ -114,12 +115,12 @@ export const CAMPAIGN_STAGE_TO_VIEW: Record<CampaignStage, "landing" | "funnel" 
   "email-1": "landing",
   "email-2": "funnel",
   "email-3": "application",
-  "email-4": "landing",
+  "email-4": "brain",
   "linkedin-inmail": "landing",
   "linkedin-1": "landing",
   "linkedin-2": "funnel",
   "linkedin-3": "application",
-  "linkedin-4": "demo",
+  "linkedin-4": "brain",
   "linkedin-5": "report",
   "linkedin-6": "report",
   "linkedin-7": "landing",
@@ -136,6 +137,7 @@ export function isOutreachEventName(value: unknown): value is OutreachEventName 
     value === "funnel_view" ||
     value === "application_view" ||
     value === "application_try_click" ||
+    value === "ai_brain_view" ||
     value === "funnel_try_click" ||
     value === "ai_brain_interest" ||
     value === "hero_fit_click" ||
