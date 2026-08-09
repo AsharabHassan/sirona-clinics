@@ -98,3 +98,24 @@ export interface SkinAnalysis {
   /** Always present, non-medical disclaimer */
   disclaimer: string;
 }
+
+export type ConcernSampleId =
+  | "hydration"
+  | "texture"
+  | "post-acne"
+  | "fine-lines"
+  | "firmness"
+  | "tone";
+
+export interface PatientJourneySnapshot {
+  source: "live" | "sample";
+  concernId?: ConcernSampleId;
+  concernLabel?: string;
+  before: string;
+  after: string | null;
+  mapImage: string | null;
+  analysis: SkinAnalysis;
+  matchedProductIds: Array<"silk-skin" | "ultra-lift" | "pearl-tone">;
+  previewStatus: "ready" | "failed";
+  disclosure?: string;
+}

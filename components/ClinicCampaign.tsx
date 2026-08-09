@@ -18,7 +18,7 @@ import {
   type OutreachEventName,
 } from "@/lib/campaign";
 import { consultationHref, trackOutreachEvent } from "@/lib/outreachClient";
-import type { ClinicLeadPayload } from "@/lib/types";
+import type { ClinicLeadPayload, PatientJourneySnapshot } from "@/lib/types";
 
 type Step =
   | "landing"
@@ -92,6 +92,7 @@ export default function ClinicCampaign({
     ),
   );
   const [lead, setLead] = useState<ClinicLeadPayload | null>(null);
+  const [patientJourney, setPatientJourney] = useState<PatientJourneySnapshot | null>(null);
   const consultationUrl = consultationHref(recipientToken, initialStage, profile?.slug);
 
   useEffect(() => {
@@ -121,7 +122,6 @@ export default function ClinicCampaign({
   const goTo = (next: Step) => {
     setStep(next);
     const eventForStep: Partial<Record<Step, OutreachEventName>> = {
-      demo: "ai_start",
       report: "report_view",
       roi: "roi_view",
     };
@@ -229,7 +229,12 @@ export default function ClinicCampaign({
               brand={brand}
               consultationUrl={consultationUrl}
               onEditBrand={() => goTo("brand")}
-              onContinue={() => goTo("report")}
+              recipientToken={recipientToken}
+              campaignStage={initialStage}
+              onContinue={(snapshot) => {
+                setPatientJourney(snapshot);
+                goTo("report");
+              }}
             />
           )}
 
@@ -239,6 +244,7 @@ export default function ClinicCampaign({
               brand={brand}
               consultationUrl={consultationUrl}
               profile={profile}
+              patientJourney={patientJourney}
               onExplore={() => goTo("roi")}
               onPrivateDemo={() => goTo("form")}
             />

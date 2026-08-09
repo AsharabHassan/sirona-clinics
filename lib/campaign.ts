@@ -39,6 +39,8 @@ export type OutreachEventName =
   | "landing_view"
   | "ai_start"
   | "ai_complete"
+  | "concern_sample_select"
+  | "patient_result_view"
   | "report_view"
   | "roi_view"
   | "booking_click";
@@ -113,6 +115,8 @@ export function isOutreachEventName(value: unknown): value is OutreachEventName 
     value === "landing_view" ||
     value === "ai_start" ||
     value === "ai_complete" ||
+    value === "concern_sample_select" ||
+    value === "patient_result_view" ||
     value === "report_view" ||
     value === "roi_view" ||
     value === "booking_click"

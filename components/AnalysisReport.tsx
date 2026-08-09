@@ -199,6 +199,7 @@ export default function AnalysisReport({
   analysis,
   clinicName = "Your Clinic",
   consultationUrl = CALENDAR_URL,
+  sourceDisclosure,
   onRetryPreview,
   onRestart,
 }: {
@@ -210,6 +211,7 @@ export default function AnalysisReport({
   analysis: SkinAnalysis;
   clinicName?: string;
   consultationUrl?: string;
+  sourceDisclosure?: string;
   onRetryPreview?: () => void;
   onRestart: () => void;
 }) {
@@ -234,7 +236,13 @@ export default function AnalysisReport({
   const handlePdf = async () => {
     setPdfBusy(true);
     try {
-      await downloadAnalysisPdf({ analysis, before, after, map: mapImage });
+      await downloadAnalysisPdf({
+        analysis,
+        before,
+        after,
+        map: mapImage,
+        sourceNote: sourceDisclosure,
+      });
     } finally {
       setPdfBusy(false);
     }
@@ -259,6 +267,17 @@ export default function AnalysisReport({
           Your complete client experience, prepared in the branding of {clinicName}.
         </p>
       </div>
+
+      {sourceDisclosure && (
+        <div className="rounded-2xl border border-serum/20 bg-[#EAF6F2] p-4 text-center animate-fade-scale">
+          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-serum">
+            Synthetic AI demonstration
+          </p>
+          <p className="mx-auto mt-2 max-w-xl text-xs leading-5 text-plum-soft">
+            {sourceDisclosure}
+          </p>
+        </div>
+      )}
 
       {/* Prominent disclaimer at the TOP of the results, not just the footer. */}
       <div className="flex items-start gap-3 rounded-2xl border border-amber-300/70 bg-amber-50/80 p-4 text-left animate-fade-scale">

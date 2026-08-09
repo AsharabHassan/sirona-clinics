@@ -104,6 +104,7 @@ export interface AnalysisPdfOptions {
   before: string;
   after: string | null;
   map: string | null;
+  sourceNote?: string;
 }
 
 /**
@@ -112,7 +113,7 @@ export interface AnalysisPdfOptions {
  * client-side download and the base64 encoder used for GHL report delivery.
  */
 async function buildAnalysisPdf(opts: AnalysisPdfOptions) {
-  const { analysis, before, after, map } = opts;
+  const { analysis, before, after, map, sourceNote } = opts;
   // Build the labelled side-by-side before/after (real selfie + generated after).
   // JPEG here (not PNG): a photographic PNG bloats the PDF to several MB, which
   // makes the emailed / GHL-hosted report slow to open.
@@ -210,6 +211,11 @@ async function buildAnalysisPdf(opts: AnalysisPdfOptions) {
 
   heading("Your Skin Consultation", 18);
   body(analysis.summary);
+
+  if (sourceNote) {
+    heading("Synthetic AI demonstration", 11);
+    body(sourceNote, 9, [58, 122, 128]);
+  }
 
   // Prominent disclaimer near the top so it's seen before the scores/preview.
   disclaimerBox();
