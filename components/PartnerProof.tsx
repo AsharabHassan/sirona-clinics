@@ -28,12 +28,6 @@ const PARTNER_CLINICS = [
     logoClass: "h-12 sm:h-14",
     surface: "bg-[#111c19]",
   },
-  {
-    name: "Harley Street Aesthetics",
-    logo: "/partners/harley-street-aesthetics-logo-white.webp",
-    logoClass: "h-10 sm:h-12",
-    surface: "bg-[#141414]",
-  },
 ] as const;
 
 function ArrowIcon() {
