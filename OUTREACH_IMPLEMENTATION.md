@@ -126,16 +126,20 @@ node tools/outreach-loop.mjs release --run <run-id> --window 09:30
 After each manual action, record the real outcome:
 
 ```powershell
-node tools/outreach-loop.mjs record --run <run-id> --contact <ghl-contact-id> --event sent --stage email-1
-node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event delivered
-node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event positive_reply
-node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event booked
+node tools/outreach-loop.mjs record --run <run-id> --contact <ghl-contact-id> --event sent --stage email-1 --channel email
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event delivered --stage email-1 --channel email
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event positive_reply --stage email-1 --channel email --classification positive --topic product_fit --note "Privacy-safe summary"
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event booked --channel consultation --topic consultation
+npm run outreach:learn
 ```
 
 Supported response outcomes include `positive_reply`, `negative_reply`,
 `explicit_stop`, `unsubscribe`, `hard_bounce`, `complaint`, `booking_click`,
 `booked`, `linkedin_accept` and `linkedin_reply`. Replies are classified and a
 personal draft is prepared, but a human approves every reply before sending.
+The learning command saves a durable snapshot only when new interactions exist.
+It aggregates stages, channels, classifications and topics, then proposes one
+reviewable hypothesis without changing live copy or sending automatically.
 
 For an interested reply or question, write the truly personalised response to
 a private text file and create a separate approval packet:

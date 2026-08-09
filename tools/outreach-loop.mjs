@@ -37,14 +37,18 @@ const PRODUCT_LABELS = {
   "pearl-tone": "VELURIA Pearl Tone",
   "hair-force-plus": "VELURIA Hair Force+",
 };
-const STOP_EVENTS = new Set(["hard_bounce", "unsubscribe", "complaint", "explicit_stop"]);
-const HIGH_INTENT_EVENTS = new Set(["positive_reply", "booking_click", "clinic_gate_submit", "demo_launch", "ai_complete", "booked"]);
+const STOP_EVENTS = new Set(["hard_bounce", "unsubscribe", "complaint", "explicit_stop", "negative_reply"]);
+const HIGH_INTENT_EVENTS = new Set(["positive_reply", "linkedin_reply", "booking_click", "application_try_click", "ai_brain_interest", "product_interest", "clinic_gate_submit", "lead_gate_submit", "demo_launch", "ai_complete", "booked"]);
 const REPLY_CLASSIFICATIONS = new Set(["positive", "question", "pricing", "timing", "referral", "not_now", "out_of_office", "decline", "stop"]);
 const ALLOWED_EVENTS = new Set([
   "sent", "delivered", "hard_bounce", "positive_reply", "negative_reply", "booking_click", "booked",
   "cancelled", "attended", "no_show", "qualified", "unsubscribe", "complaint", "explicit_stop",
   "linkedin_invite", "linkedin_accept", "linkedin_reply", "application_view", "clinic_gate_submit",
-  "demo_launch", "ai_complete", "ai_brain_view", "reply_draft_prepared",
+  "demo_launch", "ai_complete", "ai_brain_view", "reply_draft_prepared", "outreach_click", "landing_view",
+  "funnel_view", "application_try_click", "funnel_try_click", "ai_brain_interest", "hero_fit_click",
+  "product_interest", "ai_demo_start", "clinic_gate_view", "scenario_interaction", "lead_gate_submit",
+  "calculator_adjust", "hair_consultation_click", "ai_start", "concern_sample_select", "patient_result_view",
+  "report_view", "roi_view",
 ]);
 
 function tokenKey() {
@@ -104,6 +108,7 @@ function defaultState() {
     sendReceipts: [],
     events: [],
     cohorts: [],
+    learningRuns: [],
     currentExperiment: {
       variable: "email_1_hook",
       control: "product_relevance",
@@ -133,6 +138,7 @@ function loadState() {
     sendReceipts: receipts,
     events: loaded.events ?? [],
     cohorts: loaded.cohorts ?? [],
+    learningRuns: loaded.learningRuns ?? [],
     currentExperiment: migrating ? defaultState().currentExperiment : loaded.currentExperiment ?? defaultState().currentExperiment,
   };
 }
@@ -807,7 +813,18 @@ function record(options) {
   if (!ALLOWED_EVENTS.has(options.event)) throw new Error("Unsupported event");
   const state = loadState();
   const occurredAt = options.at || new Date().toISOString();
-  const event = { id: crypto.randomUUID(), contactId: options.contact, event: options.event, stage: options.stage || null, occurredAt, runId: options.run || null, note: options.note || "" };
+  const event = {
+    id: crypto.randomUUID(),
+    contactId: options.contact,
+    event: options.event,
+    stage: options.stage || null,
+    channel: options.channel || null,
+    classification: options.classification || null,
+    topic: options.topic || null,
+    occurredAt,
+    runId: options.run || null,
+    note: truncate(options.note || "", 500),
+  };
   state.events.push(event);
   let contact = state.contacts[options.contact];
   const packetItem = findPacketItem(options.run, options.contact);
@@ -874,11 +891,50 @@ function learn() {
   const state = loadState();
   const totals = {};
   for (const event of state.events) totals[event.event] = (totals[event.event] || 0) + 1;
+  const tally = (field) => state.events.reduce((result, event) => {
+    const value = event[field];
+    if (value) result[value] = (result[value] ?? 0) + 1;
+    return result;
+  }, {});
   const delivered = totals.delivered ?? 0;
   const booked = totals.booked ?? 0;
   const positive = totals.positive_reply ?? 0;
   const hardBounces = totals.hard_bounce ?? 0;
   const complaints = totals.complaint ?? 0;
+  const decision = delivered >= 300 && booked === 0 && positive === 0
+    ? "PAUSE_AND_AUDIT_ZERO_INTENT_AFTER_300_DELIVERED"
+    : hardBounces / Math.max(delivered, 1) >= 0.02 || complaints > 0
+      ? "PAUSE_AFFECTED_SENDER_AND_AUDIT_DELIVERABILITY"
+      : "CONTINUE_CONTROLLED_COHORTS";
+  const nextHypothesis = complaints > 0 || hardBounces / Math.max(delivered, 1) >= 0.02
+    ? "Protect sender reputation before testing copy."
+    : (totals.booking_click ?? 0) > 0 && booked === 0
+      ? "Audit the calendar handoff and reduce friction after booking intent."
+      : positive > 0 && booked === 0
+        ? "Test a clearer human-approved reply-to-consultation transition."
+        : delivered >= 300 && positive === 0
+          ? "Revisit audience fit and the first-touch product relevance angle."
+          : "Collect more verified interactions before changing a campaign variable.";
+  const previousRun = state.learningRuns.at(-1);
+  const newInteractionCount = Math.max(0, state.events.length - (previousRun?.eventCursor ?? 0));
+  const learningRun = {
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+    eventCursor: state.events.length,
+    newInteractionCount,
+    decision,
+    nextHypothesis,
+    totals,
+    stages: tally("stage"),
+    channels: tally("channel"),
+    classifications: tally("classification"),
+    topics: tally("topic"),
+  };
+  if (newInteractionCount > 0) {
+    state.learningRuns.push(learningRun);
+    state.learningRuns = state.learningRuns.slice(-100);
+    saveState(state);
+  }
   return {
     status: state.status,
     distinctPeopleContacted: state.distinctPeopleContacted,
@@ -889,12 +945,15 @@ function learn() {
       hardBouncePercent: delivered ? Math.round((hardBounces / delivered) * 10000) / 100 : 0,
       complaintPercent: delivered ? Math.round((complaints / delivered) * 10000) / 100 : 0,
     },
+    stages: learningRun.stages,
+    channels: learningRun.channels,
+    classifications: learningRun.classifications,
+    topics: learningRun.topics,
+    newInteractionCount,
+    durableUpdate: newInteractionCount > 0 ? "LEARNING_SNAPSHOT_SAVED" : "NO_NEW_INTERACTIONS",
     primaryMetric: CONFIG.experiments.primaryMetric,
-    decision: delivered >= 300 && booked === 0 && positive === 0
-      ? "PAUSE_AND_AUDIT_ZERO_INTENT_AFTER_300_DELIVERED"
-      : hardBounces / Math.max(delivered, 1) >= 0.02 || complaints > 0
-        ? "PAUSE_AFFECTED_SENDER_AND_AUDIT_DELIVERABILITY"
-        : "CONTINUE_CONTROLLED_COHORTS",
+    decision,
+    nextHypothesis,
   };
 }
 

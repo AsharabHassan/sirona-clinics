@@ -227,6 +227,24 @@ test("a stop reply suppresses the clinic without creating a send packet", () => 
   assert.equal(followups.cleared.length, 0);
 });
 
+test("learning snapshots persist only when new interactions exist", () => {
+  const env = sandboxEnv();
+  importResearch(env, [completeRecord()]);
+  const introduction = run(["prepare", "--limit", "1", "--at", "2026-08-10T08:30:00Z"], env);
+  run(["record", "--contact", "contact-test-1", "--event", "sent", "--stage", "email-1", "--channel", "email", "--run", introduction.runId, "--at", "2026-08-10T08:30:00Z"], env);
+  run(["record", "--contact", "contact-test-1", "--event", "booking_click", "--stage", "email-1", "--channel", "website", "--classification", "high_intent", "--topic", "consultation", "--at", "2026-08-11T08:30:00Z"], env);
+  const first = run(["learn"], env);
+  assert.equal(first.newInteractionCount, 2);
+  assert.equal(first.durableUpdate, "LEARNING_SNAPSHOT_SAVED");
+  assert.equal(first.channels.email, 1);
+  assert.equal(first.channels.website, 1);
+  assert.equal(first.topics.consultation, 1);
+  assert.match(first.nextHypothesis, /calendar handoff/i);
+  const second = run(["learn"], env);
+  assert.equal(second.newInteractionCount, 0);
+  assert.equal(second.durableUpdate, "NO_NEW_INTERACTIONS");
+});
+
 test("second clinic person is held until the 15-business-day delay", () => {
   const env = sandboxEnv();
   importResearch(env, [
