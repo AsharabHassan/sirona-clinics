@@ -28,8 +28,11 @@ receipt.
 
 ## Operating limits
 
-- 100 new people per day, Monday to Saturday.
-- 50 introductions assigned to 09:30 and 50 assigned to 14:30 UK time.
+- A maximum of 100 total emails per day, Monday to Saturday. Follow-ups and
+  approved reply messages count inside the same cap and take priority over new
+  introductions.
+- Use the remaining daily capacity for introductions, split between 09:30 and
+  14:30 UK time.
 - No message on Sunday or at/after 18:00 UK time.
 - One sender capped at 100 total messages per day, including introductions,
   follow-ups and replies.
@@ -175,6 +178,19 @@ Work only in Sirona location `OdylxFk47CSXq3mt6RoF`. Update existing contacts
 by Contact ID and do not create contacts from campaign events. The receiving
 workflow must map contact, clinic, stage, experiment, event, timestamp and page
 URL, and stop both email and LinkedIn follow-up when a consultation is booked.
+
+Published Sirona safeguards:
+
+- `VELURIA | Campaign Event Intake` receives the dedicated website event
+  webhook. Its synthetic mapping reference covers contact, clinic, stage,
+  experiment, event, timestamp and page URL. It does not create contacts.
+- `VELURIA | Booking Suppression & Handoff` handles the consultation booking
+  stop and handoff.
+- `VELURIA | Reply Review and Suppression` watches email replies from contacts
+  carrying `veluria_consultation_outreach` and adds
+  `veluria_reply_review` for human classification before any follow-up.
+- Every campaign contact must receive `veluria_consultation_outreach` before
+  the first approved email is sent.
 
 Calendar:
 `https://link.sironaaesthetics.co.uk/widget/bookings/veluria-clinic-growth-map`
