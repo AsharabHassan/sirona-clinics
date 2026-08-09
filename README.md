@@ -36,7 +36,7 @@ clinic personalisation:
 # Email 1: verified clinic overview
 https://your-domain.example/r/{OPAQUE_TOKEN}/email-1
 
-# Email 2: real result and AI experience
+# Email 2: VELURIA AI growth funnel and patient application
 https://your-domain.example/r/{OPAQUE_TOKEN}/email-2
 
 # Email 3: clinic-growth report

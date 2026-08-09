@@ -19,10 +19,23 @@ const sans = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://demo.sironaaesthetics.agency"),
   title: "PBSerum VELURIA for Clinics | Sirona Aesthetics",
   description:
     "Preview a clinic-branded AI patient journey and book a free 20-minute VELURIA clinic consultation with Sirona Aesthetics.",
   applicationName: "Sirona VELURIA for Clinics",
+  openGraph: {
+    type: "website",
+    title: "VELURIA AI Clinic Growth | Sirona Aesthetics",
+    description: "From patient interest to booked consultation with a clinic-branded VELURIA AI funnel.",
+    images: [{ url: "/og.png", width: 1732, height: 909, alt: "VELURIA AI clinic growth funnel" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VELURIA AI Clinic Growth | Sirona Aesthetics",
+    description: "From patient interest to booked consultation with a clinic-branded VELURIA AI funnel.",
+    images: ["/og.png"],
+  },
   appleWebApp: { capable: true, statusBarStyle: "default", title: "Sirona VELURIA" },
   formatDetection: { telephone: false },
 };

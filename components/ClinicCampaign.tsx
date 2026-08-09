@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import BrandStamp from "@/components/BrandStamp";
+import ClinicFunnelPage from "@/components/ClinicFunnelPage";
 import ClinicLandingPage from "@/components/ClinicLandingPage";
 import ClinicLeadForm from "@/components/ClinicLeadForm";
 import ConversionReport from "@/components/ConversionReport";
@@ -17,7 +18,7 @@ import {
 import { consultationHref, trackOutreachEvent } from "@/lib/outreachClient";
 import type { ClinicLeadPayload, PatientJourneySnapshot } from "@/lib/types";
 
-type Step = "landing" | "brand" | "demo" | "report" | "roi" | "form" | "done";
+type Step = "landing" | "funnel" | "brand" | "demo" | "report" | "roi" | "form" | "done";
 
 function ArrowIcon() {
   return (
@@ -62,7 +63,7 @@ export default function ClinicCampaign({
 
   useEffect(() => {
     if (profile) {
-      trackOutreachEvent(recipientToken, "landing_view", initialStage);
+      trackOutreachEvent(recipientToken, startingView === "funnel" ? "funnel_view" : "landing_view", initialStage);
       return;
     }
     const params = new URLSearchParams(window.location.search);
@@ -112,6 +113,8 @@ export default function ClinicCampaign({
 
       {step === "landing" ? (
         <ClinicLandingPage clinicCopy={clinicCopy} profile={profile} consultationUrl={consultationUrl} beginPreview={beginPreview} onTrack={track} />
+      ) : step === "funnel" ? (
+        <ClinicFunnelPage clinicName={clinicCopy} profile={profile} consultationUrl={consultationUrl} onTryExperience={beginPreview} onTrack={track} />
       ) : (
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
           <div className="mb-9 flex flex-wrap items-center justify-between gap-4">
