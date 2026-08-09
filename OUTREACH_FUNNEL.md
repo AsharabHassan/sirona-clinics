@@ -1,5 +1,10 @@
 # VELURIA Consultation Outreach Funnel
 
+> This document preserves earlier funnel reasoning. The active four-stage
+> sequence, landing-page mapping and send safeguards are defined in
+> `OUTREACH_IMPLEMENTATION.md`, `outreach-loop.config.json` and the generated
+> approval packet.
+
 ## End goal
 
 Move a qualified UK clinic decision-maker from cold product awareness to a

@@ -2,38 +2,50 @@
   "campaignId": "veluria-consultation-2026",
   "locationId": "OdylxFk47CSXq3mt6RoF",
   "locationName": "Sirona Aesthetics",
-  "senderEmail": "hello@sironaaesthetics.co.uk",
-  "senderName": "Jacqui Shand | Sirona Aesthetics",
+  "senderPool": [
+    { "id": "sirona-1", "emailEnv": "SIRONA_OUTREACH_SENDER_1_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_1_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_1_AUTHENTICATED" },
+    { "id": "sirona-2", "emailEnv": "SIRONA_OUTREACH_SENDER_2_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_2_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_2_AUTHENTICATED" },
+    { "id": "sirona-3", "emailEnv": "SIRONA_OUTREACH_SENDER_3_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_3_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_3_AUTHENTICATED" },
+    { "id": "sirona-4", "emailEnv": "SIRONA_OUTREACH_SENDER_4_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_4_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_4_AUTHENTICATED" },
+    { "id": "sirona-5", "emailEnv": "SIRONA_OUTREACH_SENDER_5_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_5_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_5_AUTHENTICATED" }
+  ],
   "timezone": "Europe/London",
   "sendWindows": ["09:30", "14:30"],
   "latestStart": "17:45",
   "hardStop": "18:00",
   "sundayLocked": true,
-  "maxDistinctPeoplePerWindow": 10,
-  "programmeCap": 200,
+  "newPeoplePerDay": 100,
+  "newPeoplePerWindow": 50,
+  "newPeoplePerSenderPerDay": 20,
+  "totalMessagesPerSenderPerDay": 80,
+  "readyQueueMinimum": 500,
+  "researchCandidatesPerDay": 150,
+  "researchApprovalsPerDay": 120,
+  "programmeCap": null,
   "maxPeoplePerClinic": 2,
-  "secondPersonDelayBusinessDays": 10,
+  "secondPersonDelayBusinessDays": 15,
   "approvalRequiredForEveryBatch": true,
   "linkedin": {
-    "coldStrategy": "inmail-first",
+    "coldStrategy": "connection-first",
     "manualOnly": true,
-    "maxConnectedMessages": 7,
+    "maxInvitationsPerDay": 20,
+    "maxConnectedMessages": 4,
     "stopOnWarning": true
   },
   "email": {
     "stages": [
       { "id": "email-1", "delayBusinessDays": 0, "goal": "product relevance" },
-      { "id": "email-2", "delayBusinessDays": 2, "goal": "clinic commercial relevance" },
-      { "id": "email-3", "delayBusinessDays": 3, "goal": "proof and sample report" },
-      { "id": "email-4", "delayBusinessDays": 4, "goal": "clinic growth-map consultation" }
+      { "id": "email-2", "delayBusinessDays": 3, "goal": "clinic growth opportunity" },
+      { "id": "email-3", "delayBusinessDays": 7, "goal": "doctor-facing before-and-after application" },
+      { "id": "email-4", "delayBusinessDays": 12, "goal": "contextual AI Sales Brain and consultation" }
     ]
   },
   "experiments": {
-    "cohortSizePerVariant": 20,
+    "cohortSizePerVariant": 100,
     "minimumObservationBusinessDays": 5,
     "oneVariableAtATime": true,
     "primaryMetric": "qualified_consultation_booked",
-    "secondaryMetrics": ["positive_reply", "booking_click", "ai_complete", "report_view"],
+    "secondaryMetrics": ["positive_reply", "booking_click", "application_view", "clinic_gate_submit", "ai_complete", "ai_brain_view"],
     "opensAreDiagnosticOnly": true
   }
 }

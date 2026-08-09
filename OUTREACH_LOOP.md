@@ -1,5 +1,9 @@
 # VELURIA Outreach Learning Loop
 
+> Archived 200-person pilot specification. It is retained for history only.
+> The current 100-new-people-per-day, five-sender operating rules are in
+> `OUTREACH_IMPLEMENTATION.md` and `outreach-loop.config.json`.
+
 ## Objective
 
 Build a review-gated campaign to reach 200 distinct, qualified UK clinic

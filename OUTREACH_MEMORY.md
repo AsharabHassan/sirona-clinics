@@ -1,5 +1,9 @@
 # VELURIA Outreach Memory
 
+> Historical campaign notes. They are not a send ledger or current readiness
+> source. The receipt-backed controller state and `OUTREACH_IMPLEMENTATION.md`
+> are authoritative.
+
 Last updated: 30 July 2026
 
 ## Current status

@@ -1,99 +1,186 @@
-# VELURIA consultation outreach implementation
+# VELURIA outreach operating system
 
-## Current safety state
+## Safety state
 
-The controller is `PAUSED`. Building and testing the funnel does not authorize
-researching, queuing, approving, releasing or sending a live batch. Activation
-requires explicit funnel approval and records the reviewer:
+The campaign is `PAUSED` by default. The controller can research, validate and
+prepare approval packets while paused, but it cannot transmit an email or
+perform a LinkedIn action. `release` only exposes approved manual actions. It
+does not send them.
 
-```powershell
-node tools/outreach-loop.mjs activate --funnel-approved yes --by "Reviewer name"
-```
+Live activation requires all of the following:
 
-Activation does not send anything. Every batch still requires its own approval
-and a fresh release inside the UK clock gate.
+- five different authenticated `@sironaaesthetics.co.uk` senders with real names;
+- at least 500 fully verified, unsuppressed people in the ready queue;
+- an approved production profile for every clinic;
+- a working Sirona GoHighLevel event webhook;
+- a 32-character or longer recipient-token secret;
+- explicit funnel, sender and research approval by a named reviewer.
 
-## Clinic profiles
-
-Add only approved records to `data/clinic-profiles.json`. A live profile needs
-`status: "verified"`, a confirmed corporate entity, an official website and
-location, source-backed clinic signals, verification dates, relevant VELURIA
-products and clinic-specific funnel copy. Unknown slugs return a 404. The
-included example is an internal QA record and cannot pass the live batch gate.
-
-## Recipient evidence
-
-`npm run outreach:init` creates the gitignored file
-`outreach-private/recipient-evidence.json`. Key records by the existing
-GoHighLevel Contact ID:
-
-```json
-{
-  "EXISTING_GHL_CONTACT_ID": {
-    "identityMatch": "exact",
-    "currentRole": "Founder and Clinic Director",
-    "workEmail": "name@clinic-domain.co.uk",
-    "emailStatus": "verified",
-    "salesNavigatorLeadUrl": "https://www.linkedin.com/sales/lead/...",
-    "officialSourceUrl": "https://clinic-domain.co.uk/relevant-service",
-    "connectionState": "not-connected",
-    "dnd": false,
-    "unsubscribed": false,
-    "suppressed": false,
-    "hardBounce": false,
-    "explicitStop": false
-  }
-}
-```
-
-Personal email domains, missing identity evidence, non-corporate businesses and
-all stop signals are held automatically.
-
-## Batch lifecycle
+Activation command, to be used only after those checks pass:
 
 ```powershell
-node tools/outreach-loop.mjs prepare --input "C:\path\Sirona_Top100_Outreach.csv" --limit 10 --variant control
+node tools/outreach-loop.mjs activate --funnel-approved yes --senders-approved yes --research-approved yes --by "Reviewer name"
+```
+
+Activation still does not send anything. Every introduction and follow-up
+packet needs separate approval, a valid UK release window and a manual send
+receipt.
+
+## Operating limits
+
+- 100 new people per day, Monday to Saturday.
+- 50 introductions assigned to 09:30 and 50 assigned to 14:30 UK time.
+- No message on Sunday or at/after 18:00 UK time.
+- Five senders, each capped at 20 new people and 80 total messages per day.
+- Four emails on business days 0, 3, 7 and 12.
+- 20 manual LinkedIn invitations per day, with no more than four messages after acceptance.
+- One person per clinic in a daily packet. A second person is eligible only
+  after 15 business days with no clinic-level engagement.
+- Positive replies, bookings and meaningful funnel activity stop generic
+  follow-ups and move the record to human review.
+
+Pending approval packets reserve sender capacity. Preparing the command twice
+cannot silently schedule more than the daily or per-sender limits.
+
+## Approved clinic discovery and verification
+
+The daily research target is 150 candidate clinics and 120 fully approved
+people, maintaining at least 500 send-ready people. Discovery may use public
+search engines, public UK clinic directories, Google Business listings,
+professional association directories and the existing Sirona CRM.
+
+Every person must pass this chain before entering a packet:
+
+1. Confirm clinic fit, official website, UK location, services and an active
+   corporate status using the official site and Companies House.
+2. Match the exact Sales Navigator account using domain, location and trading
+   name. A name-only match fails.
+3. Match a current owner, founder, clinic/commercial director or medical
+   director to the exact account.
+4. Check the same person in SalesQL and retain only a verified work email.
+   Personal/free-mail addresses are rejected.
+5. Match the existing GoHighLevel contact ID in Sirona location
+   `OdylxFk47CSXq3mt6RoF` and check DND, unsubscribe, suppression, bounce and
+   identity conflicts.
+6. Add a source-backed clinic signal, approved profile and final personalised
+   copy. Never invent a service or clinic fact.
+
+Automated LinkedIn scraping, bulk invitations and automated LinkedIn messages
+are prohibited. Sales Navigator actions stay manual and stop on any warning.
+
+## Research queue schema
+
+Import JSON or CSV. CSV supports the human-readable names in parentheses.
+
+| Field | Requirement |
+| --- | --- |
+| `discoverySourceUrl` (`Discovery Source URL`) | Public page where the clinic was found |
+| `clinicName` (`Business Name`) | Confirmed trading name |
+| `officialWebsite` (`Website`) | Exact clinic domain |
+| `city` (`City`) | Confirmed UK location |
+| `officialSourceUrl` (`Official Source URL`) | Page supporting the personalisation statement |
+| `companiesHouseNumber` | Corporate identifier |
+| `companiesHouseStatus` | Must be `active` |
+| `clinicFit` | Must be `qualified` |
+| `verifiedServices` | Array in JSON or semicolon-separated in CSV |
+| `clinicSignal` | One truthful, source-backed sentence |
+| `profileSlug` | A `verified` record in `data/clinic-profiles.json` |
+| `contactId` (`Contact Id`) | Existing Sirona GHL contact ID |
+| `personName` (`Contact Name`) | Exact matched person |
+| `currentRole` (`Role`) | Current decision-making role |
+| `personOrder` | `1` for primary, `2` for delayed secondary |
+| `salesNavigatorAccountUrl` | Exact clinic account |
+| `salesNavigatorLeadUrl` | Exact person |
+| `salesQlChecked` | Must be `true` or `yes` |
+| `workEmail` (`Email`) | Same person's verified work address |
+| `emailStatus` | Must be `verified` |
+| `identityMatch` | Must be `exact` |
+| `ghlChecked` | Must be `true` or `yes` |
+| `connectionState` | `not-connected`, `connected`, `pending` or `unresolved` |
+| `verifiedAt` | Verification date |
+
+Any true stop flag (`dnd`, `unsubscribed`, `suppressed`, `hardBounce`,
+`explicitStop`) blocks the person.
+
+## Daily commands
+
+```powershell
+npm run outreach:init
+npm run outreach:readiness
+npm run outreach:research
+
+node tools/outreach-loop.mjs research-import --input "C:\path\verified-research.csv"
+node tools/outreach-loop.mjs research-status
+
+npm run outreach:prepare
 node tools/outreach-loop.mjs approve --run <run-id> --by "Reviewer name"
-node tools/outreach-loop.mjs release --run <run-id>
-node tools/outreach-loop.mjs record --run <run-id> --contact <ghl-contact-id> --event delivered
-node tools/outreach-loop.mjs record --run <run-id> --contact <ghl-contact-id> --event booked
+node tools/outreach-loop.mjs release --run <run-id> --window 09:30
+
+npm run outreach:followups
+node tools/outreach-loop.mjs approve --run <followup-run-id> --by "Reviewer name"
+node tools/outreach-loop.mjs release --run <followup-run-id>
 ```
 
-`release` never transmits email or LinkedIn messages. It refuses paused
-campaigns, unapproved batches, a location mismatch, Sunday, times outside the
-09:30/14:30 UK windows, starts after 17:45 and all times at or after 18:00.
+After each manual action, record the real outcome:
 
-## GoHighLevel configuration
+```powershell
+node tools/outreach-loop.mjs record --run <run-id> --contact <ghl-contact-id> --event sent --stage email-1
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event delivered
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event positive_reply
+node tools/outreach-loop.mjs record --contact <ghl-contact-id> --event booked
+```
 
-The dedicated Sirona calendar is live at
-`https://link.sironaaesthetics.co.uk/widget/bookings/veluria-clinic-growth-map`.
-Its calendar ID is `Tsy3vyvGTiInsley6Egm`.
+Supported response outcomes include `positive_reply`, `negative_reply`,
+`explicit_stop`, `unsubscribe`, `hard_bounce`, `complaint`, `booking_click`,
+`booked`, `linkedin_accept` and `linkedin_reply`. Replies are classified and a
+personal draft is prepared, but a human approves every reply before sending.
 
-The published `VELURIA | Booking Suppression & Handoff` workflow is limited to
-that calendar and adds the existing `consultation | appointment booked` tag.
-Treat that tag as a hard promotional stop in every execution audit.
+For an interested reply or question, write the truly personalised response to
+a private text file and create a separate approval packet:
 
-Work only in location `OdylxFk47CSXq3mt6RoF`.
+```powershell
+node tools/outreach-loop.mjs prepare-reply --contact <ghl-contact-id> --classification question --draft-file "C:\private\reply.txt" --subject "Re: VELURIA"
+node tools/outreach-loop.mjs approve --run <reply-run-id> --by "Reviewer name"
+node tools/outreach-loop.mjs release --run <reply-run-id>
+```
 
-1. Create a dedicated inbound-webhook workflow and set its URL as
-   `GHL_OUTREACH_EVENT_WEBHOOK_URL`.
-2. Map contact, campaign, clinic-profile, experiment, event, stage, timestamp
-   and page URL fields. Update by existing Contact ID; never create a contact
-   from an outreach event.
-3. Attach a custom calendar form requiring first name, last name, work email
-   and clinic name. Phone is optional. Include the hidden Source field.
-4. Recipient booking links pass `vl26.<token>` as Source.
-5. A Customer Booked Appointment workflow applies the booked tag, notifies
-   Jacqui and stops email and LinkedIn follow-ups.
-6. Use reminders only after booking.
+Available classifications are `positive`, `question`, `pricing`, `timing`,
+`referral`, `not_now`, `out_of_office`, `decline` and `stop`. Every
+classification stops generic sequencing. `decline` and `stop` suppress the
+clinic immediately and intentionally create no reply packet.
 
-Before activation, test-book with a Sirona-owned contact and confirm matching,
-attribution, confirmation, reminders, cancellation, timezone display and
-cross-channel sequence stopping.
+## Four-stage message journey
 
-## Learning rules
+1. Email 1 introduces the relevant VELURIA product pathway and opens the
+   clinic-personalised product page.
+2. Email 2 explains the VELURIA clinic-growth funnel and gross-revenue scenario.
+3. Email 3 invites the doctor to try the before-and-after patient application.
+4. Email 4 explains the optional contextual AI Sales Brain and offers the free
+   20-minute VELURIA Clinic Growth Map.
 
-Events update the ledger immediately, but copy changes require 20 delivered
-recipients per variant and five business days of observation. Bookings,
-positive replies, booking clicks, AI completions and report views can support a
-decision. Opens cannot select a winner.
+The same private token maintains clinic and recipient attribution throughout.
+Copy QA rejects guarantee language and long dashes, and every email contains a
+plain-language opt-out sentence. GoHighLevel must also append its configured
+unsubscribe footer.
+
+## GoHighLevel boundary
+
+Work only in Sirona location `OdylxFk47CSXq3mt6RoF`. Update existing contacts
+by Contact ID and do not create contacts from campaign events. The receiving
+workflow must map contact, clinic, stage, experiment, event, timestamp and page
+URL, and stop both email and LinkedIn follow-up when a consultation is booked.
+
+Calendar:
+`https://link.sironaaesthetics.co.uk/widget/bookings/veluria-clinic-growth-map`
+
+Before activation, test booking, attribution, confirmation, reminders,
+cancellation, timezone display, suppression and cross-channel stopping with a
+Sirona-owned test contact.
+
+## Learning loop
+
+Run `npm run outreach:learn` after recording outcomes. Bookings and positive
+replies are the primary signals; clicks and application activity are intent
+signals; opens are diagnostic only. Change one variable at a time and wait for
+the configured cohort and observation period. The learner may recommend a
+change or a pause, but it cannot alter live copy or send without approval.

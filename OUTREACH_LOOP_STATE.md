@@ -1,5 +1,9 @@
 # VELURIA Outreach Loop State
 
+> Historical snapshot. Do not use the totals or limits below as current
+> campaign state. Run `npm run outreach:status` and follow
+> `OUTREACH_IMPLEMENTATION.md`.
+
 Last updated: 6 August 2026
 
 ## Automation status

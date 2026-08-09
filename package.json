@@ -10,6 +10,10 @@
     "outreach:init": "node tools/outreach-loop.mjs init",
     "outreach:status": "node tools/outreach-loop.mjs status",
     "outreach:validate": "node tools/outreach-loop.mjs validate",
+    "outreach:readiness": "node tools/outreach-loop.mjs readiness",
+    "outreach:research": "node tools/outreach-loop.mjs research-status",
+    "outreach:prepare": "node tools/outreach-loop.mjs prepare --limit 100",
+    "outreach:followups": "node tools/outreach-loop.mjs prepare-followups",
     "outreach:learn": "node tools/outreach-loop.mjs learn",
     "test": "node --test tools/outreach-loop.test.mjs"
   },

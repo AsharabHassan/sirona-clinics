@@ -39,11 +39,11 @@ https://your-domain.example/r/{OPAQUE_TOKEN}/email-1
 # Email 2: VELURIA AI growth funnel and patient application
 https://your-domain.example/r/{OPAQUE_TOKEN}/email-2
 
-# Email 3: clinic-growth report
+# Email 3: doctor-facing before-and-after application
 https://your-domain.example/r/{OPAQUE_TOKEN}/email-3
 
-# Email 4: tracked consultation handoff
-https://your-domain.example/book/{OPAQUE_TOKEN}/email-4
+# Email 4: contextual AI Sales Brain and consultation handoff
+https://your-domain.example/r/{OPAQUE_TOKEN}/email-4
 ```
 
 ## Local development
@@ -83,6 +83,8 @@ execution only after all identity, suppression, location and UK-time gates pass.
 npm run outreach:init
 npm run outreach:validate
 npm run outreach:status
+npm run outreach:readiness
+npm run outreach:research
 npm run outreach:learn
 ```
 
