@@ -3,11 +3,7 @@
   "locationId": "OdylxFk47CSXq3mt6RoF",
   "locationName": "Sirona Aesthetics",
   "senderPool": [
-    { "id": "sirona-1", "emailEnv": "SIRONA_OUTREACH_SENDER_1_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_1_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_1_AUTHENTICATED" },
-    { "id": "sirona-2", "emailEnv": "SIRONA_OUTREACH_SENDER_2_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_2_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_2_AUTHENTICATED" },
-    { "id": "sirona-3", "emailEnv": "SIRONA_OUTREACH_SENDER_3_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_3_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_3_AUTHENTICATED" },
-    { "id": "sirona-4", "emailEnv": "SIRONA_OUTREACH_SENDER_4_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_4_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_4_AUTHENTICATED" },
-    { "id": "sirona-5", "emailEnv": "SIRONA_OUTREACH_SENDER_5_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_5_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_5_AUTHENTICATED" }
+    { "id": "sirona-1", "emailEnv": "SIRONA_OUTREACH_SENDER_1_EMAIL", "nameEnv": "SIRONA_OUTREACH_SENDER_1_NAME", "authenticatedEnv": "SIRONA_OUTREACH_SENDER_1_AUTHENTICATED" }
   ],
   "timezone": "Europe/London",
   "sendWindows": ["09:30", "14:30"],
@@ -16,8 +12,8 @@
   "sundayLocked": true,
   "newPeoplePerDay": 100,
   "newPeoplePerWindow": 50,
-  "newPeoplePerSenderPerDay": 20,
-  "totalMessagesPerSenderPerDay": 80,
+  "newPeoplePerSenderPerDay": 100,
+  "totalMessagesPerSenderPerDay": 100,
   "readyQueueMinimum": 500,
   "researchCandidatesPerDay": 150,
   "researchApprovalsPerDay": 120,

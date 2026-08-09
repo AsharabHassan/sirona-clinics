@@ -9,7 +9,7 @@ does not send them.
 
 Live activation requires all of the following:
 
-- five different authenticated `@sironaaesthetics.co.uk` senders with real names;
+- one authenticated `@sironaaesthetics.co.uk` sender with a real name;
 - at least 500 fully verified, unsuppressed people in the ready queue;
 - an approved production profile for every clinic;
 - a working Sirona GoHighLevel event webhook;
@@ -31,7 +31,8 @@ receipt.
 - 100 new people per day, Monday to Saturday.
 - 50 introductions assigned to 09:30 and 50 assigned to 14:30 UK time.
 - No message on Sunday or at/after 18:00 UK time.
-- Five senders, each capped at 20 new people and 80 total messages per day.
+- One sender capped at 100 total messages per day, including introductions,
+  follow-ups and replies.
 - Four emails on business days 0, 3, 7 and 12.
 - 20 manual LinkedIn invitations per day, with no more than four messages after acceptance.
 - One person per clinic in a daily packet. A second person is eligible only
@@ -39,8 +40,9 @@ receipt.
 - Positive replies, bookings and meaningful funnel activity stop generic
   follow-ups and move the record to human review.
 
-Pending approval packets reserve sender capacity. Preparing the command twice
-cannot silently schedule more than the daily or per-sender limits.
+Pending approval packets reserve sender capacity. Prepare due follow-ups before
+new introductions; introductions use only the remaining daily capacity.
+Preparing the command twice cannot silently schedule more than 100 total.
 
 ## Approved clinic discovery and verification
 
@@ -112,13 +114,13 @@ npm run outreach:research
 node tools/outreach-loop.mjs research-import --input "C:\path\verified-research.csv"
 node tools/outreach-loop.mjs research-status
 
+node tools/outreach-loop.mjs prepare-followups
+node tools/outreach-loop.mjs approve --run <followup-run-id> --by "Reviewer name"
+node tools/outreach-loop.mjs release --run <followup-run-id>
+
 npm run outreach:prepare
 node tools/outreach-loop.mjs approve --run <run-id> --by "Reviewer name"
 node tools/outreach-loop.mjs release --run <run-id> --window 09:30
-
-npm run outreach:followups
-node tools/outreach-loop.mjs approve --run <followup-run-id> --by "Reviewer name"
-node tools/outreach-loop.mjs release --run <followup-run-id>
 ```
 
 After each manual action, record the real outcome:

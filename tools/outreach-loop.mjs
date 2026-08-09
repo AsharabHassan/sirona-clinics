@@ -4,6 +4,24 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+function loadLocalEnvironment() {
+  const file = path.join(ROOT, ".env.local");
+  if (!fs.existsSync(file)) return;
+  for (const rawLine of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+    const separator = line.indexOf("=");
+    if (separator < 1) continue;
+    const key = line.slice(0, separator).trim();
+    let value = line.slice(separator + 1).trim();
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) value = value.slice(1, -1);
+    if (process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
+loadLocalEnvironment();
+
 const PRIVATE_DIR = process.env.OUTREACH_PRIVATE_DIR
   ? path.resolve(process.env.OUTREACH_PRIVATE_DIR)
   : path.join(ROOT, "outreach-private");
@@ -73,10 +91,10 @@ function args() {
 
 function defaultState() {
   return {
-    version: 2,
+    version: 3,
     campaignId: CONFIG.campaignId,
     status: "PAUSED",
-    pausedReason: "Five approved senders, a 500-person cleared queue, final daily packet approval and explicit activation are required.",
+    pausedReason: "One approved Sirona sender, a 500-person cleared queue, final daily packet approval and explicit activation are required.",
     updatedAt: new Date().toISOString(),
     distinctPeopleContacted: 0,
     lastRunId: null,
@@ -98,12 +116,12 @@ function defaultState() {
 function loadState() {
   if (!fs.existsSync(STATE_PATH)) return defaultState();
   const loaded = readJson(STATE_PATH);
-  const migrating = Number(loaded.version ?? 1) < 2;
+  const migrating = Number(loaded.version ?? 1) < 3;
   const receipts = loaded.sendReceipts ?? [];
   return {
     ...defaultState(),
     ...loaded,
-    version: 2,
+    version: 3,
     status: migrating ? "PAUSED" : loaded.status,
     pausedReason: migrating ? defaultState().pausedReason : loaded.pausedReason,
     distinctPeopleContacted: migrating

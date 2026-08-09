@@ -11,7 +11,7 @@ const controller = path.join(root, "tools", "outreach-loop.mjs");
 
 function senderEnv() {
   const env = {};
-  for (let index = 1; index <= 5; index += 1) {
+  for (let index = 1; index <= 1; index += 1) {
     env[`SIRONA_OUTREACH_SENDER_${index}_EMAIL`] = `sender${index}@sironaaesthetics.co.uk`;
     env[`SIRONA_OUTREACH_SENDER_${index}_NAME`] = `Approved Sirona Sender ${index}`;
     env[`SIRONA_OUTREACH_SENDER_${index}_AUTHENTICATED`] = "yes";
@@ -81,7 +81,7 @@ test("profile catalogue and 100-person operating configuration validate", () => 
   assert.equal(result.ok, true);
   assert.equal(result.config.newPeoplePerDay, 100);
   assert.equal(result.config.newPeoplePerWindow, 50);
-  assert.equal(result.config.senderPool.length, 5);
+  assert.equal(result.config.senderPool.length, 1);
   assert.equal(result.config.linkedin.maxInvitationsPerDay, 20);
   assert.deepEqual(result.config.email.stages.map((stage) => stage.delayBusinessDays), [0, 3, 7, 12]);
 });
@@ -128,7 +128,7 @@ test("research import applies the approved verification chain", () => {
   assert.equal(second.counts.email_verification, 1);
 });
 
-test("daily packet uses five senders and the current four landing pages", () => {
+test("daily packet uses the approved sender and current four landing pages", () => {
   const env = sandboxEnv();
   const records = Array.from({ length: 10 }, (_, index) => completeRecord({
     id: `research-${index}`,
@@ -142,13 +142,13 @@ test("daily packet uses five senders and the current four landing pages", () => 
   importResearch(env, records);
   const packet = run(["prepare", "--limit", "10", "--at", "2026-08-10T08:30:00Z"], env);
   assert.equal(packet.cleared.length, 10);
-  assert.deepEqual(Object.values(packet.senderCounts), [2, 2, 2, 2, 2]);
+  assert.deepEqual(Object.values(packet.senderCounts), [10]);
   assert.equal(packet.cleared[0].drafts.email3.body.includes("/email-3"), true);
   assert.equal(packet.cleared[0].drafts.email4.body.includes("/email-4"), true);
   assert.ok(packet.cleared[0].drafts.linkedin.connectionNote.length <= 180);
 });
 
-test("same-day packet reservations enforce 100 new people and 20 per sender", () => {
+test("same-day packet reservations enforce the 100-total single-sender cap", () => {
   const env = sandboxEnv();
   const records = Array.from({ length: 105 }, (_, index) => completeRecord({
     id: `capacity-research-${index}`,
@@ -161,7 +161,7 @@ test("same-day packet reservations enforce 100 new people and 20 per sender", ()
   importResearch(env, records);
   const first = run(["prepare", "--limit", "100", "--at", "2026-08-10T08:30:00Z"], env);
   assert.equal(first.cleared.length, 100);
-  assert.deepEqual(Object.values(first.senderCounts), [20, 20, 20, 20, 20]);
+  assert.deepEqual(Object.values(first.senderCounts), [100]);
   assert.equal(first.cleared.filter((item) => item.window === "09:30").length, 50);
   assert.equal(first.cleared.filter((item) => item.window === "14:30").length, 50);
   const second = run(["prepare", "--limit", "10", "--at", "2026-08-10T10:00:00Z"], env);
@@ -169,8 +169,8 @@ test("same-day packet reservations enforce 100 new people and 20 per sender", ()
   assert.equal(second.shortfall, 10);
 });
 
-test("packet preparation is blocked when any approved sender is missing", () => {
-  const env = sandboxEnv({ SIRONA_OUTREACH_SENDER_5_EMAIL: "" });
+test("packet preparation is blocked when the approved sender is missing", () => {
+  const env = sandboxEnv({ SIRONA_OUTREACH_SENDER_1_EMAIL: "" });
   importResearch(env, [completeRecord()]);
   const result = spawnSync(process.execPath, [controller, "prepare", "--limit", "1", "--at", "2026-08-10T08:30:00Z"], {
     cwd: root,
