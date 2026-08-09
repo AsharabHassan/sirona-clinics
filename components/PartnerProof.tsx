@@ -74,7 +74,7 @@ export function PartnerLogoStrip() {
           </p>
         </div>
 
-        <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {PARTNER_CLINICS.map((clinic) => (
             <article
               key={clinic.name}

@@ -30,7 +30,17 @@
     "heroIntro": "this demonstration shows how a verified clinic signal can shape the VELURIA product story, AI experience and consultation pathway without inventing services or making outcome promises.",
     "productFit": "The profile can match Silk Skin, Ultra Lift or Pearl Tone to the visible skin-quality conversations already supported by the clinic's verified public offering.",
     "pipelineOpportunity": "The clinic can show real product proof, let prospective patients explore the cosmetic AI experience and follow genuine interest into a structured consultation pathway.",
-    "consultationRationale": "Use the free clinic growth map to review product fit, the proposed patient journey and one practical launch step."
+    "consultationRationale": "Use the free clinic growth map to review product fit, the proposed patient journey and one practical launch step.",
+    "verifiedServices": ["Professional skin treatments", "Patient consultations"],
+    "serviceMenuBridge": "The VELURIA range can be presented as four clear skin and hair pathways, supported by an enquiry journey that gives prospective patients a reason to start a consultation.",
+    "teamCapacityOpportunity": "Build a repeatable service that appropriately trained and competent clinic team members can support within the clinic's governance and protocols.",
+    "productFitNotes": {
+      "silk-skin": "A skin-quality pathway for patients asking about texture, radiance, firmness and elasticity.",
+      "ultra-lift": "A separate firmness and revitalisation conversation for patients focused on tone and elasticity.",
+      "pearl-tone": "A clarity and luminosity pathway for patients concerned about uneven-looking tone.",
+      "hair-force-plus": "A professional scalp and hair vitality pathway that can open a distinct consultation conversation."
+    },
+    "hairConsultationRationale": "Discuss whether a dedicated scalp and hair vitality pathway is suitable for the clinic's services and practitioner team."
   },
   {
     "id": "profile_preview_clinica_london",
@@ -73,6 +83,16 @@
     "heroIntro": "this private preview explores how an enzyme-led professional range, responsible visual engagement and structured consultation follow-up could complement the clinic's existing surgical and non-surgical facial rejuvenation pathway.",
     "productFit": "VELURIA Silk Skin could support a conversation around visible surface quality, smoothness and radiance, while Ultra Lift could support a separate firmness and elasticity pathway. Final suitability and product selection remain with the treating clinician.",
     "pipelineOpportunity": "Clinica London can introduce the range through verified product education, show a real VELURIA result, let prospective patients explore the cosmetic AI experience and move genuine interest into a structured consultation journey.",
-    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could complement Clinica London's existing facial rejuvenation services, staff education and patient journey."
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could complement Clinica London's existing facial rejuvenation services, staff education and patient journey.",
+    "verifiedServices": ["Facial rejuvenation", "Profhilo", "Sculptra", "Ultherapy", "Facial fillers"],
+    "serviceMenuBridge": "Clinica London's established facial rejuvenation pathway creates a credible bridge into professional skin-quality conversations, while Hair Force+ can be assessed separately as a potential new scalp and hair service.",
+    "teamCapacityOpportunity": "VELURIA could support an additional repeatable skin-quality service without requiring every treatment appointment to sit in the medical director's diary, subject to practitioner competence, training and clinic governance.",
+    "productFitNotes": {
+      "silk-skin": "Complements existing facial rejuvenation conversations with a visible focus on texture, radiance, firmness and elasticity.",
+      "ultra-lift": "Creates a distinct firmness, tone and revitalisation pathway alongside Clinica London's established rejuvenation options.",
+      "pearl-tone": "Adds a professional brightness and even-looking tone conversation without implying whitening or treatment of pigmentation disease.",
+      "hair-force-plus": "Offers a separate scalp and hair vitality pathway that should be assessed with the clinic team before launch."
+    },
+    "hairConsultationRationale": "Review whether Hair Force+ could support a dedicated scalp and hair vitality consultation pathway at Clinica London."
   }
 ]

@@ -37,6 +37,12 @@ export type CampaignStage =
 export type OutreachEventName =
   | "outreach_click"
   | "landing_view"
+  | "hero_fit_click"
+  | "product_interest"
+  | "ai_demo_start"
+  | "lead_gate_submit"
+  | "calculator_adjust"
+  | "hair_consultation_click"
   | "ai_start"
   | "ai_complete"
   | "concern_sample_select"
@@ -77,6 +83,11 @@ export interface ClinicProfile {
   productFit: string;
   pipelineOpportunity: string;
   consultationRationale: string;
+  verifiedServices: string[];
+  serviceMenuBridge: string;
+  teamCapacityOpportunity: string;
+  productFitNotes: Record<CampaignProductId, string>;
+  hairConsultationRationale: string;
 }
 
 export const CAMPAIGN_PRODUCT_LABELS: Record<CampaignProductId, string> = {
@@ -113,6 +124,12 @@ export function isOutreachEventName(value: unknown): value is OutreachEventName 
   return (
     value === "outreach_click" ||
     value === "landing_view" ||
+    value === "hero_fit_click" ||
+    value === "product_interest" ||
+    value === "ai_demo_start" ||
+    value === "lead_gate_submit" ||
+    value === "calculator_adjust" ||
+    value === "hair_consultation_click" ||
     value === "ai_start" ||
     value === "ai_complete" ||
     value === "concern_sample_select" ||

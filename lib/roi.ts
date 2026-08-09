@@ -1,68 +1,77 @@
 /**
- * ROI projection for a clinic running the AI skin-scan lead magnet on Meta ads.
- * Deliberately simple and transparent — every input is a slider the owner can
- * see and adjust, and the maths is a plain funnel so the number feels earned,
- * not conjured.
- *
- * Funnel:  ad clicks/scans  →  leads (opt-in %)  →  consultations (book %)
- *          →  Veluria courses sold (close %)  →  revenue (avg course value)
+ * Transparent clinic economics model for the VELURIA patient-acquisition
+ * funnel. Every commercial assumption is adjustable and the output is a
+ * scenario, never a forecast or guarantee.
  */
 export interface RoiInputs {
-  /** Skin-scans started per month (from ads / social / website). */
-  monthlyScans: number;
-  /** % of scans that submit contact details (become a lead). */
-  optInRate: number;
-  /** % of leads that book a consultation. */
+  qualifiedEnquiries: number;
   bookRate: number;
-  /** % of consultations that buy a Veluria course. */
   closeRate: number;
-  /** Average value of a Veluria course (£). */
   courseValue: number;
+  variableCourseCost: number;
+  monthlyMarketingCost: number;
 }
 
 export interface RoiResult {
-  leads: number;
   consultations: number;
   courses: number;
-  monthlyRevenue: number;
-  annualRevenue: number;
+  appointments: number;
+  grossRevenue: number;
+  deliveryCosts: number;
+  contribution: number;
+  breakEvenCourses: number | null;
 }
 
 export const ROI_DEFAULTS: RoiInputs = {
-  monthlyScans: 80,
-  optInRate: 35,
-  bookRate: 25,
-  closeRate: 20,
-  courseValue: 500,
+  qualifiedEnquiries: 24,
+  bookRate: 35,
+  closeRate: 25,
+  courseValue: 600,
+  variableCourseCost: 125,
+  monthlyMarketingCost: 300,
 };
 
-/** Sensible slider bounds for the UI. */
 export const ROI_BOUNDS = {
-  monthlyScans: { min: 20, max: 1000, step: 10 },
-  optInRate: { min: 10, max: 75, step: 1 },
+  qualifiedEnquiries: { min: 4, max: 200, step: 2 },
   bookRate: { min: 5, max: 60, step: 1 },
-  closeRate: { min: 5, max: 50, step: 1 },
+  closeRate: { min: 5, max: 60, step: 1 },
   courseValue: { min: 150, max: 2500, step: 50 },
+  variableCourseCost: { min: 0, max: 1000, step: 25 },
+  monthlyMarketingCost: { min: 0, max: 3000, step: 50 },
 } as const;
 
 const pct = (n: number) => Math.max(0, Math.min(100, n)) / 100;
 
 export function computeRoi(input: RoiInputs): RoiResult {
-  const scans = Math.max(0, input.monthlyScans);
-  const leads = scans * pct(input.optInRate);
-  const consultations = leads * pct(input.bookRate);
+  const enquiries = Math.max(0, input.qualifiedEnquiries);
+  const consultations = enquiries * pct(input.bookRate);
   const courses = consultations * pct(input.closeRate);
-  const monthlyRevenue = courses * Math.max(0, input.courseValue);
+  const courseValue = Math.max(0, input.courseValue);
+  const variableCourseCost = Math.max(0, input.variableCourseCost);
+  const marketingCost = Math.max(0, input.monthlyMarketingCost);
+  const grossRevenue = courses * courseValue;
+  const variableCosts = courses * variableCourseCost;
+  const contribution = grossRevenue - variableCosts - marketingCost;
+  const contributionPerCourse = courseValue - variableCourseCost;
+
   return {
-    leads: Math.round(leads),
     consultations: Math.round(consultations),
-    courses: Math.round(courses),
-    monthlyRevenue: Math.round(monthlyRevenue),
-    annualRevenue: Math.round(monthlyRevenue * 12),
+    courses: Math.round(courses * 10) / 10,
+    appointments: Math.round(courses * 3),
+    grossRevenue: Math.round(grossRevenue),
+    deliveryCosts: Math.round(variableCosts + marketingCost),
+    contribution: Math.round(contribution),
+    breakEvenCourses:
+      contributionPerCourse > 0
+        ? Math.ceil(marketingCost / contributionPerCourse)
+        : null,
   };
 }
 
-/** £12,345 → "£12,345". */
 export function gbp(n: number): string {
-  return "£" + Math.round(n).toLocaleString("en-GB");
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+    maximumFractionDigits: 0,
+  }).format(Math.round(n));
 }

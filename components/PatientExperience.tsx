@@ -259,6 +259,7 @@ export default function PatientExperience({
           }}
           onSubmitted={(submittedLead) => {
             setSampleLead(submittedLead);
+            trackOutreachEvent(recipientToken, "lead_gate_submit", campaignStage);
             revealSample(selectedSample);
           }}
         />
@@ -323,6 +324,7 @@ export default function PatientExperience({
           onSubmitted={(submittedLead, submittedMeta) => {
             setLead(submittedLead);
             setLeadMeta(submittedMeta);
+            trackOutreachEvent(recipientToken, "lead_gate_submit", campaignStage);
             runAnalysis(selfie, submittedLead, submittedMeta);
           }}
         />
