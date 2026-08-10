@@ -326,5 +326,63 @@
       "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
     },
     "hairConsultationRationale": "Keep Hair Force+ outside the initial Surgical Aesthetics preview unless the practice confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_jonathan_britto_clinic",
+    "slug": "jonathan-britto-clinic",
+    "clinicName": "Jonathan Britto Clinic",
+    "city": "London",
+    "website": "https://jonathanbritto.com/",
+    "segment": "consultant-led-plastic-surgery-and-skin-health",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Consultant-led surgery and skin health",
+        "detail": "Jonathan Britto Clinic publicly combines plastic surgery, medical aesthetics, skin health and lifestyle medicine in a consultant-led practice.",
+        "sourceUrl": "https://jonathanbritto.com/"
+      },
+      {
+        "label": "Established medical-aesthetics pathway",
+        "detail": "The clinic lists skin conditioning and chemical peels alongside wrinkle modulators, fillers and facial contouring.",
+        "sourceUrl": "https://jonathanbritto.com/medical-aesthetics/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Jonathan Britto Clinic official website",
+        "url": "https://jonathanbritto.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Jonathan Britto Clinic medical aesthetics",
+        "url": "https://jonathanbritto.com/medical-aesthetics/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "J A Britto Ltd Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/09437878",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Jonathan Britto Clinic",
+    "heroHeadline": "Give established skin-health conversations a clearer patient pathway.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Jonathan Britto Clinic's medical-aesthetics and skin-health pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a separate firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Jonathan Britto Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's skin conditioning, chemical peel and facial-rejuvenation services.",
+    "verifiedServices": ["Skin conditioning", "Chemical peels", "Wrinkle modulators", "Fillers and facial contouring"],
+    "serviceMenuBridge": "The clinic's established skin conditioning, chemical peel and facial-rejuvenation pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Jonathan Britto Clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with existing patient conversations about texture, radiance and visible skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's facial-rejuvenation work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the clinic's conditioning and peel services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Jonathan Britto Clinic preview unless the clinic confirms a relevant scalp or hair service pathway."
   }
 ]
