@@ -210,5 +210,63 @@
       "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
     },
     "hairConsultationRationale": "Keep Hair Force+ outside the initial EUDELO preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_harley_street_skin_clinic",
+    "slug": "harley-street-skin-clinic",
+    "clinicName": "Harley Street Skin Clinic",
+    "city": "London",
+    "website": "https://www.harleystreetskinclinic.com/",
+    "segment": "doctor-led-aesthetics",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Doctor-led Harley Street clinic",
+        "detail": "Harley Street Skin Clinic identifies Dr Aamer Khan as its Medical Lead and publicly presents a broad medical and aesthetic treatment service.",
+        "sourceUrl": "https://www.harleystreetskinclinic.com/expert/dr-aamer-khan/"
+      },
+      {
+        "label": "Established skin and hair pathways",
+        "detail": "The clinic publicly lists microneedling, skin boosters, Hydrafacial and PRP hair treatments among its current services.",
+        "sourceUrl": "https://www.harleystreetskinclinic.com/expert/dr-aamer-khan/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Harley Street Skin Clinic official website",
+        "url": "https://www.harleystreetskinclinic.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Dr Aamer Khan profile",
+        "url": "https://www.harleystreetskinclinic.com/expert/dr-aamer-khan/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Harley Street Skin Clinic Ltd Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/05672757",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "hair-force-plus"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Harley Street Skin Clinic",
+    "heroHeadline": "Connect established skin and hair services with a clearer patient journey.",
+    "heroIntro": "this private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Harley Street Skin Clinic's existing skin-quality and hair pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture, radiance and skin quality, Ultra Lift could support a separate firmness pathway, and Hair Force+ could support a dedicated scalp and hair vitality conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Harley Street Skin Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's microneedling, skin booster and PRP hair services.",
+    "verifiedServices": ["Microneedling", "Skin boosters", "Hydrafacial", "PRP hair treatments"],
+    "serviceMenuBridge": "The clinic's established microneedling, skin booster and PRP hair pathways create a credible starting point for distinct VELURIA skin-quality and scalp or hair conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to the clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with existing patient conversations about texture, radiance and visible skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's established skin services.",
+      "pearl-tone": "Could support a separate clarity and even-looking tone conversation if the clinic chooses to include it in a later pathway.",
+      "hair-force-plus": "Connects with the clinic's published PRP hair pathway through a separate scalp and hair vitality conversation."
+    },
+    "hairConsultationRationale": "Review how Hair Force+ could complement the clinic's existing PRP hair service as a distinct professional scalp and hair vitality pathway."
   }
 ]
