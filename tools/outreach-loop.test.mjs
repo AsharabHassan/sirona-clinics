@@ -81,6 +81,9 @@ test("profile catalogue and 100-person operating configuration validate", () => 
   assert.equal(result.ok, true);
   assert.equal(result.config.newPeoplePerDay, 100);
   assert.equal(result.config.newPeoplePerWindow, 50);
+  assert.equal(result.config.researchCandidatesPerDay, 120);
+  assert.equal(result.config.researchApprovalsPerDay, 100);
+  assert.equal(result.config.programmeCap, null);
   assert.equal(result.config.senderPool.length, 1);
   assert.equal(result.config.linkedin.maxInvitationsPerDay, 20);
   assert.deepEqual(result.config.email.stages.map((stage) => stage.delayBusinessDays), [0, 3, 7, 12]);

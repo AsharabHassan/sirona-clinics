@@ -34,12 +34,19 @@ reviewed because their content depends on the recipient's actual message.
 - A maximum of 100 total emails per day, Monday to Saturday. Follow-ups and
   approved reply messages count inside the same cap and take priority over new
   introductions.
+- Maintain a daily research target of 120 new clinic candidates so holds and
+  failed verification do not prevent up to 100 fully cleared routes reaching
+  the sender queue. Research volume never overrides a verification gate.
 - Prepare introductions one clinic at a time. Use the remaining
   daily capacity at 09:30 or 14:30 UK time.
 - No message on Sunday or at/after 18:00 UK time.
 - One sender capped at 100 total messages per day, including introductions,
   follow-ups and replies.
 - Four emails on business days 0, 3, 7 and 12.
+- Never repeat the same stage to the same contact. A contact receives at most
+  one scheduled campaign email per UK day. "Continue the loop" means progress
+  through the configured 0, 3, 7 and 12 business-day sequence, not duplicate
+  or same-day repeated messages.
 - 20 manual LinkedIn invitations per day, with no more than four messages after acceptance.
 - One person per clinic in a daily packet. A second person is eligible only
   after 15 business days with no clinic-level engagement.
@@ -49,6 +56,10 @@ reviewed because their content depends on the recipient's actual message.
 Prepared packets reserve sender capacity. Prepare due follow-ups before
 new introductions; introductions use only the remaining daily capacity.
 Preparing the command twice cannot silently schedule more than 100 total.
+The programme has no lifetime cap and continues each eligible working day until
+the user stops it. The daily figure is a hard ceiling, not permission to lower
+identity, suppression, evidence or copy standards; if fewer routes clear, send
+fewer and report the holds.
 
 ## Approved clinic discovery and verification
 
