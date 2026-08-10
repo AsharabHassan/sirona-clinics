@@ -152,5 +152,63 @@
       "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
     },
     "hairConsultationRationale": "Keep Hair Force+ outside the initial PHI Clinic preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_eudelo",
+    "slug": "eudelo",
+    "clinicName": "EUDELO",
+    "city": "London",
+    "website": "https://eudelo.com/",
+    "segment": "dermatologist-led-skin-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Dermatologist-led skin clinic",
+        "detail": "EUDELO describes itself as a private specialist skin clinic led by dermatologist and Medical Director Dr Stefanie Williams.",
+        "sourceUrl": "https://eudelo.com/about-us/"
+      },
+      {
+        "label": "Established aesthetic skin pathways",
+        "detail": "The clinic publicly offers aesthetic dermatology and Dermatology Grade Facials, including medical needling and treatments for texture, breakouts and uneven-looking skin.",
+        "sourceUrl": "https://eudelo.com/dermatology-grade-facials/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "EUDELO official website",
+        "url": "https://eudelo.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Dr Stefanie Williams profile",
+        "url": "https://eudelo.com/dr-stefanie-williams/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "EUDELO Medical Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/09352402",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "pearl-tone", "ultra-lift"],
+    "heroEyebrow": "A VELURIA patient journey prepared for EUDELO",
+    "heroHeadline": "Connect dermatologist-led skin expertise with a clearer product journey.",
+    "heroIntro": "this private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement EUDELO's existing aesthetic dermatology and facial pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture, radiance and skin quality, while Pearl Tone could support a separate clarity and even-looking tone pathway. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "EUDELO can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into the clinic's consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside EUDELO's dermatologist-led aesthetic services and patient education journey.",
+    "verifiedServices": ["Aesthetic dermatology", "Dermatology Grade Facials", "Medical needling", "Skin consultations"],
+    "serviceMenuBridge": "EUDELO's established aesthetic dermatology, medical needling and facial pathways create a credible starting point for an enzyme-based skin-quality conversation.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to EUDELO's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with existing patient conversations about texture, radiance and visible skin quality.",
+      "ultra-lift": "Creates a separate firmness and elasticity pathway alongside the clinic's aesthetic dermatology services.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation without implying treatment of pigmentation disease.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial EUDELO preview unless the clinic confirms a relevant scalp or hair service pathway."
   }
 ]
