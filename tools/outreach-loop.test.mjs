@@ -95,12 +95,18 @@ test("UK Thursday 09:30 is an allowed release window", () => {
   assert.equal(result.allowed, true);
 });
 
-test("Sunday and 18:00 UK are hard locked", () => {
+test("Sunday and 21:00 UK are hard locked", () => {
   const env = sandboxEnv();
   const sunday = run(["window", "--at", "2026-08-09T08:30:00Z"], env);
-  const evening = run(["window", "--at", "2026-08-06T17:00:00Z"], env);
+  const evening = run(["window", "--at", "2026-08-06T20:00:00Z"], env);
   assert.equal(sunday.reason, "SUNDAY_LOCKOUT");
-  assert.equal(evening.reason, "AFTER_1800_LOCKOUT");
+  assert.equal(evening.reason, "AFTER_2100_LOCKOUT");
+});
+
+test("UK Thursday 20:30 remains inside the extended operating window", () => {
+  const result = run(["window", "--at", "2026-08-06T19:30:00Z"]);
+  assert.equal(result.time, "20:30");
+  assert.equal(result.allowed, true);
 });
 
 test("controller starts paused and cannot release messages", () => {
@@ -223,6 +229,24 @@ test("same-day packet reservations enforce the 100-total single-sender cap", () 
   const second = run(["prepare", "--limit", "10", "--at", "2026-08-10T10:00:00Z"], env);
   assert.equal(second.cleared.length, 0);
   assert.equal(second.shortfall, 10);
+});
+
+test("an approved missed wave can still be released before the 21:00 hard stop", () => {
+  const env = sandboxEnv();
+  const records = Array.from({ length: 51 }, (_, index) => completeRecord({
+    id: `evening-research-${index}`,
+    clinicName: `Evening Skin Clinic ${index}`,
+    officialWebsite: `https://evening-${index}.example/`,
+    contactId: `evening-contact-${index}`,
+    personName: `Doctor Evening ${index}`,
+    workEmail: `doctor${index}@evening-${index}.example`,
+  }));
+  importResearch(env, records);
+  const packet = run(["prepare", "--limit", "51", "--at", "2026-08-10T08:30:00Z"], env);
+  run(["activate", "--funnel-approved", "yes", "--senders-approved", "yes", "--research-approved", "yes", "--by", "Test Reviewer"], env);
+  const released = run(["release", "--run", packet.runId, "--at", "2026-08-10T19:30:00Z"], env);
+  assert.equal(released.gate.time, "20:30");
+  assert.equal(released.count, 51);
 });
 
 test("packet preparation is blocked when the approved sender is missing", () => {

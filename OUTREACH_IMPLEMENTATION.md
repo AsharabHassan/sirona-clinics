@@ -37,9 +37,11 @@ reviewed because their content depends on the recipient's actual message.
 - Maintain a daily research target of 120 new clinic candidates so holds and
   failed verification do not prevent up to 100 fully cleared routes reaching
   the sender queue. Research volume never overrides a verification gate.
-- Prepare introductions one clinic at a time. Use the remaining
-  daily capacity at 09:30 or 14:30 UK time.
-- No message on Sunday or at/after 18:00 UK time.
+- Prepare introductions one clinic at a time. The 09:30 and 14:30 UK waves
+  reserve capacity, and a cleared missed wave may be released later that same
+  working day.
+- No message on Sunday or at/after 21:00 UK time. Start no new manual send
+  after 20:45 UK so work can stop cleanly by 21:00.
 - One sender capped at 100 total messages per day, including introductions,
   follow-ups and replies.
 - Four emails on business days 0, 3, 7 and 12.

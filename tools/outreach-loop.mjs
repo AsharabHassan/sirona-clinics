@@ -177,12 +177,7 @@ function clockGate(date = new Date()) {
   const parts = londonParts(date);
   const time = `${parts.hour}:${parts.minute}`;
   const sunday = parts.weekday === "Sun";
-  const inWindow = CONFIG.sendWindows.some((window) => {
-    const [hour, minute] = window.split(":").map(Number);
-    const start = hour * 60 + minute;
-    const current = Number(parts.hour) * 60 + Number(parts.minute);
-    return current >= start && current < start + 60;
-  });
+  const afterOperatingStart = time >= CONFIG.sendWindows[0];
   const beforeLatestStart = time < CONFIG.latestStart;
   const beforeHardStop = time < CONFIG.hardStop;
   return {
@@ -190,14 +185,14 @@ function clockGate(date = new Date()) {
     weekday: parts.weekday,
     date: londonDateKey(date),
     time,
-    allowed: !sunday && inWindow && beforeLatestStart && beforeHardStop,
+    allowed: !sunday && afterOperatingStart && beforeLatestStart && beforeHardStop,
     reason: sunday
       ? "SUNDAY_LOCKOUT"
       : !beforeHardStop
-        ? "AFTER_1800_LOCKOUT"
+        ? "AFTER_2100_LOCKOUT"
         : !beforeLatestStart
-          ? "AFTER_1745_START_LOCKOUT"
-          : !inWindow
+          ? "AFTER_2045_START_LOCKOUT"
+          : !afterOperatingStart
             ? "OUTSIDE_APPROVED_WINDOWS"
             : "ALLOWED",
   };
@@ -830,13 +825,17 @@ function release(options) {
   if (state.status !== "ACTIVE") throw new Error(`LOOP_${state.status}: transmission release is disabled`);
   const packetPath = path.join(APPROVAL_DIR, `${options.run}.json`);
   const packet = readJson(packetPath);
-  if (packet.status !== "APPROVED_WAITING_FOR_WINDOW") throw new Error("Batch is not approved");
+  if (!["APPROVED_WAITING_FOR_WINDOW", "READY_FOR_MANUAL_SEND"].includes(packet.status)) throw new Error("Batch is not approved");
   const at = options.at ? new Date(String(options.at)) : new Date();
   const gate = clockGate(at);
   if (!gate.allowed) throw new Error(`CLOCK_GATE: ${gate.reason}`);
   if (packet.locationId !== CONFIG.locationId) throw new Error("GHL_LOCATION_MISMATCH");
-  const window = options.window || CONFIG.sendWindows.find((item) => gate.time >= item && gate.time < `${String(Number(item.slice(0, 2)) + 1).padStart(2, "0")}:${item.slice(3)}`);
-  const actions = packet.type === "INTRODUCTIONS" ? packet.cleared.filter((item) => item.window === window) : packet.cleared;
+  const window = options.window || [...CONFIG.sendWindows].reverse().find((item) => gate.time >= item) || CONFIG.sendWindows[0];
+  const actions = packet.cleared.filter((item) => {
+    const alreadySent = state.sendReceipts.some((receipt) => receipt.runId === packet.runId && receipt.contactId === item.contactId && receipt.stage === item.stage);
+    if (alreadySent) return false;
+    return packet.type !== "INTRODUCTIONS" || item.window <= window;
+  });
   packet.status = "READY_FOR_MANUAL_SEND";
   packet.releasedAt = new Date().toISOString();
   packet.clockGate = gate;
