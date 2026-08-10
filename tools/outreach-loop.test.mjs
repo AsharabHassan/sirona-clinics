@@ -113,10 +113,10 @@ test("controller starts paused and cannot release messages", () => {
   assert.match(result.stderr, /LOOP_PAUSED/);
 });
 
-test("activation readiness requires a 500-person cleared queue", () => {
+test("rolling activation readiness requires one fully cleared recipient", () => {
   const result = run(["readiness"]);
   assert.equal(result.ready, false);
-  assert.ok(result.blockers.includes("READY_QUEUE_BELOW_500"));
+  assert.ok(result.blockers.includes("READY_QUEUE_BELOW_1"));
 });
 
 test("research import applies the approved verification chain", () => {
@@ -126,6 +126,56 @@ test("research import applies the approved verification chain", () => {
   const weak = completeRecord({ id: "weak", contactId: "weak-contact", workEmail: "person@gmail.com", emailStatus: "unverified" });
   const second = importResearch(env, [weak]);
   assert.equal(second.counts.email_verification, 1);
+});
+
+test("a verified clinician can carry a referral-first introduction", () => {
+  const env = sandboxEnv();
+  importResearch(env, [completeRecord({
+    recipientType: "clinical-referral",
+    personName: "Dr Alex Example",
+    currentRole: "Aesthetic Doctor",
+  })]);
+  const packet = run(["prepare", "--limit", "1", "--at", "2026-08-10T08:30:00Z"], env);
+  assert.equal(packet.cleared.length, 1);
+  assert.equal(packet.cleared[0].recipientType, "clinical-referral");
+  assert.match(packet.cleared[0].drafts.email1.body, /comfortable forwarding this/);
+});
+
+test("an official clinic inbox can carry the message without a named lead", () => {
+  const env = sandboxEnv();
+  importResearch(env, [completeRecord({
+    recipientType: "clinic-inbox",
+    personName: "Example Skin Clinic team",
+    currentRole: "Clinic team",
+    salesNavigatorLeadUrl: "",
+    salesQlChecked: false,
+    workEmail: "hello@demo.sironaaesthetics.agency",
+    emailStatus: "official-role-inbox",
+    identityMatch: "clinic-exact",
+    connectionState: "unresolved",
+  })]);
+  const packet = run(["prepare", "--limit", "1", "--at", "2026-08-10T08:30:00Z"], env);
+  assert.equal(packet.cleared.length, 1);
+  assert.equal(packet.cleared[0].recipientType, "clinic-inbox");
+  assert.equal(packet.cleared[0].linkedinPriority, false);
+  assert.match(packet.cleared[0].drafts.email1.body, /Hello Example Skin Clinic team/);
+  assert.match(packet.cleared[0].drafts.email1.body, /please pass this/);
+});
+
+test("a clinic inbox on another domain remains held", () => {
+  const env = sandboxEnv();
+  const result = importResearch(env, [completeRecord({
+    recipientType: "clinic-inbox",
+    personName: "Example Skin Clinic team",
+    currentRole: "Clinic team",
+    salesNavigatorLeadUrl: "",
+    salesQlChecked: false,
+    workEmail: "hello@anotherclinic.co.uk",
+    emailStatus: "official-role-inbox",
+    identityMatch: "clinic-exact",
+  })]);
+  assert.equal(result.approvalReady, 0);
+  assert.equal(result.counts.clinic_verification, 1);
 });
 
 test("daily packet uses the approved sender and current four landing pages", () => {

@@ -94,5 +94,58 @@
       "hair-force-plus": "Offers a separate scalp and hair vitality pathway that should be assessed with the clinic team before launch."
     },
     "hairConsultationRationale": "Review whether Hair Force+ could support a dedicated scalp and hair vitality consultation pathway at Clinica London."
+  },
+  {
+    "id": "profile_phi_clinic",
+    "slug": "phi-clinic",
+    "clinicName": "PHI Clinic",
+    "city": "London",
+    "website": "https://www.phiclinic.com/",
+    "segment": "doctor-led-aesthetics",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1C7768" },
+    "signals": [
+      {
+        "label": "Doctor-led Harley Street clinic",
+        "detail": "PHI Clinic describes a medically led non-surgical service on Harley Street, with patient plans beginning with consultation.",
+        "sourceUrl": "https://www.phiclinic.com/"
+      },
+      {
+        "label": "Established skin-quality pathways",
+        "detail": "The clinic publicly groups services across skin health and facials, skin tightening and lifting, lasers and regenerative skin treatments.",
+        "sourceUrl": "https://www.phiclinic.com/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "PHI Clinic official website",
+        "url": "https://www.phiclinic.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "PHI Clinic contact page",
+        "url": "https://www.phiclinic.com/contact",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for PHI Clinic",
+    "heroHeadline": "Connect PHI Clinic's skin expertise with a clearer patient journey.",
+    "heroIntro": "this private preview explores how an enzyme-led professional range, an illustrative AI skin experience and structured consultation follow-up could complement PHI Clinic's established skin-health pathways.",
+    "productFit": "VELURIA Silk Skin could support a conversation around visible texture, radiance and elasticity; Ultra Lift could support a separate firmness pathway; and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability remains with the treating clinician.",
+    "pipelineOpportunity": "PHI Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into the clinic's consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to assess whether VELURIA fits PHI Clinic's existing skin-health services and how the patient journey could be configured around its consultation standards.",
+    "verifiedServices": ["Skin health and facials", "Skin tightening and lifting", "Laser skin treatments", "Regenerative skin treatments"],
+    "serviceMenuBridge": "PHI Clinic's established skin-health, lifting and laser pathways create a credible starting point for discussing a professional enzyme-led range without replacing its current clinical assessment process.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to PHI Clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with existing patient conversations about texture, radiance and visible skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's established tightening services.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation without implying treatment of pigmentation disease.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial PHI Clinic preview unless the clinic confirms a relevant scalp or hair service pathway."
   }
 ]

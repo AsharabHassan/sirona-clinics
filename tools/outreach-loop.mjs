@@ -98,7 +98,7 @@ function defaultState() {
     version: 3,
     campaignId: CONFIG.campaignId,
     status: "PAUSED",
-    pausedReason: "One approved Sirona sender, a 500-person cleared queue, final daily packet approval and explicit activation are required.",
+    pausedReason: "One approved Sirona sender, one fully verified rolling recipient, final one-clinic message approval and explicit activation are required.",
     updatedAt: new Date().toISOString(),
     distinctPeopleContacted: 0,
     lastRunId: null,
@@ -256,6 +256,15 @@ function isWorkEmail(email) {
     && !new Set(["gmail.com", "hotmail.com", "outlook.com", "yahoo.com", "icloud.com", "aol.com", "googlemail.com"]).has(domain);
 }
 
+function isOfficialClinicEmail(email, website) {
+  if (!isWorkEmail(email) || !isUrl(website)) return false;
+  const emailDomain = String(email).trim().toLowerCase().split("@")[1] ?? "";
+  const websiteDomain = new URL(website).hostname.replace(/^www\./, "").toLowerCase();
+  return emailDomain === websiteDomain
+    || emailDomain.endsWith(`.${websiteDomain}`)
+    || websiteDomain.endsWith(`.${emailDomain}`);
+}
+
 function clinicKey(record) {
   try { return new URL(record.officialWebsite).hostname.replace(/^www\./, "").toLowerCase(); }
   catch { return normalize(record.clinicName); }
@@ -311,6 +320,7 @@ function normalizeResearchRecord(input, index = 0) {
     verifiedServices: Array.isArray(input.verifiedServices) ? input.verifiedServices : String(get("verifiedServices", "Verified Services")).split(";").map((value) => value.trim()).filter(Boolean),
     clinicSignal: String(get("clinicSignal", "Clinic Signal")).trim(),
     profileSlug: String(get("profileSlug", "Profile Slug")).trim(),
+    recipientType: String(get("recipientType", "Recipient Type")).trim().toLowerCase() || "decision-maker",
     contactId: String(get("contactId", "Contact Id")).trim(),
     personName,
     currentRole: String(get("currentRole", "Current Role", "Role")).trim(),
@@ -334,6 +344,9 @@ function normalizeResearchRecord(input, index = 0) {
 
 function researchMissing(record) {
   const missing = [];
+  const recipientType = record.recipientType || "decision-maker";
+  const clinicInbox = recipientType === "clinic-inbox";
+  if (!new Set(["decision-maker", "clinical-referral", "clinic-inbox"]).has(recipientType)) missing.push("INVALID_RECIPIENT_TYPE");
   if (!record.clinicName) missing.push("MISSING_CLINIC_NAME");
   if (!isUrl(record.discoverySourceUrl)) missing.push("MISSING_DISCOVERY_SOURCE");
   if (!isUrl(record.officialWebsite)) missing.push("MISSING_OFFICIAL_WEBSITE");
@@ -348,11 +361,14 @@ function researchMissing(record) {
   if (!record.personName) missing.push("MISSING_PERSON_NAME");
   if (!record.currentRole) missing.push("MISSING_CURRENT_ROLE");
   if (!isUrl(record.salesNavigatorAccountUrl)) missing.push("MISSING_SALES_NAVIGATOR_ACCOUNT");
-  if (!isUrl(record.salesNavigatorLeadUrl)) missing.push("MISSING_SALES_NAVIGATOR_LEAD");
-  if (!record.salesQlChecked) missing.push("SALESQL_NOT_CHECKED");
-  if (record.identityMatch !== "exact") missing.push("IDENTITY_NOT_EXACT");
-  if (record.emailStatus !== "verified") missing.push("EMAIL_NOT_VERIFIED");
-  if (!isWorkEmail(record.workEmail)) missing.push("NOT_VERIFIED_WORK_EMAIL");
+  if (!clinicInbox && !isUrl(record.salesNavigatorLeadUrl)) missing.push("MISSING_SALES_NAVIGATOR_LEAD");
+  if (!clinicInbox && !record.salesQlChecked) missing.push("SALESQL_NOT_CHECKED");
+  if (!clinicInbox && record.identityMatch !== "exact") missing.push("IDENTITY_NOT_EXACT");
+  if (!clinicInbox && record.emailStatus !== "verified") missing.push("EMAIL_NOT_VERIFIED");
+  if (!clinicInbox && !isWorkEmail(record.workEmail)) missing.push("NOT_VERIFIED_WORK_EMAIL");
+  if (clinicInbox && record.identityMatch !== "clinic-exact") missing.push("CLINIC_INBOX_IDENTITY_NOT_EXACT");
+  if (clinicInbox && record.emailStatus !== "official-role-inbox") missing.push("CLINIC_INBOX_NOT_OFFICIALLY_VERIFIED");
+  if (clinicInbox && !isOfficialClinicEmail(record.workEmail, record.officialWebsite)) missing.push("CLINIC_INBOX_DOMAIN_MISMATCH");
   if (!record.ghlChecked) missing.push("GHL_NOT_CHECKED");
   if (!record.verifiedAt) missing.push("MISSING_VERIFICATION_DATE");
   if (record.dnd || record.unsubscribed || record.suppressed || record.hardBounce || record.explicitStop) missing.push("SUPPRESSION_OR_STOP_SIGNAL");
@@ -362,10 +378,11 @@ function researchMissing(record) {
 
 function researchStage(record) {
   const missing = researchMissing(record);
+  const clinicInbox = (record.recipientType || "decision-maker") === "clinic-inbox";
   if (!record.officialWebsite) return "discovered";
   if (missing.some((item) => item.includes("CLINIC") || item.includes("CORPORATE") || item.includes("OFFICIAL_WEBSITE"))) return "clinic_verification";
-  if (!record.salesNavigatorAccountUrl || !record.salesNavigatorLeadUrl) return "account_matching";
-  if (!record.workEmail || record.emailStatus !== "verified") return "email_verification";
+  if (!record.salesNavigatorAccountUrl || (!clinicInbox && !record.salesNavigatorLeadUrl)) return "account_matching";
+  if (!record.workEmail || (clinicInbox ? record.emailStatus !== "official-role-inbox" : record.emailStatus !== "verified")) return "email_verification";
   if (!record.ghlChecked) return "crm_check";
   if (missing.length) return "profile_and_qa";
   return "approval_ready";
@@ -426,10 +443,23 @@ function truncate(value, max) {
   return text.length <= max ? text : `${text.slice(0, max - 3).trim()}...`;
 }
 
+function formatList(values) {
+  if (values.length <= 1) return values[0] || "";
+  if (values.length === 2) return `${values[0]} and ${values[1]}`;
+  return `${values.slice(0, -1).join(", ")}, and ${values.at(-1)}`;
+}
+
 function buildDrafts(record, profile, token) {
   const first = firstName(record.personName);
+  const recipientType = record.recipientType || "decision-maker";
+  const greeting = recipientType === "clinic-inbox" ? `Hello ${profile.clinicName} team` : `Hi ${first}`;
+  const referralRequest = recipientType === "clinical-referral"
+    ? `If another colleague reviews new treatment pathways at ${profile.clinicName}, would you be comfortable forwarding this to them?`
+    : recipientType === "clinic-inbox"
+      ? `Would you please pass this to the clinician or director who reviews new treatment pathways at ${profile.clinicName}?`
+      : "Would this type of pathway be worth exploring?";
   const signal = record.clinicSignal || profile.signals[0].detail;
-  const products = profile.relevantProducts.map((id) => PRODUCT_LABELS[id]).join(", ");
+  const products = formatList(profile.relevantProducts.map((id) => PRODUCT_LABELS[id]));
   const productUrl = `https://demo.sironaaesthetics.agency/r/${token}/email-1`;
   const funnelUrl = `https://demo.sironaaesthetics.agency/r/${token}/email-2`;
   const applicationUrl = `https://demo.sironaaesthetics.agency/r/${token}/email-3`;
@@ -440,23 +470,23 @@ function buildDrafts(record, profile, token) {
   return {
     email1: {
       subject: `${profile.clinicName}: a VELURIA skin-quality idea`,
-      body: `Hi ${first},\n\nI noticed ${signal.toLowerCase()}\n\nVELURIA is PBSerum's four-product professional cosmetic range for skin-quality and scalp or hair pathways. Based on ${profile.clinicName}'s current offering, the most relevant starting point appears to be ${products}.\n\nI prepared a private product-fit example for your clinic: ${productUrl}\n\nWould this type of pathway be worth exploring?\n\n${signature}\n\n${optOut}`,
+      body: `${greeting},\n\nI noticed that ${signal}\n\nVELURIA is PBSerum's four-product professional cosmetic range for skin-quality and scalp or hair pathways. Based on ${profile.clinicName}'s current offering, the most relevant starting point appears to be ${products}.\n\nI prepared a private product-fit example for your clinic: ${productUrl}\n\n${referralRequest}\n\n${signature}\n\n${optOut}`,
     },
     email2: {
       subject: `The VELURIA growth opportunity for ${profile.clinicName}`,
-      body: `Hi ${first},\n\nThe reason I connected VELURIA with ${profile.clinicName} is not simply to add another product. Sirona pairs the range and training with a clinic-branded patient funnel.\n\nThe page below shows how paid campaigns and existing-client reactivation could create informed consultation opportunities, using gross revenue examples rather than profit claims:\n${funnelUrl}\n\nWould it be useful to map the model to your current services?\n\n${signature}\n\n${optOut}`,
+      body: `${greeting},\n\nThe reason I connected VELURIA with ${profile.clinicName} is not simply to add another product. Sirona pairs the range and training with a clinic-branded patient funnel.\n\nThe page below shows how paid campaigns and existing-client reactivation could create informed consultation opportunities, using gross revenue examples rather than profit claims:\n${funnelUrl}\n\nWould it be useful to map the model to your current services?\n\n${signature}\n\n${optOut}`,
     },
     email3: {
       subject: `A before-and-after application for ${profile.clinicName}`,
-      body: `Hi ${first},\n\nI prepared the patient-facing part of the VELURIA idea for ${profile.clinicName}. It lets a patient explore a concern or use a permitted photograph, see an illustrative before-and-after experience, understand the relevant VELURIA pathway and move towards the clinic calendar.\n\nYou can test the doctor-facing preview here: ${applicationUrl}\n\nThe visual is the engagement point. Your clinic remains responsible for consultation, suitability and treatment.\n\n${signature}\n\n${optOut}`,
+      body: `${greeting},\n\nI prepared the patient-facing part of the VELURIA idea for ${profile.clinicName}. It lets a patient explore a concern or use a permitted photograph, see an illustrative before-and-after experience, understand the relevant VELURIA pathway and move towards the clinic calendar.\n\nYou can test the doctor-facing preview here: ${applicationUrl}\n\nThe visual is the engagement point. Your clinic remains responsible for consultation, suitability and treatment.\n\n${signature}\n\n${optOut}`,
     },
     email4: {
       subject: `How the AI Sales Brain follows a VELURIA enquiry`,
-      body: `Hi ${first},\n\nThe final part of the example is the optional AI Sales Brain. It knows which campaign produced the lead, what concern the patient explored, the consented analysis summary and the matched VELURIA pathway.\n\nIt can then coordinate approved messaging, calling, scheduling and handoff agents so each follow-up starts with the right context. The Brain is an additional, separately priced implementation:\n${brainUrl}\n\nIf this is worth examining, the free 20-minute VELURIA Clinic Growth Map is the place to review the right first phase for ${profile.clinicName}.\n\n${signature}\n\n${optOut}`,
+      body: `${greeting},\n\nThe final part of the example is the optional AI Sales Brain. It knows which campaign produced the lead, what concern the patient explored, the consented analysis summary and the matched VELURIA pathway.\n\nIt can then coordinate approved messaging, calling, scheduling and handoff agents so each follow-up starts with the right context. The Brain is an additional, separately priced implementation:\n${brainUrl}\n\nIf this is worth examining, the free 20-minute VELURIA Clinic Growth Map is the place to review the right first phase for ${profile.clinicName}.\n\n${signature}\n\n${optOut}`,
     },
     linkedin: {
-      connectionNote,
-      messages: [
+      connectionNote: recipientType === "clinic-inbox" ? "" : connectionNote,
+      messages: recipientType === "clinic-inbox" ? [] : [
         `Thanks for connecting, ${first}. I prepared a private VELURIA product-fit example around ${profile.clinicName}'s ${record.verifiedServices[0]} work: ${productUrl}`,
         `The second part shows how the VELURIA range can connect to a clinic-branded acquisition funnel rather than sit as a product-only promotion: ${funnelUrl}`,
         `I also built the doctor preview of the before-and-after application. It shows the patient journey, VELURIA match and consultation handoff: ${applicationUrl}`,
@@ -602,6 +632,7 @@ function prepareIntroductions(options) {
     const window = ordinal < CONFIG.newPeoplePerWindow ? CONFIG.sendWindows[0] : CONFIG.sendWindows[1];
     const item = {
       researchId: record.id,
+      recipientType: record.recipientType || "decision-maker",
       contactId: record.contactId,
       clinicKey: clinicKey(record),
       clinic: record.clinicName,
@@ -611,7 +642,7 @@ function prepareIntroductions(options) {
       workEmail: record.workEmail,
       sender,
       window,
-      linkedinPriority: cleared.length < CONFIG.linkedin.maxInvitationsPerDay,
+      linkedinPriority: (record.recipientType || "decision-maker") !== "clinic-inbox" && cleared.length < CONFIG.linkedin.maxInvitationsPerDay,
       salesNavigatorAccountUrl: record.salesNavigatorAccountUrl,
       salesNavigatorLeadUrl: record.salesNavigatorLeadUrl,
       profileSlug: profile.slug,

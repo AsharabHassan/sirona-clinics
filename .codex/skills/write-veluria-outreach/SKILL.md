@@ -11,6 +11,11 @@ description: Write and quality-check personalised Sirona Aesthetics outreach for
 - Write every message individually. Do not reuse identical sentences across recipients.
 - Connect the clinic signal naturally to VELURIA without inventing familiarity, results, or prior contact.
 - Use the recipient's verified first name and the clinic's correct trading name.
+- When the recipient is a clinician rather than the decision-maker, state the
+  clinic relevance and politely ask them to forward it if another colleague
+  reviews new treatment pathways.
+- Address an official role inbox to the clinic team and ask for routing to the
+  relevant clinician or director. Do not pretend a shared inbox is a person.
 
 ## Write clean copy
 
@@ -35,6 +40,9 @@ description: Write and quality-check personalised Sirona Aesthetics outreach for
 
 - Send future campaign emails from `hello@sironaaesthetics.co.uk`.
 - Confirm the recipient, verified address, suppression status, DND state, sender identity, and link destination before sending.
+- Accept only a SalesQL-verified work email for a named person, or a role inbox
+  published on the exact official clinic domain. Reject personal and off-domain
+  addresses.
 - Include exactly one working HighLevel unsubscribe mechanism. Use `{{unsubscribe}}` when the account's default unsubscribe footer is not already enabled.
 - Do not combine `{{unsubscribe}}` with an enabled default footer.
 - Stop for a suppression conflict, hard bounce, authentication failure, or location mismatch.
