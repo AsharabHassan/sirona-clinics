@@ -268,5 +268,63 @@
       "hair-force-plus": "Connects with the clinic's published PRP hair pathway through a separate scalp and hair vitality conversation."
     },
     "hairConsultationRationale": "Review how Hair Force+ could complement the clinic's existing PRP hair service as a distinct professional scalp and hair vitality pathway."
+  },
+  {
+    "id": "profile_surgical_aesthetics",
+    "slug": "surgical-aesthetics",
+    "clinicName": "Surgical Aesthetics",
+    "city": "London",
+    "website": "https://www.janstanek.com/",
+    "segment": "consultant-led-cosmetic-surgery",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Consultant-led cosmetic practice",
+        "detail": "Surgical Aesthetics identifies Jan Stanek FRCS as its founder and consultant cosmetic surgeon, with a London clinical practice.",
+        "sourceUrl": "https://www.janstanek.com/about/"
+      },
+      {
+        "label": "Established skin-quality treatments",
+        "detail": "The practice publicly lists skin peels, Erbium YAG laser and Exilis radio-frequency treatments alongside its surgical work.",
+        "sourceUrl": "https://www.janstanek.com/about/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Surgical Aesthetics official website",
+        "url": "https://www.janstanek.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Surgical Aesthetics practice profile",
+        "url": "https://www.janstanek.com/about/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Surgical Aesthetics Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/03699239",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Surgical Aesthetics",
+    "heroHeadline": "Connect laser-led skin work with a clearer product journey.",
+    "heroIntro": "this private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Surgical Aesthetics' established skin peel, laser and radio-frequency pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a separate firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Surgical Aesthetics can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the practice's skin peel, Erbium YAG laser and Exilis radio-frequency services.",
+    "verifiedServices": ["Skin peels", "Erbium YAG laser", "Exilis radio-frequency", "Professional skin care"],
+    "serviceMenuBridge": "The practice's established skin peel, laser and radio-frequency pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Surgical Aesthetics' protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with existing patient conversations about texture, radiance and visible skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the practice's radio-frequency work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the practice's peel and laser services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Surgical Aesthetics preview unless the practice confirms a relevant scalp or hair service pathway."
   }
 ]
