@@ -192,6 +192,9 @@ test("daily packet uses the approved sender and current four landing pages", () 
   importResearch(env, records);
   const packet = run(["prepare", "--limit", "10", "--at", "2026-08-10T08:30:00Z"], env);
   assert.equal(packet.cleared.length, 10);
+  assert.equal(packet.status, "APPROVED_WAITING_FOR_WINDOW");
+  assert.equal(packet.approvedBy, "standing-user-authorisation");
+  assert.equal(packet.cleared.every((item) => item.approval === "APPROVED"), true);
   assert.deepEqual(Object.values(packet.senderCounts), [10]);
   assert.equal(packet.cleared[0].drafts.email3.body.includes("/email-3"), true);
   assert.equal(packet.cleared[0].drafts.email4.body.includes("/email-4"), true);
@@ -240,6 +243,7 @@ test("follow-up packet waits until the configured business-day stage", () => {
   const due = run(["prepare-followups", "--at", "2026-08-13T08:30:00Z"], env);
   assert.equal(early.cleared.length, 0);
   assert.equal(due.cleared.length, 1);
+  assert.equal(due.status, "APPROVED_WAITING_FOR_WINDOW");
   assert.equal(due.cleared[0].stage, "email-2");
 });
 

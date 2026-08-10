@@ -3,7 +3,7 @@
 ## Safety state
 
 The campaign is `PAUSED` by default. The controller can research, validate and
-prepare approval packets while paused, but it cannot transmit an email or
+prepare review packets while paused, but it cannot transmit an email or
 perform a LinkedIn action. `release` only exposes approved manual actions. It
 does not send them.
 
@@ -22,16 +22,19 @@ Activation command, to be used only after those checks pass:
 node tools/outreach-loop.mjs activate --funnel-approved yes --senders-approved yes --research-approved yes --by "Reviewer name"
 ```
 
-Activation still does not send anything. Every introduction and follow-up
-packet needs separate approval, a valid UK release window and a manual send
-receipt.
+Activation still does not send anything. The user granted standing authorisation
+on 10 August 2026 for fully cleared introductions and scheduled follow-ups, so
+those packets may enter `APPROVED_WAITING_FOR_WINDOW` automatically. Every send
+still needs a valid UK release window, a fresh suppression check, manual UI
+transmission and a visible send receipt. Contextual replies remain separately
+reviewed because their content depends on the recipient's actual message.
 
 ## Operating limits
 
 - A maximum of 100 total emails per day, Monday to Saturday. Follow-ups and
   approved reply messages count inside the same cap and take priority over new
   introductions.
-- Prepare and approve introductions one clinic at a time. Use the remaining
+- Prepare introductions one clinic at a time. Use the remaining
   daily capacity at 09:30 or 14:30 UK time.
 - No message on Sunday or at/after 18:00 UK time.
 - One sender capped at 100 total messages per day, including introductions,
@@ -43,7 +46,7 @@ receipt.
 - Positive replies, bookings and meaningful funnel activity stop generic
   follow-ups and move the record to human review.
 
-Pending approval packets reserve sender capacity. Prepare due follow-ups before
+Prepared packets reserve sender capacity. Prepare due follow-ups before
 new introductions; introductions use only the remaining daily capacity.
 Preparing the command twice cannot silently schedule more than 100 total.
 
@@ -83,7 +86,7 @@ Every recipient route must pass this chain before entering a packet:
    person and work email. Reuse the existing contact when found. If no exact
    contact exists, create one verified contact in that location, record its
    Contact ID, and then check DND, unsubscribe, suppression, bounce and identity
-   conflicts before approval.
+   conflicts before clearance.
 6. Add a source-backed clinic signal, approved profile and final personalised
    copy. Never invent a service or clinic fact.
 
@@ -225,4 +228,5 @@ Run `npm run outreach:learn` after recording outcomes. Bookings and positive
 replies are the primary signals; clicks and application activity are intent
 signals; opens are diagnostic only. Change one variable at a time and wait for
 the configured cohort and observation period. The learner may recommend a
-change or a pause, but it cannot alter live copy or send without approval.
+change or a pause, but it cannot alter live copy or bypass the verified-recipient,
+suppression, sender, time-window, platform-warning or receipt gates.

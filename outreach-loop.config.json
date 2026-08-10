@@ -20,7 +20,7 @@
   "programmeCap": null,
   "maxPeoplePerClinic": 2,
   "secondPersonDelayBusinessDays": 15,
-  "approvalRequiredForEveryBatch": true,
+  "approvalRequiredForEveryBatch": false,
   "linkedin": {
     "coldStrategy": "connection-first",
     "manualOnly": true,

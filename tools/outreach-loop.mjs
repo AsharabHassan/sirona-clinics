@@ -651,7 +651,7 @@ function prepareIntroductions(options) {
       stage: "email-1",
       drafts,
       schedule: Object.fromEntries(CONFIG.email.stages.map((stage) => [stage.id, addBusinessDays(now, stage.delayBusinessDays)])),
-      approval: "PENDING",
+      approval: CONFIG.approvalRequiredForEveryBatch ? "PENDING" : "APPROVED",
       recipientToken: token,
     };
     cleared.push(item);
@@ -661,11 +661,13 @@ function prepareIntroductions(options) {
     selectedClinics.add(item.clinicKey);
   }
   const senderCounts = Object.fromEntries(senders.map((sender) => [sender.id, cleared.filter((item) => item.sender.id === sender.id).length]));
+  const standingApproval = !CONFIG.approvalRequiredForEveryBatch;
   const packet = {
     runId,
     type: "INTRODUCTIONS",
-    status: "APPROVAL_REQUIRED",
+    status: standingApproval ? "APPROVED_WAITING_FOR_WINDOW" : "APPROVAL_REQUIRED",
     createdAt: new Date().toISOString(),
+    ...(standingApproval ? { approvedAt: new Date().toISOString(), approvedBy: "standing-user-authorisation" } : {}),
     scheduledDate,
     locationId: CONFIG.locationId,
     target: requestedTarget,
@@ -718,10 +720,21 @@ function prepareFollowups(options) {
       stage: stage.id,
       draft: contact.drafts[stage.id.replace("-", "")],
       recipientToken: contact.recipientToken,
-      approval: "PENDING",
+      approval: CONFIG.approvalRequiredForEveryBatch ? "PENDING" : "APPROVED",
     });
   }
-  const packet = { runId, type: "FOLLOWUPS", status: "APPROVAL_REQUIRED", createdAt: new Date().toISOString(), scheduledDate, locationId: CONFIG.locationId, cleared, held };
+  const standingApproval = !CONFIG.approvalRequiredForEveryBatch;
+  const packet = {
+    runId,
+    type: "FOLLOWUPS",
+    status: standingApproval ? "APPROVED_WAITING_FOR_WINDOW" : "APPROVAL_REQUIRED",
+    createdAt: new Date().toISOString(),
+    ...(standingApproval ? { approvedAt: new Date().toISOString(), approvedBy: "standing-user-authorisation" } : {}),
+    scheduledDate,
+    locationId: CONFIG.locationId,
+    cleared,
+    held,
+  };
   writeJson(path.join(APPROVAL_DIR, `${runId}.json`), packet);
   state.lastRunId = runId;
   saveState(state);
