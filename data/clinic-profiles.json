@@ -49,9 +49,9 @@
     "city": "London",
     "website": "https://clinicalondon.co.uk/",
     "segment": "surgical-aesthetics",
-    "legalEntityType": "unknown",
-    "status": "demo",
-    "verifiedAt": "2026-08-06",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
     "brand": { "accent": "#1B7465" },
     "signals": [
       {
@@ -74,7 +74,12 @@
       {
         "label": "Clinica London official website",
         "url": "https://clinicalondon.co.uk/",
-        "verifiedAt": "2026-08-06"
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Clinica London Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/06523937",
+        "verifiedAt": "2026-08-10"
       }
     ],
     "relevantProducts": ["silk-skin", "ultra-lift"],
