@@ -465,7 +465,7 @@ function buildDrafts(record, profile, token) {
   return {
     email1: {
       subject: `${profile.clinicName}: a VELURIA skin-quality idea`,
-      body: `${greeting},\n\nI noticed that ${signal}\n\nVELURIA is PBSerum's four-product professional cosmetic range for skin-quality and scalp or hair pathways. Based on ${profile.clinicName}'s current offering, the most relevant starting point appears to be ${products}.\n\nI prepared a private product-fit example for your clinic: ${productUrl}\n\n${referralRequest}\n\n${signature}\n\n${optOut}`,
+      body: `${greeting},\n\nI noticed that ${signal}\n\nVELURIA is PBSerum's professional enzyme-based bioremodelling range. In practical terms, each formula combines recombinant enzymes with pathway-specific supporting ingredients, giving clinics distinct treatment conversations for skin quality or scalp and hair vitality. Based on ${profile.clinicName}'s current offering, the most relevant starting point appears to be ${products}.\n\nI prepared a private product-fit example for your clinic: ${productUrl}\n\n${referralRequest}\n\n${signature}\n\n${optOut}`,
     },
     email2: {
       subject: `The VELURIA growth opportunity for ${profile.clinicName}`,
