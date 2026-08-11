@@ -384,5 +384,810 @@
       "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
     },
     "hairConsultationRationale": "Keep Hair Force+ outside the initial Jonathan Britto Clinic preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_ouronyx",
+    "slug": "ouronyx",
+    "clinicName": "Ouronyx",
+    "city": "London",
+    "website": "https://ouronyx.com/",
+    "segment": "doctor-led-facial-aesthetics-and-hair-restoration",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#1B7465" },
+    "signals": [
+      {
+        "label": "Data-informed facial and hair pathways",
+        "detail": "Ouronyx publicly focuses on facial aesthetics and hair care, using 3D imaging to support skin and scalp assessment before a doctor-led treatment plan.",
+        "sourceUrl": "https://ouronyx.com/"
+      },
+      {
+        "label": "Current London medical leadership",
+        "detail": "Dr Marco Nicoloso is listed as Medical Director and Hair Loss Specialist at Ouronyx in London.",
+        "sourceUrl": "https://www.linkedin.com/sales/lead/ACwAACDMc18BjECQ1YRPwLGBI7Tl_ORvJmiOOME,NAME_SEARCH,rkQ_"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Ouronyx official website",
+        "url": "https://ouronyx.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Ouronyx Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/12649786",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone", "hair-force-plus"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Ouronyx",
+    "heroHeadline": "Connect data-informed facial and hair consultations with a clearer product journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Ouronyx's facial-aesthetics and hair-restoration pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a firmness and elasticity pathway, Pearl Tone could support a clarity and even-looking tone conversation, and Hair Force+ could support a distinct scalp and hair vitality discussion. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Ouronyx can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its doctor-led consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Ouronyx's facial-aesthetics, skin-analysis and hair-restoration services.",
+    "verifiedServices": ["Facial aesthetics", "Hair restoration", "3D skin and scalp imaging", "Doctor-led treatment planning"],
+    "serviceMenuBridge": "Ouronyx's existing facial, hair and imaging-led consultation pathways create a credible starting point for distinct VELURIA skin-quality and scalp conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Ouronyx's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with established conversations about visible texture, radiance and skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway within the clinic's facial-aesthetics offering.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside image-informed skin planning.",
+      "hair-force-plus": "Connects with Ouronyx's current scalp assessment and hair-restoration pathway."
+    },
+    "hairConsultationRationale": "Review how Hair Force+ could complement Ouronyx's current hair-restoration and scalp-assessment services as a distinct professional scalp and hair vitality pathway."
+  },
+  {
+    "id": "profile_revere_clinics",
+    "slug": "revere-clinics",
+    "clinicName": "Revere Clinics",
+    "city": "London",
+    "website": "https://www.revereclinics.com/",
+    "segment": "doctor-led-skin-aesthetics-and-hair-restoration",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#8C6F5A" },
+    "signals": [
+      {
+        "label": "Established skin and regenerative pathways",
+        "detail": "Revere Clinics publicly presents medical dermafacials, skin resurfacing and scar treatments, medical-grade skincare, pigmentation pathways and regenerative facials.",
+        "sourceUrl": "https://www.revereclinics.com/"
+      },
+      {
+        "label": "Founder-led clinical direction",
+        "detail": "Sach Mohan is currently listed as Founder and Cosmetic Physician at Revere Clinics in London.",
+        "sourceUrl": "https://www.linkedin.com/sales/lead/ACwAAAAYwksBLBN9PXUmAiFCunc11bHwsI5Y10U,NAME_SEARCH,X9Q-"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Revere Clinics official website",
+        "url": "https://www.revereclinics.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Revere Clinics Ltd Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/09850322",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone", "hair-force-plus"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Revere Clinics",
+    "heroHeadline": "Connect established skin and hair pathways with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Revere Clinics' current skin-quality, resurfacing and hair-restoration services.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a firmness and elasticity pathway, Pearl Tone could support a clarity and even-looking tone conversation, and Hair Force+ could support a distinct scalp and hair vitality discussion. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Revere Clinics can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Revere Clinics' medical dermafacial, resurfacing, pigmentation and hair-restoration services.",
+    "verifiedServices": ["Medical dermafacials", "Skin resurfacing and scar treatments", "Skin brightening and hyperpigmentation", "Injectable hair growth and hair transplants"],
+    "serviceMenuBridge": "Revere Clinics' established skin-quality, resurfacing, pigmentation and hair pathways create a credible starting point for the full VELURIA range.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Revere Clinics' protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with established conversations about visible texture, radiance and skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's facial-aesthetics work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the clinic's pigmentation services.",
+      "hair-force-plus": "Connects with Revere Clinics' current injectable hair-growth and hair-transplant pathways."
+    },
+    "hairConsultationRationale": "Review how Hair Force+ could complement Revere Clinics' existing hair-growth and transplant services as a distinct professional scalp and hair vitality pathway."
+  },
+  {
+    "id": "profile_la_belle_forme_glasgow",
+    "slug": "la-belle-forme-glasgow",
+    "clinicName": "La Belle Forme",
+    "city": "Glasgow",
+    "website": "https://labelleforme.co.uk/",
+    "segment": "hospital-based-cosmetic-surgery-and-aesthetics",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#7A5F57" },
+    "signals": [
+      {
+        "label": "Hospital-based surgical and non-surgical care",
+        "detail": "La Belle Forme presents surgical and advanced non-surgical treatment pathways from Electiva Hospitals Glasgow at 154 Clyde Street.",
+        "sourceUrl": "https://labelleforme.co.uk/locations/glasgow/"
+      },
+      {
+        "label": "Established facial-aesthetics pathways",
+        "detail": "The Glasgow clinic publicly lists skin tightening, laser treatments, wrinkle treatments and dermal fillers among its non-surgical services.",
+        "sourceUrl": "https://labelleforme.co.uk/locations/glasgow/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "La Belle Forme Glasgow official page",
+        "url": "https://labelleforme.co.uk/locations/glasgow/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Electiva Hospitals Glasgow Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/SC419044",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for La Belle Forme",
+    "heroHeadline": "Connect established non-surgical pathways with a clearer skin-quality journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement La Belle Forme's current skin-tightening, laser and facial-aesthetics services.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "La Belle Forme can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside La Belle Forme's skin-tightening, laser and facial-aesthetics services.",
+    "verifiedServices": ["Skin tightening", "Laser treatments", "Wrinkle treatments", "Dermal fillers"],
+    "serviceMenuBridge": "La Belle Forme's established non-surgical pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to La Belle Forme's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's skin-tightening work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the clinic's laser and facial-aesthetics services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial La Belle Forme preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_marlow_face_and_body",
+    "slug": "marlow-face-and-body",
+    "clinicName": "Marlow Face & Body",
+    "city": "Marlow",
+    "website": "https://marlowfaceandbody.com/",
+    "segment": "medical-aesthetics-and-skin-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#6F7667" },
+    "signals": [
+      {
+        "label": "CQC-registered private medical and aesthetics practice",
+        "detail": "Marlow Face & Body describes a CQC-registered practice in Marlow with medical professionals and qualified aesthetic practitioners.",
+        "sourceUrl": "https://marlowfaceandbody.com/"
+      },
+      {
+        "label": "Established skin and facial-aesthetics pathways",
+        "detail": "The clinic publicly presents skin tightening, laser skin treatments, chemical peels and dermal fillers alongside a wider face and body treatment portfolio.",
+        "sourceUrl": "https://marlowfaceandbody.com/about/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Marlow Face & Body official website",
+        "url": "https://marlowfaceandbody.com/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Marlow Face and Body Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/11810393",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Marlow Face & Body",
+    "heroHeadline": "Connect established skin treatments with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Marlow Face & Body's current skin-tightening, laser and facial-aesthetics services.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Marlow Face & Body can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's skin-tightening, laser, peel and facial-aesthetics services.",
+    "verifiedServices": ["Skin tightening", "Laser skin treatments", "Chemical peels", "Dermal fillers"],
+    "serviceMenuBridge": "The clinic's existing skin-tightening, laser, peel and facial-aesthetics pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Marlow Face & Body's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside the clinic's skin-tightening work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the clinic's laser and peel services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Marlow Face & Body preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_clinetix_glasgow",
+    "slug": "clinetix-glasgow",
+    "clinicName": "Clinetix",
+    "city": "Glasgow",
+    "website": "https://clinetix.co.uk/",
+    "segment": "doctor-led-medical-aesthetics-and-skin-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#6E7168" },
+    "signals": [
+      {
+        "label": "Doctor-led Scottish medical-aesthetics group",
+        "detail": "Clinetix describes a multi-award-winning medical-aesthetics clinic group founded by Dr Simon Ravichandran and Dr Emma Ravichandran, with locations in Bothwell and Glasgow city centre.",
+        "sourceUrl": "https://clinetix.co.uk/"
+      },
+      {
+        "label": "Established technology-led skin pathways",
+        "detail": "The clinic publicly presents radio-frequency skin rejuvenation, dermal microneedling, skin lifting and tightening, medical-grade chemical peels, laser and IPL treatments.",
+        "sourceUrl": "https://clinetix.co.uk/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Clinetix official website",
+        "url": "https://clinetix.co.uk/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Clinetix Rejuvenation Glasgow Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/SC467705",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Clinetix",
+    "heroHeadline": "Connect established technology-led skin pathways with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Clinetix's current microneedling, radio-frequency, peel and laser services.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Clinetix can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Clinetix's microneedling, radio-frequency, peel, laser and skin-tightening services.",
+    "verifiedServices": ["Radio-frequency skin rejuvenation", "Dermal microneedling", "Skin lifting and tightening", "Medical-grade chemical peels", "Laser and IPL treatments"],
+    "serviceMenuBridge": "Clinetix's established technology-led skin pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Clinetix's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside microneedling and peel pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside radio-frequency and skin-tightening work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside laser, IPL and peel services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Clinetix preview unless the clinic confirms a relevant scalp or hair service pathway."
+  },
+  {
+    "id": "profile_colaz_reading",
+    "slug": "colaz-reading",
+    "clinicName": "CoLaz Reading",
+    "city": "Reading",
+    "website": "https://www.colaz.co.uk/clinics/reading/",
+    "segment": "multi-pathway-aesthetics-skin-and-hair-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#716156" },
+    "signals": [
+      {
+        "label": "Broad clinician-led skin and hair menu",
+        "detail": "CoLaz Reading publicly presents a clinician-led Oxford Road clinic with skin rejuvenation, injectables, hair-loss work and consultation-led treatment planning.",
+        "sourceUrl": "https://www.colaz.co.uk/clinics/reading/"
+      },
+      {
+        "label": "Established technology-led treatment pathways",
+        "detail": "The Reading clinic lists Dermapen microneedling, chemical peels, radio-frequency treatment, PICO laser, PRP face and PRP hair-loss services among its current menu.",
+        "sourceUrl": "https://www.colaz.co.uk/clinics/reading/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "CoLaz Reading official clinic page",
+        "url": "https://www.colaz.co.uk/clinics/reading/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "OSD Beauty Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/10470368",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone", "hair-force-plus"],
+    "heroEyebrow": "A VELURIA patient journey prepared for CoLaz Reading",
+    "heroHeadline": "Connect a broad skin and hair menu with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement CoLaz Reading's current microneedling, peel, radio-frequency, laser and hair-loss services.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, Pearl Tone could support a clarity and even-looking tone conversation, and Hair Force+ could support a separate scalp and hair vitality pathway. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "CoLaz Reading can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside CoLaz Reading's microneedling, peel, radio-frequency, laser and hair-loss services.",
+    "verifiedServices": ["Dermapen microneedling", "Chemical skin peels", "Radio-frequency treatment", "PICO laser treatment", "PRP face", "PRP hair loss"],
+    "serviceMenuBridge": "CoLaz Reading's established skin-rejuvenation and hair-loss pathways create a credible starting point for the full VELURIA range.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to CoLaz Reading's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside microneedling and peel pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside radio-frequency and facial-rejuvenation work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside laser and peel services.",
+      "hair-force-plus": "Connects with the clinic's existing PRP hair-loss pathway as a distinct professional scalp and hair vitality conversation."
+    },
+    "hairConsultationRationale": "Review how Hair Force+ could complement CoLaz Reading's current PRP hair-loss service as a distinct professional scalp and hair vitality pathway."
+  },
+  {
+    "id": "profile_diamond_skin_care",
+    "slug": "diamond-skin-care",
+    "clinicName": "Diamond Skin Care",
+    "city": "Norwich",
+    "website": "https://diamondskincare.co.uk/",
+    "segment": "consultant-led-private-dermatology-group",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#58656A" },
+    "signals": [
+      {
+        "label": "Consultant-led private dermatology group",
+        "detail": "Diamond Skin Care describes consultant-led private dermatology services across Norwich, Colchester, Doncaster, Sutton Coldfield, Dorchester and Hertford.",
+        "sourceUrl": "https://diamondskincare.co.uk/"
+      },
+      {
+        "label": "Established skin, hair and scalp pathways",
+        "detail": "The clinic publicly presents acne, melasma, rosacea, hair and scalp care alongside mole checks, removals and wider dermatology consultations.",
+        "sourceUrl": "https://diamondskincare.co.uk/private-dermatologist/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Diamond Skin Care official website",
+        "url": "https://diamondskincare.co.uk/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Diamond Skin Care Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/06423505",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "pearl-tone", "hair-force-plus"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Diamond Skin Care",
+    "heroHeadline": "Explore a responsible elective skin-quality pathway alongside consultant-led dermatology.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could support separate elective skin-quality and scalp conversations alongside Diamond Skin Care's consultant-led dermatology services.",
+    "productFit": "VELURIA Silk Skin could support elective conversations about visible texture and radiance, Pearl Tone could support a clarity and even-looking tone pathway, and Hair Force+ could support a separate professional scalp and hair vitality conversation. These pathways would remain distinct from diagnosis and medical dermatology care, with final suitability and product selection determined by the treating clinician.",
+    "pipelineOpportunity": "Diamond Skin Care can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route suitable interest into its existing consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review where a separate VELURIA skin-quality and scalp pathway could fit alongside Diamond Skin Care's consultant-led services.",
+    "verifiedServices": ["Consultant-led private dermatology", "Acne treatment", "Melasma and rosacea care", "Hair and scalp conditions", "Mole checks and removals"],
+    "serviceMenuBridge": "Diamond Skin Care's established consultation-led skin and scalp pathways create a credible setting for clearly separated elective VELURIA conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Diamond Skin Care's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Supports an elective skin-quality conversation about visible texture and radiance, kept separate from medical dermatology claims.",
+      "ultra-lift": "Could be considered later if Diamond Skin Care confirms a relevant firmness or laxity pathway.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation without positioning the product as treatment for a diagnosed skin disease.",
+      "hair-force-plus": "Connects with the clinic's existing hair and scalp consultation context as a distinct professional vitality pathway."
+    },
+    "hairConsultationRationale": "Review how Hair Force+ could sit as a separate professional scalp and hair vitality pathway alongside Diamond Skin Care's consultant-led hair and scalp services."
+  },
+  {
+    "id": "profile_contour_couture",
+    "slug": "contour-couture",
+    "clinicName": "Contour Couture",
+    "city": "Swindon",
+    "website": "https://www.contourcouture.co.uk/",
+    "segment": "multi-site-aesthetics-skin-and-body-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#775D68" },
+    "signals": [
+      {
+        "label": "Founder-led South West aesthetics group",
+        "detail": "Contour Couture identifies Mimi Thomas as founder and clinic director and presents clinics serving Swindon and Bristol.",
+        "sourceUrl": "https://www.contourcouture.co.uk/about-us"
+      },
+      {
+        "label": "Established skin-technology pathways",
+        "detail": "The clinic publicly presents advanced microneedling with radiofrequency, chemical peels, skin rejuvenation, dermal fillers and body sculpting.",
+        "sourceUrl": "https://www.contourcouture.co.uk/clinic-locations/bristol"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Contour Couture official website",
+        "url": "https://www.contourcouture.co.uk/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Contour Couture Ltd Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/12175077",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Contour Couture",
+    "heroHeadline": "Connect advanced skin treatments with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Contour Couture's current radiofrequency microneedling, peel, rejuvenation and facial-aesthetics pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating practitioner.",
+    "pipelineOpportunity": "Contour Couture can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Contour Couture's radiofrequency microneedling, peel, skin-rejuvenation and facial-aesthetics services.",
+    "verifiedServices": ["Advanced microneedling with radiofrequency", "Chemical peels", "Skin rejuvenation", "Dermal fillers", "Body sculpting"],
+    "serviceMenuBridge": "Contour Couture's established device-led and practitioner-led skin pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Contour Couture's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside microneedling and peel pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside radiofrequency and facial-rejuvenation work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside peel and skin-rejuvenation services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair-vitality pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Contour Couture preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_dr_leah_clinics",
+    "slug": "dr-leah-clinics",
+    "clinicName": "Dr Leah Clinics",
+    "city": "London",
+    "website": "https://www.drleah.co.uk/",
+    "segment": "doctor-led-multi-site-aesthetics-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-10",
+    "brand": { "accent": "#735C6E" },
+    "signals": [
+      {
+        "label": "Doctor-led London and Essex clinic group",
+        "detail": "Dr Leah Clinics presents three non-surgical cosmetic clinics led by Medical Director Dr Leah Totton.",
+        "sourceUrl": "https://www.drleah.co.uk/"
+      },
+      {
+        "label": "Established microneedling and skin-renewal pathways",
+        "detail": "The current treatment menu includes microneedling, microneedling with exosomes, chemical peels, Morpheus8, laser treatments and polynucleotides.",
+        "sourceUrl": "https://www.drleah.co.uk/pricing"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Dr Leah Clinics official website",
+        "url": "https://www.drleah.co.uk/",
+        "verifiedAt": "2026-08-10"
+      },
+      {
+        "label": "Dr Leah Clinics Limited Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/16456094",
+        "verifiedAt": "2026-08-10"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Dr Leah Clinics",
+    "heroHeadline": "Connect established skin-renewal treatments with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Dr Leah Clinics' current microneedling, peel, laser and skin-tightening pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Dr Leah Clinics can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Dr Leah Clinics' microneedling, peel, laser and skin-tightening services.",
+    "verifiedServices": ["Microneedling", "Microneedling with exosomes", "Chemical peels", "Morpheus8", "Laser skin treatments", "Polynucleotide treatments"],
+    "serviceMenuBridge": "The clinic's established microneedling, peel, laser and skin-tightening pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to Dr Leah Clinics' protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside microneedling and peel pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity pathway alongside Morpheus8 and other skin-tightening work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside peel and laser services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair-vitality pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial Dr Leah Clinics preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_london_skin_hair_clinic",
+    "slug": "london-skin-hair-clinic",
+    "clinicName": "The London Skin and Hair Clinic",
+    "city": "London",
+    "website": "https://thelondonskinandhairclinic.com/",
+    "segment": "consultant-led-dermatology-and-hair-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#446A64" },
+    "signals": [
+      {
+        "label": "Consultant-led central London dermatology clinic",
+        "detail": "The clinic presents a consultant team covering medical dermatology, plastic surgery and care for a range of skin conditions.",
+        "sourceUrl": "https://thelondonskinandhairclinic.com/"
+      },
+      {
+        "label": "Established hair-loss and scalp pathway",
+        "detail": "The clinic's public service description includes hair-loss and scalp conditions alongside acne, eczema and psoriasis.",
+        "sourceUrl": "https://thelondonskinandhairclinic.com/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "The London Skin and Hair Clinic official website",
+        "url": "https://thelondonskinandhairclinic.com/",
+        "verifiedAt": "2026-08-11"
+      },
+      {
+        "label": "London Skin & Hair Clinic (W1) LLP Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/OC350222",
+        "verifiedAt": "2026-08-11"
+      }
+    ],
+    "relevantProducts": ["hair-force-plus", "silk-skin", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for The London Skin and Hair Clinic",
+    "heroHeadline": "Connect skin and hair expertise with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI experience and structured consultation follow-up could complement the clinic's established skin, hair and scalp pathways.",
+    "productFit": "VELURIA Hair Force+ could support a focused scalp and hair-vitality conversation, while Silk Skin and Pearl Tone could support distinct skin-quality and even-looking tone pathways. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "The London Skin and Hair Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's consultant-led skin, hair and scalp services.",
+    "verifiedServices": ["Consultant dermatology", "Hair-loss and scalp conditions", "Acne", "Eczema and psoriasis", "Plastic surgery"],
+    "serviceMenuBridge": "The clinic's established skin, hair and scalp pathways create a credible starting point for distinct VELURIA conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to the clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside the clinic's broader dermatology pathway.",
+      "ultra-lift": "Could be reviewed separately if the clinic identifies a relevant firmness and elasticity pathway.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside the clinic's skin-care pathway.",
+      "hair-force-plus": "Creates a focused professional conversation alongside the clinic's established hair-loss and scalp pathway."
+    },
+    "hairConsultationRationale": "Use the consultation to review how Hair Force+ could sit within the clinic's established hair-loss and scalp pathway, subject to clinical assessment and protocol review."
+  },
+  {
+    "id": "profile_medical_skin_clinic_newmarket",
+    "slug": "medical-skin-clinic-newmarket",
+    "clinicName": "The Medical Skin Clinic",
+    "city": "Newmarket",
+    "website": "https://medicalskinclinic.co.uk/",
+    "segment": "medical-dermatology-and-aesthetics-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#6A5B52" },
+    "signals": [
+      {
+        "label": "CQC-registered medical clinic in Newmarket",
+        "detail": "The clinic presents consultant dermatology and medically led aesthetic care delivered by registered medical professionals.",
+        "sourceUrl": "https://medicalskinclinic.co.uk/"
+      },
+      {
+        "label": "Established skin-quality and regenerative pathways",
+        "detail": "The current treatment menu includes non-surgical facelifts, polynucleotides, dermal fillers and prescription skincare alongside dermatology services.",
+        "sourceUrl": "https://medicalskinclinic.co.uk/pricing"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "The Medical Skin Clinic official website",
+        "url": "https://medicalskinclinic.co.uk/",
+        "verifiedAt": "2026-08-11"
+      },
+      {
+        "label": "NEWMED HEALTHCARE LTD Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/08966527",
+        "verifiedAt": "2026-08-11"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for The Medical Skin Clinic",
+    "heroHeadline": "Connect medically led skin care with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement the clinic's established dermatology, skin-quality and facial-rejuvenation pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "The Medical Skin Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's consultant dermatology, non-surgical facelift, polynucleotide and prescription-skincare pathways.",
+    "verifiedServices": ["Consultant dermatology", "Non-surgical facelifts", "Polynucleotide treatments", "Dermal fillers", "Prescription skincare"],
+    "serviceMenuBridge": "The clinic's established dermatology and medically led aesthetic pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to the clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside the clinic's dermatology and skincare pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity conversation alongside the clinic's facial-rejuvenation work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside prescription skincare and dermatology pathways.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair-vitality pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_dr_ana_the_skin_clinic",
+    "slug": "dr-ana-the-skin-clinic",
+    "clinicName": "Dr Ana • The Skin Clinic",
+    "city": "Birmingham",
+    "website": "https://www.drana.co.uk/",
+    "segment": "doctor-led-aesthetics-and-skin-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#745E67" },
+    "signals": [
+      {
+        "label": "Doctor-led Birmingham skin clinic",
+        "detail": "Dr Ana • The Skin Clinic presents a doctor-led practice with consultation-led aesthetic and skin services.",
+        "sourceUrl": "https://www.drana.co.uk/"
+      },
+      {
+        "label": "Established microneedling and skin-renewal pathways",
+        "detail": "The clinic's public treatment menu includes RF microneedling, SkinPen microneedling, chemical peels, Hydrafacial, laser skin treatments and skin tightening.",
+        "sourceUrl": "https://www.drana.co.uk/prices/"
+      }
+    ],
+    "evidence": [
+      {
+        "label": "Dr Ana • The Skin Clinic official website",
+        "url": "https://www.drana.co.uk/",
+        "verifiedAt": "2026-08-11"
+      },
+      {
+        "label": "Dr Ana • The Skin Clinic treatment menu",
+        "url": "https://www.drana.co.uk/prices/",
+        "verifiedAt": "2026-08-11"
+      },
+      {
+        "label": "THE SKIN CLINIC BY DR ANA LTD Companies House record",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/13687014",
+        "verifiedAt": "2026-08-11"
+      }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Dr Ana • The Skin Clinic",
+    "heroHeadline": "Connect established skin-renewal treatments with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement the clinic's current microneedling, peel, laser and skin-tightening pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness and elasticity pathway, and Pearl Tone could support a clarity and even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Dr Ana • The Skin Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's microneedling, peel, Hydrafacial, laser and skin-tightening services.",
+    "verifiedServices": ["RF microneedling", "SkinPen microneedling", "Chemical peels", "Hydrafacial", "Laser skin treatments", "Skin tightening"],
+    "serviceMenuBridge": "The clinic's established microneedling, peel, laser and skin-tightening pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to the clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with patient conversations about visible texture, radiance and skin quality alongside microneedling, Hydrafacial and peel pathways.",
+      "ultra-lift": "Creates a distinct firmness and elasticity conversation alongside RF microneedling and skin-tightening work.",
+      "pearl-tone": "Supports a clarity and even-looking tone conversation alongside peel and laser services.",
+      "hair-force-plus": "Would require a separate service-fit discussion because no scalp or hair-vitality pathway was used in this outreach preview."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_newlife_aesthetics",
+    "slug": "newlife-aesthetics",
+    "clinicName": "NewLife Aesthetics",
+    "city": "London",
+    "website": "https://newlifeaesthetics.co.uk/",
+    "segment": "doctor-led-aesthetics-and-skin-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#6B716A" },
+    "signals": [
+      { "label": "Doctor-led London skin clinic", "detail": "NewLife Aesthetics presents a doctor-led microneedling pathway for texture, scarring, fine lines and uneven tone.", "sourceUrl": "https://newlifeaesthetics.co.uk/microneedling-treatment/" }
+    ],
+    "evidence": [
+      { "label": "NewLife Aesthetics official website", "url": "https://newlifeaesthetics.co.uk/microneedling-treatment/", "verifiedAt": "2026-08-11" },
+      { "label": "NEWLIFE MEDICAL AESTHETICS LTD Companies House record", "url": "https://find-and-update.company-information.service.gov.uk/company/11248596", "verifiedAt": "2026-08-11" }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for NewLife Aesthetics",
+    "heroHeadline": "Connect established microneedling work with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement NewLife Aesthetics' current texture, scarring and uneven-tone pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible texture and radiance, Ultra Lift could support a distinct firmness pathway, and Pearl Tone could support an even-looking tone conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "NewLife Aesthetics can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's microneedling and skin-quality services.",
+    "verifiedServices": ["Microneedling", "Skin texture treatment", "Acne-scar treatment"],
+    "serviceMenuBridge": "The clinic's microneedling and skin-quality pathways create a credible starting point for distinct VELURIA conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to clinic protocols and clinical oversight.",
+    "productFitNotes": { "silk-skin": "Connects with texture, radiance and visible skin-quality conversations.", "ultra-lift": "Creates a separate firmness and elasticity conversation.", "pearl-tone": "Supports a clarity and even-looking tone conversation.", "hair-force-plus": "Requires a separate service-fit discussion." },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_dr_melanin",
+    "slug": "dr-melanin",
+    "clinicName": "Dr Melanin Aesthetics",
+    "city": "West Thurrock",
+    "website": "https://drmelanin.co.uk/",
+    "segment": "doctor-led-skin-of-colour-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#745C52" },
+    "signals": [
+      { "label": "Dermatologist-led skin-of-colour clinic", "detail": "Dr Melanin is a dermatologist-led clinic focused on medical aesthetics and advanced skin treatment for melanin-rich skin.", "sourceUrl": "https://drmelanin.co.uk/" }
+    ],
+    "evidence": [
+      { "label": "Dr Melanin official website", "url": "https://drmelanin.co.uk/", "verifiedAt": "2026-08-11" },
+      { "label": "DR MELANIN LIMITED Companies House record", "url": "https://find-and-update.company-information.service.gov.uk/company/15192574", "verifiedAt": "2026-08-11" }
+    ],
+    "relevantProducts": ["pearl-tone", "silk-skin", "ultra-lift"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Dr Melanin Aesthetics",
+    "heroHeadline": "Connect advanced skin treatment with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Dr Melanin's current peel, microneedling and regenerative skin pathways.",
+    "productFit": "VELURIA Pearl Tone could support a clarity and even-looking tone conversation, Silk Skin could support visible texture and radiance, and Ultra Lift could support a distinct firmness pathway. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Dr Melanin can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's advanced skin services.",
+    "verifiedServices": ["Chemical peels", "Microneedling", "Regenerative skin treatments", "Medical-grade skincare"],
+    "serviceMenuBridge": "The clinic's skin-of-colour focus and advanced skin pathways create a credible starting point for distinct VELURIA conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to clinic protocols and clinical oversight.",
+    "productFitNotes": { "silk-skin": "Connects with visible texture and radiance conversations.", "ultra-lift": "Creates a separate firmness and elasticity conversation.", "pearl-tone": "Supports a clarity and even-looking tone conversation.", "hair-force-plus": "Requires a separate service-fit discussion." },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_hedox_clinic",
+    "slug": "hedox-clinic",
+    "clinicName": "Hedox Clinic",
+    "city": "London",
+    "website": "https://hedoxclinic.co.uk/",
+    "segment": "doctor-led-aesthetics-and-laser-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#655C58" },
+    "signals": [
+      { "label": "Senior-doctor-led skin clinic", "detail": "Hedox Clinic combines senior-doctor oversight with Dermapen microneedling, laser resurfacing and collagen-focused skin treatments.", "sourceUrl": "https://hedoxclinic.co.uk/" }
+    ],
+    "evidence": [
+      { "label": "Hedox Clinic official website", "url": "https://hedoxclinic.co.uk/", "verifiedAt": "2026-08-11" },
+      { "label": "HEDOX CLINIC LTD Companies House record", "url": "https://find-and-update.company-information.service.gov.uk/company/10810513", "verifiedAt": "2026-08-11" }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Hedox Clinic",
+    "heroHeadline": "Connect collagen-focused treatments with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Hedox Clinic's Dermapen, resurfacing and rejuvenation pathways.",
+    "productFit": "VELURIA Silk Skin could support visible texture and radiance conversations, Ultra Lift could support firmness and elasticity, and Pearl Tone could support clarity and even-looking tone. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Hedox Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside Dermapen, resurfacing and skin-rejuvenation services.",
+    "verifiedServices": ["Dermapen microneedling", "Laser skin resurfacing", "Profhilo", "Skin rejuvenation"],
+    "serviceMenuBridge": "The clinic's collagen-focused treatments create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to clinic protocols and clinical oversight.",
+    "productFitNotes": { "silk-skin": "Connects with texture and radiance alongside Dermapen pathways.", "ultra-lift": "Creates a firmness and elasticity conversation alongside rejuvenation work.", "pearl-tone": "Supports clarity and even-looking tone alongside resurfacing services.", "hair-force-plus": "Requires a separate service-fit discussion." },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_taktouk_clinic",
+    "slug": "taktouk-clinic",
+    "clinicName": "Taktouk Clinic",
+    "city": "London",
+    "website": "https://www.drwassimtaktouk.com/",
+    "segment": "doctor-led-medical-aesthetics-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#635A52" },
+    "signals": [
+      { "label": "Medically led Knightsbridge clinic", "detail": "Taktouk Clinic presents medically led, personalised aesthetics and tailored HydraFacial treatment within its Knightsbridge practice.", "sourceUrl": "https://www.drwassimtaktouk.com/hydrafacial" }
+    ],
+    "evidence": [
+      { "label": "Taktouk Clinic official website", "url": "https://www.drwassimtaktouk.com/", "verifiedAt": "2026-08-11" },
+      { "label": "DR WASSIM TAKTOUK LTD Companies House record", "url": "https://find-and-update.company-information.service.gov.uk/company/10147537", "verifiedAt": "2026-08-11" }
+    ],
+    "relevantProducts": ["silk-skin", "ultra-lift", "pearl-tone"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Taktouk Clinic",
+    "heroHeadline": "Connect personalised aesthetics with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement Taktouk Clinic's medically led aesthetics and HydraFacial pathways.",
+    "productFit": "VELURIA Silk Skin could support visible texture and radiance conversations, Ultra Lift could support firmness and elasticity, and Pearl Tone could support clarity and even-looking tone. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Taktouk Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review how VELURIA could sit alongside the clinic's personalised skin-treatment pathways.",
+    "verifiedServices": ["HydraFacial", "Medical aesthetics", "Personalised skin treatment planning"],
+    "serviceMenuBridge": "The clinic's personalised skin-treatment planning creates a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to clinic protocols and clinical oversight.",
+    "productFitNotes": { "silk-skin": "Connects with visible texture and radiance alongside HydraFacial pathways.", "ultra-lift": "Creates a firmness and elasticity conversation.", "pearl-tone": "Supports clarity and even-looking tone conversations.", "hair-force-plus": "Requires a separate service-fit discussion." },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
+  },
+  {
+    "id": "profile_thames_valley_scar_clinic",
+    "slug": "thames-valley-scar-clinic",
+    "clinicName": "Thames Valley Scar Clinic",
+    "city": "Oxford",
+    "website": "https://thamesvalleyscarclinic.com/",
+    "segment": "consultant-led-scar-and-laser-clinic",
+    "legalEntityType": "corporate",
+    "status": "verified",
+    "verifiedAt": "2026-08-11",
+    "brand": { "accent": "#596B67" },
+    "signals": [
+      {
+        "label": "Consultant-led scar and laser clinic",
+        "detail": "Thames Valley Scar Clinic presents plastic-surgeon-led care spanning scars, laser skin rejuvenation, pigmentation and age-related skin change.",
+        "sourceUrl": "https://thamesvalleyscarclinic.com/"
+      }
+    ],
+    "evidence": [
+      { "label": "Thames Valley Scar Clinic official website", "url": "https://thamesvalleyscarclinic.com/", "verifiedAt": "2026-08-11" },
+      { "label": "THAMES VALLEY SCAR CLINIC LIMITED Companies House record", "url": "https://find-and-update.company-information.service.gov.uk/company/14681092", "verifiedAt": "2026-08-11" }
+    ],
+    "relevantProducts": ["silk-skin", "pearl-tone", "ultra-lift"],
+    "heroEyebrow": "A VELURIA patient journey prepared for Thames Valley Scar Clinic",
+    "heroHeadline": "Connect specialist scar and rejuvenation care with a clearer patient journey.",
+    "heroIntro": "This private preview explores how an enzyme-based professional range, an illustrative AI skin experience and structured consultation follow-up could complement the clinic's established scar, pigmentation and age-related skin pathways.",
+    "productFit": "VELURIA Silk Skin could support conversations about visible surface quality and texture, Pearl Tone could support an even-looking tone pathway, and Ultra Lift could support a separate firmness conversation. Final suitability and product selection remain with the treating clinician.",
+    "pipelineOpportunity": "Thames Valley Scar Clinic can introduce the range through responsible product education, let prospective patients explore an illustrative AI experience and route genuine interest into its consultation process.",
+    "consultationRationale": "Use the free Clinic Growth Map to review where VELURIA could sit alongside the clinic's specialist scar, pigmentation and skin-rejuvenation services.",
+    "verifiedServices": ["Scar assessment and treatment", "Laser skin rejuvenation", "Pigmentation treatment", "Age-related skin care"],
+    "serviceMenuBridge": "The clinic's scar, pigmentation and rejuvenation pathways create a credible starting point for distinct VELURIA skin-quality conversations.",
+    "teamCapacityOpportunity": "A structured VELURIA pathway could be reviewed for delivery by appropriately trained and competent clinic team members, subject to the clinic's protocols, governance and clinical oversight.",
+    "productFitNotes": {
+      "silk-skin": "Connects with visible texture and surface-quality conversations.",
+      "ultra-lift": "Creates a separate firmness and elasticity conversation.",
+      "pearl-tone": "Supports clarity and even-looking tone conversations alongside pigmentation work.",
+      "hair-force-plus": "Requires a separate service-fit discussion."
+    },
+    "hairConsultationRationale": "Keep Hair Force+ outside the initial preview unless the clinic confirms a relevant scalp or hair-vitality pathway."
   }
 ]
